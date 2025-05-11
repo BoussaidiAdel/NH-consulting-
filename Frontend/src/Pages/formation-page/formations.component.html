@@ -198,28 +198,20 @@
   </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal-overlay" *ngIf="showDeleteConfirmation">
-  <div class="confirmation-modal" (click)="$event.stopPropagation()">
-    <h3>Confirmer la suppression</h3>
-    <p>Êtes-vous sûr de vouloir supprimer cette formation ? Cette action est irréversible.</p>
-    <div class="confirmation-actions">
-      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
-      <button class="btn btn-primary" (click)="confirmDelete()">Supprimer</button>
-    </div>
-  </div>
-</div>
+<!-- Formation Form Dialog -->
+<div class="modal-overlay" *ngIf="showFormationForm" (click)="closeFormationForm()">
+  <div class="modal-content form-modal" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeFormationForm()">
+      <mat-icon>close</mat-icon>
+    </button>
 
-<!-- Formation Form Modal -->
-<div class="modal-overlay" *ngIf="showFormationForm">
-  <div class="form-dialog" (click)="$event.stopPropagation()">
-    <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
-      <div class="form-dialog-content">
-        <h2>{{ editMode ? 'Modifier' : 'Ajouter' }} une formation</h2>
-        
+    <div class="modal-body">
+      <h2>{{ editMode ? 'Modifier la formation' : 'Ajouter une formation' }}</h2>
+      
+      <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
         <div class="form-group">
           <label for="title">Titre</label>
-          <input type="text" id="title" formControlName="title" class="form-control">
+          <input type="text" id="title" formControlName="title" class="form-control" matInput>
         </div>
 
         <div class="form-group">
@@ -229,16 +221,22 @@
 
         <div class="form-row">
           <div class="form-group half">
-            <label for="prix">Prix (€)</label>
-            <input type="number" id="prix" formControlName="prix" class="form-control">
+            <label for="prix">Prix</label>
+            <input type="number" id="prix" formControlName="prix" class="form-control" matInput>
           </div>
+
           <div class="form-group half">
             <label for="duree">Durée (semaines)</label>
-            <input type="number" id="duree" formControlName="duree" class="form-control">
+            <input type="number" id="duree" formControlName="duree" class="form-control" matInput>
           </div>
         </div>
 
         <div class="form-row">
+          <div class="form-group half">
+            <label for="nomFormateur">Formateur</label>
+            <input type="text" id="nomFormateur" formControlName="nomFormateur" class="form-control" matInput>
+          </div>
+
           <div class="form-group half">
             <label for="niveau">Niveau</label>
             <mat-select id="niveau" formControlName="niveau" class="form-control">
@@ -247,6 +245,9 @@
               <mat-option value="Avancé">Avancé</mat-option>
             </mat-select>
           </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group half">
             <label for="etat">Mode</label>
             <mat-select id="etat" formControlName="etat" class="form-control">
@@ -254,27 +255,23 @@
               <mat-option value="Présentiel">Présentiel</mat-option>
             </mat-select>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="nomFormateur">Formateur</label>
-          <input type="text" id="nomFormateur" formControlName="nomFormateur" class="form-control">
+          <div class="form-group half">
+            <label for="placesDisponibles">Places disponibles</label>
+            <input type="number" id="placesDisponibles" formControlName="placesDisponibles" class="form-control" matInput>
+          </div>
         </div>
 
         <div class="form-row">
           <div class="form-group half">
             <label for="dateDebut">Date de début</label>
-            <input type="date" id="dateDebut" formControlName="dateDebut" class="form-control">
+            <input type="date" id="dateDebut" formControlName="dateDebut" class="form-control" matInput>
           </div>
+
           <div class="form-group half">
             <label for="dateFin">Date de fin</label>
-            <input type="date" id="dateFin" formControlName="dateFin" class="form-control">
+            <input type="date" id="dateFin" formControlName="dateFin" class="form-control" matInput>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="placesDisponibles">Places disponibles</label>
-          <input type="number" id="placesDisponibles" formControlName="placesDisponibles" class="form-control">
         </div>
 
         <div class="form-group">
@@ -286,14 +283,31 @@
           <label for="programme">Programme</label>
           <textarea id="programme" formControlName="programme" class="form-control" rows="4"></textarea>
         </div>
-      </div>
 
-      <div class="form-dialog-actions">
-        <button type="button" class="btn btn-secondary" (click)="closeFormationForm()">Annuler</button>
-        <button type="submit" class="btn btn-primary" [disabled]="formationForm.invalid">
-          {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
-        </button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="image">Image URL</label>
+          <input type="text" id="image" formControlName="image" class="form-control" matInput>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="closeFormationForm()">Annuler</button>
+          <button type="submit" class="save-btn" [disabled]="!formationForm.valid">
+            {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Dialog -->
+<div class="modal-overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()">
+  <div class="modal-content confirmation-modal" (click)="$event.stopPropagation()">
+    <h3>Confirmer la suppression</h3>
+    <p>Êtes-vous sûr de vouloir supprimer cette formation ?</p>
+    <div class="confirmation-actions">
+      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+      <button class="delete-confirm-btn" (click)="confirmDelete()">Supprimer</button>
+    </div>
   </div>
 </div>

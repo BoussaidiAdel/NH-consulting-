@@ -34,7 +34,7 @@ a {
 }
 
 a:hover {
-  color: #e50914;
+  color: #007bff;
 }
 
 /* Game Section Styles */
@@ -64,7 +64,7 @@ a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #333;
+  color: #212529;
   display: inline-block;
 }
 
@@ -80,12 +80,12 @@ a:hover {
 
 .line-title::before {
   width: 100%;
-  background: #e6e6e6;
+  background: #e9ecef;
 }
 
 .line-title::after {
   width: 60px;
-  background: #e50914;
+  background: #007bff;
 }
 
 .section-controls {
@@ -94,9 +94,9 @@ a:hover {
 }
 
 .control-btn {
-  background-color: rgba(0, 0, 0, 0.1);
-  border: none;
-  color: #333;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  color: #495057;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -108,8 +108,9 @@ a:hover {
 }
 
 .control-btn:hover {
-  background-color: #e50914;
+  background-color: #007bff;
   color: white;
+  border-color: #007bff;
 }
 
 .control-btn:disabled {
@@ -123,7 +124,7 @@ a:hover {
   padding: 20px 0;
   margin: 0 -20px;
   scrollbar-width: thin;
-  scrollbar-color: #e50914 #e6e6e6;
+  scrollbar-color: #007bff #e9ecef;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -131,12 +132,12 @@ a:hover {
 }
 
 .carousel-container::-webkit-scrollbar-track {
-  background: #e6e6e6;
+  background: #e9ecef;
   border-radius: 10px;
 }
 
 .carousel-container::-webkit-scrollbar-thumb {
-  background: #e50914;
+  background: #007bff;
   border-radius: 10px;
 }
 
@@ -160,8 +161,8 @@ a:hover {
   transition: all 0.4s ease-out;
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  border: 2px solid #e6e6e6;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e9ecef;
 }
 
 .item::before {
@@ -181,14 +182,14 @@ a:hover {
 .item.active {
   width: 480px;
   transform: translateY(-10px);
-  border: 2px solid #e50914;
-  box-shadow: 0 15px 30px rgba(229, 9, 20, 0.3);
+  border: 2px solid #007bff;
+  box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
 }
 
 .item-badge {
   display: inline-block;
   padding: 4px 10px;
-  background-color: #e50914;
+  background-color: #007bff;
   color: white;
   border-radius: 4px;
   font-size: 12px;
@@ -201,15 +202,15 @@ a:hover {
 }
 
 .item-badge.en {
-  background-color: #e50914;
+  background-color: #007bff;
 }
 
 .item-badge.présentiel {
-  background-color: #1db954;
+  background-color: #28a745;
 }
 
 .item-badge.hybride {
-  background-color: #ff9800;
+  background-color: #ffc107;
 }
 
 .item-desc {
@@ -239,7 +240,7 @@ a:hover {
   left: 0;
   width: 40px;
   height: 3px;
-  background-color: #e50914;
+  background-color: #007bff;
 }
 
 .item p {
@@ -279,10 +280,10 @@ a:hover {
 }
 
 .enroll-btn {
-  background-color: #e50914;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 500;
@@ -299,7 +300,7 @@ a:hover {
 }
 
 .enroll-btn:hover {
-  background-color: #f40612;
+  background-color: #0056b3;
 }
 
 .item.active .enroll-btn {
@@ -315,22 +316,8 @@ a:hover {
   justify-content: center;
   height: 300px;
   width: 100%;
-  color: #555;
+  color: #6c757d;
   gap: 20px;
-}
-
-.loader {
-  border: 3px solid #e6e6e6;
-  border-radius: 50%;
-  border-top: 3px solid #e50914;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 /* Error State */
@@ -380,18 +367,13 @@ a:hover {
 }
 
 /* Responsive Styles */
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .game-section {
     padding: 60px 30px;
   }
   
-  .line-title {
-    font-size: 24px;
-    margin-bottom: 30px;
-  }
-  
   .item {
-    width: 260px;
+    width: 280px;
     height: 380px;
   }
   
@@ -400,40 +382,23 @@ a:hover {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .game-section {
     padding: 40px 20px;
   }
   
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-  
-  .line-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
   .item {
-    width: 240px;
-    height: 340px;
-    margin: 0 10px 20px;
+    width: 260px;
+    height: 360px;
   }
   
   .item.active {
-    width: 300px;
+    width: 320px;
   }
   
-  .item-desc {
-    padding: 15px;
-    transform: translateY(calc(100% - 70px));
-  }
-  
-  .item h4 {
-    font-size: 18px;
-    margin-bottom: 8px;
+  .line-title {
+    font-size: 24px;
+    line-height: 32px;
   }
 }
 

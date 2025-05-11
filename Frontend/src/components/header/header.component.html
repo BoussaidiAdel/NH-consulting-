@@ -2,24 +2,33 @@
     <div class="m-global-menu">
         <div class="m-super-header d-lg-block d-none">
             <div class="m-super-header-wrapper">
-                <div class="container">
-                    <div class="m-super-header-content">
-                        <div class="super-header-search">
-                            <button type="button" class="nav-search-btn ps-0">Search<i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>
-                        <div class="super-header-dropdown">
-                            <button id="dropdownCountries" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                             <i class="fa fa-chevron-down"></i>
-                            </button>
-                            <ul aria-labelledby="dropdownCountries" class="dropdown-menu">
-                              <li [class.active]="(selectedLanguage$ | async) === 'en'">
-                                <a class="dropdown-item" (click)="changeLanguage('en')">{{ 'COMMON.LANGUAGE_SELECTOR.ENGLISH' | translate }}</a>
-                              </li>
-                              <li [class.active]="(selectedLanguage$ | async) === 'fr'">
-                                <a class="dropdown-item" (click)="changeLanguage('fr')">{{ 'COMMON.LANGUAGE_SELECTOR.FRENCH' | translate }}</a>
-                              </li>
-                            </ul>
-                          </div>
+                <div class="m-super-header-content">
+                    <div class="super-header-search">
+                        <button type="button" class="nav-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Search
+                        </button>
+                    </div>
+                    <div class="super-header-dropdown">
+                        <button id="dropdownCountries" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-globe"></i>
+                            <span>{{ (selectedLanguage$ | async) === 'en' ? 'English' : 'Français' }}</span>
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                        <ul aria-labelledby="dropdownCountries" class="dropdown-menu">
+                            <li [class.active]="(selectedLanguage$ | async) === 'en'">
+                                <a class="dropdown-item" (click)="changeLanguage('en')">
+                                    <i class="fa fa-flag-usa"></i>
+                                    {{ 'COMMON.LANGUAGE_SELECTOR.ENGLISH' | translate }}
+                                </a>
+                            </li>
+                            <li [class.active]="(selectedLanguage$ | async) === 'fr'">
+                                <a class="dropdown-item" (click)="changeLanguage('fr')">
+                                    <i class="fa fa-flag"></i>
+                                    {{ 'COMMON.LANGUAGE_SELECTOR.FRENCH' | translate }}
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -27,54 +36,55 @@
         <div class="m-header-wrapper">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <div class="nav-brand-wrapper d-flex flex-grow-1 justify-content-between py-3 py-lg-0 w-100">
-                        <a class="navbar-brand" href="#">
-                            <img src="../../assets/images/logo.png" alt="Nh consulting" />
-                        </a>
-                        <button
-                            class="navbar-toggler collapsed p-0"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
+                    <a class="navbar-brand" href="#">
+                        <img src="../../assets/images/logo.png" alt="NH Consulting" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                    <div class="navbar-collapse collapse mt-lg-0 scrollbar-light" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">{{ 'HEADER.MENU.HOME_PAGE' | translate }}<i class="fa-solid fa-arrow-right-long d-lg-none d-inline-block"></i></a>
+                                <a routerLink="/" routerLinkActive="active" class="nav-link">
+                                    {{ 'HEADER.MENU.HOME_PAGE' | translate }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" [routerLink]="'formation'">{{ 'HEADER.MENU.OUR_WIDGETS' | translate }} <i class="fa-solid fa-arrow-right-long d-lg-none d-inline-block"></i></a>
-                            </li>   
+                                <a routerLink="/formation" routerLinkActive="active" class="nav-link">
+                                    {{ 'HEADER.MENU.OUR_WIDGETS' | translate }}
+                                </a>
+                            </li>
                             <li class="nav-item">
-                                <a [routerLink]="'contact'" class="nav-link">{{ 'HEADER.MENU.CONTACT' | translate }}<i class="fa-solid fa-arrow-right-long d-lg-none d-inline-block"></i></a>
-                            </li>                         
+                                <a routerLink="/contact" routerLinkActive="active" class="nav-link">
+                                    {{ 'HEADER.MENU.CONTACT' | translate }}
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-user"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end login-dropdown">
-                                    <div class="login-dropdown-triangle"></div>
                                     <div class="login-box">
                                         <form class="login-form">
                                             <input class="login-input" placeholder="{{ 'HEADER.LOGIN.USERNAME' | translate }}" />
                                             <input class="login-input" type="password" placeholder="{{ 'HEADER.LOGIN.PASSWORD' | translate }}" />
                                             <div class="login-remember">
                                                 <input class="login-checkbox" type="checkbox" id="rememberMe" />
-                                                <label class="login-remember-text" for="rememberMe">{{ 'HEADER.LOGIN.REMEMBER_ME' | translate }}</label>
+                                                <label class="login-remember-text" for="rememberMe">
+                                                    {{ 'HEADER.LOGIN.REMEMBER_ME' | translate }}
+                                                </label>
                                             </div>
-                                            <button class="login-button" type="button">{{ 'HEADER.LOGIN.LOG_IN' | translate }}</button>
-                                            <a href="#" class="login-forgot">{{ 'HEADER.LOGIN.FORGOT_PASSWORD' | translate }}</a>
+                                            <button class="login-button" type="button">
+                                                {{ 'HEADER.LOGIN.LOG_IN' | translate }}
+                                            </button>
+                                            <a href="#" class="login-forgot">
+                                                {{ 'HEADER.LOGIN.FORGOT_PASSWORD' | translate }}
+                                            </a>
                                         </form>
                                     </div>
                                 </div>
-                            </li>                           
+                            </li>
                         </ul>
                     </div>
                 </div>

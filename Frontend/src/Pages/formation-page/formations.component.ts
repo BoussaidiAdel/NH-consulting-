@@ -201,76 +201,64 @@ export class FormationsComponent implements OnInit {
 
   // Open the formation form (add or edit)
   openFormationForm(formation?: Formation): void {
+    this.editMode = !!formation;
+    this.showFormationForm = true;
+    
     if (formation) {
-      // Edit existing formation
-      this.editMode = true;
-      this.formationForm.patchValue(formation);
+      // Convert dates to YYYY-MM-DD format for the form
+      const formationToEdit = {
+        ...formation,
+        dateDebut: formation.dateDebut ? new Date(formation.dateDebut).toISOString().split('T')[0] : '',
+        dateFin: formation.dateFin ? new Date(formation.dateFin).toISOString().split('T')[0] : ''
+      };
+      this.formationForm.patchValue(formationToEdit);
     } else {
-      // Add new formation
-      this.editMode = false;
       this.formationForm.reset({
         etat: 'En ligne',
         niveau: 'Débutant',
         active: true,
+        placesDisponibles: 0,
         prix: 0,
-        duree: 0,
-        placesDisponibles: 0
+        duree: 1
       });
     }
-
-    this.showFormationForm = true;
   }
 
   // Close the formation form
   closeFormationForm(): void {
     this.showFormationForm = false;
+    this.editMode = false;
     this.formationForm.reset();
   }
 
   // Save formation (add or update)
   saveFormation(): void {
-    if (this.formationForm.invalid) return;
-
-    const formData = this.formationForm.value;
-
-    if (this.editMode) {
-      // Update existing formation
-      this.formationService.updateFormation(formData).subscribe({
-        next: (updatedFormation) => {
-          // Update the formation in the local array
-          const index = this.formations.findIndex(f => f.id === updatedFormation.id);
-          if (index !== -1) {
-            this.formations[index] = updatedFormation;
+    if (this.formationForm.valid) {
+      const formationData = this.formationForm.value;
+      
+      if (this.editMode) {
+        this.formationService.updateFormation(formationData).subscribe({
+          next: () => {
+            this.showSuccess('Formation mise à jour avec succès');
+            this.closeFormationForm();
+            this.loadFormations();
+          },
+          error: (error) => {
+            this.showError(`Erreur lors de la mise à jour: ${error.message}`);
           }
-
-          // Close form and show notification
-          this.closeFormationForm();
-          this.closeDetails(); // Close details if open
-          this.showSuccess('Formation updated successfully');
-        },
-        error: (error) => {
-          console.error('Error updating formation:', error);
-          this.errorMessage = `Failed to update formation: ${error.message || 'Unknown error'}`;
-          this.showError(this.errorMessage);
-        }
-      });
-    } else {
-      // Add new formation
-      this.formationService.addFormation(formData).subscribe({
-        next: (newFormation) => {
-          // Add to the local array
-          this.formations.push(newFormation);
-
-          // Close form and show notification
-          this.closeFormationForm();
-          this.showSuccess('Formation added successfully');
-        },
-        error: (error) => {
-          console.error('Error adding formation:', error);
-          this.errorMessage = `Failed to add formation: ${error.message || 'Unknown error'}`;
-          this.showError(this.errorMessage);
-        }
-      });
+        });
+      } else {
+        this.formationService.addFormation(formationData).subscribe({
+          next: () => {
+            this.showSuccess('Formation ajoutée avec succès');
+            this.closeFormationForm();
+            this.loadFormations();
+          },
+          error: (error) => {
+            this.showError(`Erreur lors de l'ajout: ${error.message}`);
+          }
+        });
+      }
     }
   }
 
