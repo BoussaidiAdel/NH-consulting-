@@ -1,0 +1,255 @@
+.m-global-menu {
+    top: 0;
+    left: 0;
+    position: relative;
+    right: 0;
+    z-index: 1030;
+}
+
+
+.m-global-menu .m-super-header {
+    background-color: white;
+    font-size: 14px;
+    min-height: 25px;
+    column-gap: 16px;
+}
+
+.m-global-menu .m-super-header .m-super-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    min-height: 40px;
+}
+
+.m-global-menu .m-super-header .m-super-header-content button {
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: black;
+}
+
+.m-global-menu .m-super-header .m-super-header-content button i {
+    color: black;
+    padding-left: 0.5rem;
+}
+
+.m-global-menu .m-super-header .super-header-dropdown .dropdown-menu {
+    background-color: #ffffff;
+}
+
+.m-global-menu .m-super-header .super-header-dropdown .dropdown-menu .dropdown-item {
+    font-size: 14px;
+    color: #212529;
+}
+
+.m-global-menu .m-super-header .super-header-dropdown .dropdown-menu .dropdown-item:hover,
+.m-global-menu .m-super-header .super-header-dropdown .dropdown-menu .dropdown-item:focus {
+    color: red;
+    background-color: rgba(108, 117, 125, 0.1);
+}
+
+/* Header Wrapper Styles */
+.m-global-menu .m-header-wrapper .navbar {
+    background-color: #000000;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-brand img {
+    height: 40px;
+    width: auto;
+    margin-right: 15px;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-brand span {
+    font-size: 1.25rem;
+    color: #e9ecef;
+    font-weight: bold;
+}
+
+/* Nav Link Styles */
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .nav-link {
+    position: relative;
+    white-space: nowrap;
+    color: #e9ecef;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .nav-link:hover:not(.m-nav-fund-link),
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .nav-link.active:not(.m-nav-fund-link) {
+    color: red;
+}
+
+/* Dropdown Menu Styles */
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    margin-top: 0;
+    position: fixed;
+    top: 97px;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-title {
+    color: #212529;
+    padding-bottom: 1rem;
+    font-family: "Inter-Medium", sans-serif;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-description {
+    font-size: 1rem;
+    color: #212529;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-list {
+    list-style: none;
+    padding-left: 40px;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-list li {
+    padding-bottom: 13px;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-list li .dropdown-item {
+    padding: 0;
+    font-size: 1rem;
+    font-family: "Inter-Medium", sans-serif;
+}
+
+.m-global-menu .m-header-wrapper .navbar .navbar-nav li .dropdown-menu.m-submenu-wrapper .m-submenu-list li .dropdown-item:hover {
+    color: red;
+}
+
+/* Adjustments for Mobile */
+@media (max-width: 991.98px) {
+    .m-global-menu .m-header-wrapper .navbar .navbar-brand {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .m-global-menu .m-header-wrapper .navbar .navbar-brand img {
+        height: 30px;
+    }
+
+    .m-global-menu .m-header-wrapper .navbar .navbar-brand span {
+        font-size: 1rem;
+    }
+}
+
+
+.login-dropdown {
+    margin-top: 20px; 
+    border: none;
+    transform: translateX(20px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    width: 350px;
+    padding: 0;
+}
+
+.login-dropdown-triangle {
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-bottom-color: red; 
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    z-index: 1;
+}
+
+.login-box {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(251, 11, 11, 0.964));
+    background-color: black;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 0; 
+}
+
+
+
+.login-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-input {
+    height: 30px;
+    width: 100%;
+    background: white;
+    color: black;
+    padding-left: 15px;
+    font-family: "Source Sans Pro", sans-serif;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+.login-input[type="password"] {
+    margin-bottom: 10px;
+}
+
+.login-remember {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+
+.login-checkbox {
+    margin-right: 10px;
+}
+
+.login-remember-text {
+    color: white;
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.login-button {
+    margin-top: 10px;
+    height: 40px;
+    width: 100%;
+    border: none;
+    background: white;
+    color: black;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+}
+
+.login-button:hover {
+    background: red;
+}
+
+.login-forgot {
+    color: white;
+    margin-top: 15px;
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.login-forgot:hover {
+    color: red;
+}

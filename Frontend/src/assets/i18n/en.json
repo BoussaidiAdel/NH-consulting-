@@ -1,0 +1,76 @@
+{
+  "COMMON": {
+    "LANGUAGE_SELECTOR": {
+      "ENGLISH": "English",
+      "FRENCH": "French"
+    }
+  },
+  "HEADER": {
+    "MENU": {
+      "ABOUT_US": "About Us",
+      "HOME_PAGE": "Home Page",
+      "OUR_WIDGETS": "Our Courses",
+      "CONTACT": "Contact"
+    },
+    "LOGIN": {
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER_ME": "Remember Me",
+      "LOG_IN": "Log In",
+      "FORGOT_PASSWORD": "Forgot password?"
+    }
+  },
+  "CONTACT": {
+    "HEADER": "We're always on the lookout to work with new clients...",
+    "FORM": {
+      "FULL_NAME": "Full Name",
+      "EMAIL": "Email",
+      "PHONE": "Phone Number",
+      "SUBJECT": "Subject",
+      "MESSAGE": "Message",
+      "SEND_MESSAGE": "Send Message"
+    },
+    "OFFICE": {
+      "TITLE": "Office",
+      "DESCRIPTION": "Please visit us for further information.",
+      "ADDRESS": "3rd floor, Panorama building..."
+    },
+    "EMAIL": {
+      "TITLE": "Email",
+      "DESCRIPTION": "Please write to us directly."
+    },
+    "OPENING_HOURS": {
+      "TITLE": "Opening Hours",
+      "DESCRIPTION": "Explore our business opening hours.",
+      "MON_FRI": "Mon - Fri",
+      "TIME": "9am - 6pm"
+    }
+  },
+  "FOOTER": {
+    "LOGO": {
+      "DESCRIPTION": "Digital innovation for market finance."
+    },
+    "NEWSLETTER": {
+      "TITLE": "Mailing-list",
+      "DESCRIPTION": "Stay up to date with our latest courses",
+      "EMAIL_PLACEHOLDER": "Your email",
+      "SUBSCRIBE_BUTTON": "Subscribe"
+    },
+    "SOCIAL": {
+      "TITLE": "Follow Us",
+      "LINKEDIN": "LinkedIn",
+      "FACEBOOK": "Facebook"
+    },
+    "LINKS": {
+      "TITLE": "Quick Access",
+      "CONTACT_US": "Contact us",
+      "OFFICIAL_WEBSITE": "Our Courses"
+    },
+    "COPYRIGHT": "2025  NH consulting. All rights reserved.",
+    "LEGAL": {
+      "PRIVACY": "Privacy",
+      "TERMS": "Terms",
+      "COOKIES": "Cookies"
+    }
+  }
+}

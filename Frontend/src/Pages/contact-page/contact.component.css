@@ -1,0 +1,195 @@
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+/* Spacing Utilities */
+.py-3 { padding: 1rem 0; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 3rem; }
+.p-4 { padding: 1.5rem; }
+.p-5 { padding: 3rem; }
+
+/* Typography */
+.fs-5 { font-size: 1.25rem; }
+.display-5 {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+.text-danger,
+.text-primary { color: #ff0000; }
+.fw-bold { font-weight: 700; }
+
+/* Form Elements */
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+/* Input Group Fixes */
+.input-group {
+  display: flex;
+  flex-direction: row; /* Always row, not column */
+  width: 100%;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-right: none;
+  border-radius: 0.25rem 0 0 0.25rem;
+  min-width: 40px; /* Ensure icon area has enough space */
+}
+
+.input-group .form-control {
+  flex: 1;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Buttons */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+/* Layout */
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 575.98px) {
+  .display-5 {
+    font-size: 1.75rem;
+  }
+
+  .p-5, .py-md-5 {
+    padding: 2rem;
+  }
+}
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+  .py-md-5 { padding: 3rem 0; }
+  .col-md-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-md-10 { flex: 0 0 83.333%; max-width: 83.333%; }
+
+  .btn {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+/* Desktop (992px and up) */
+@media (min-width: 992px) {
+  .py-xl-8 { padding: 6rem 0; }
+  .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-lg-8 { flex: 0 0 66.667%; max-width: 66.667%; }
+
+  .display-5 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* Utility Classes */
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.text-decoration-none { text-decoration: none; }
+.overflow-hidden { overflow: hidden; }
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+
+/* SVG Icons */
+.bi-geo, .bi-envelope-at, .bi-alarm, .bi-envelope, .bi-telephone {
+  fill: #ff0000;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+/* Link Styles */
+.link-secondary {
+  color: #888;
+  transition: color 0.2s;
+}
+
+.link-secondary:hover {
+  color: #ff0000;
+}
+
+/* Border Styles */
+.border {
+  border: 1px solid #dee2e6;
+}
+
+.border-dark-subtle {
+  border-color: #adb5bd;
+}
+
+/* Width Utilities */
+.w-50 {
+  width: 50%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+/* Margin Utilities */
+.me-5 {
+  margin-right: 3rem;
+}
+
+/* Text Color Utilities */
+.text-secondary {
+  color: #6c757d;
+}
+
+/* Address Reset */
+address {
+  margin-bottom: 1rem;
+  font-style: normal;
+  line-height: inherit;
+}
+
+/* Form Label */
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}

@@ -1,0 +1,76 @@
+{
+  "COMMON": {
+    "LANGUAGE_SELECTOR": {
+      "ENGLISH": "Anglais",
+      "FRENCH": "Français"
+    }
+  },
+  "HEADER": {
+    "MENU": {
+      "ABOUT_US": "À propos de nous",
+      "HOME_PAGE": "Page d'accueil",
+      "OUR_WIDGETS": "Nos formations",
+      "CONTACT": "Contact"
+    },
+    "LOGIN": {
+      "USERNAME": "Nom d'utilisateur",
+      "PASSWORD": "Mot de passe",
+      "REMEMBER_ME": "Se souvenir de moi",
+      "LOG_IN": "Se connecter",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?"
+    }
+  },
+  "CONTACT": {
+    "HEADER": "Nous sommes toujours à la recherche de nouveaux clients...",
+    "FORM": {
+      "FULL_NAME": "Nom complet",
+      "EMAIL": "Email",
+      "PHONE": "Numéro de téléphone",
+      "SUBJECT": "Objet",
+      "MESSAGE": "Message",
+      "SEND_MESSAGE": "Envoyer le message"
+    },
+    "OFFICE": {
+      "TITLE": "Bureau",
+      "DESCRIPTION": "Veuillez nous rendre visite pour plus d'informations.",
+      "ADDRESS": "3ème étage, immeuble Panorama..."
+    },
+    "EMAIL": {
+      "TITLE": "Email",
+      "DESCRIPTION": "Veuillez nous écrire directement."
+    },
+    "OPENING_HOURS": {
+      "TITLE": "Heures d'ouverture",
+      "DESCRIPTION": "Découvrez nos horaires d'ouverture.",
+      "MON_FRI": "Lun - Ven",
+      "TIME": "9h - 18h"
+    }
+  },
+  "FOOTER": {
+    "LOGO": {
+      "DESCRIPTION": "L'innovation digitale pour la finance de marché."
+    },
+    "NEWSLETTER": {
+      "TITLE": "Mailing-list",
+      "DESCRIPTION": "Restez informé des derniers formations",
+      "EMAIL_PLACEHOLDER": "Votre email",
+      "SUBSCRIBE_BUTTON": "M'abonner"
+    },
+    "SOCIAL": {
+      "TITLE": "Suivez-nous",
+      "LINKEDIN": "LinkedIn",
+      "FACEBOOK": "Facebook"
+    },
+    "LINKS": {
+      "TITLE": "Accès rapide",
+      "CONTACT_US": "Contactez-nous",
+      "OFFICIAL_WEBSITE": "Nos formations"
+    },
+    "COPYRIGHT": "2025 NH consulting. Tous droits réservés.",
+    "LEGAL": {
+      "PRIVACY": "Confidentialité",
+      "TERMS": "Conditions",
+      "COOKIES": "Cookies"
+    }
+  }
+}

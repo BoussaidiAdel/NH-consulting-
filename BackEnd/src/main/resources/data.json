@@ -1,0 +1,11 @@
+{
+  "id" : "1",
+  "title": "Formation Cloud Computing AWS",
+  "description": "Formation sur les services Cloud de AWS.",
+  "prix": 400.0,
+  "image": "https://example.com/aws-cloud.jpg",
+  "duree": 60,
+  "nomFormateur": "Sarah Green",
+  "etat": "Présentiel",
+  "niveau": "Avancé"
+}

@@ -1,0 +1,23 @@
+<!-- map.component.html -->
+<div class="map-wrapper">
+  <div class="map-header">
+    <h2 class="map-title">Interactive Location Map</h2>
+    <div class="map-controls">
+      <button class="map-control-btn" (click)="zoomIn()" title="Zoom In">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button class="map-control-btn" (click)="zoomOut()" title="Zoom Out">
+        <i class="fas fa-minus"></i>
+      </button>
+      <button class="map-control-btn" (click)="resetView()" title="Reset View">
+        <i class="fas fa-crosshairs"></i>
+      </button>
+    </div>
+  </div>
+  <div class="map-container">
+    <div #mapDiv class="map-div"></div>
+    <div class="map-attribution">
+      <span>© OpenStreetMap contributors</span>
+    </div>
+  </div>
+</div>
