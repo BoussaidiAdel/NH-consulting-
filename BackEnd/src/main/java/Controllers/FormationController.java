@@ -19,8 +19,8 @@
 
         // Endpoint to get all formations
         @GetMapping
-        public List<Formation> getAllFormations() {
-            return formationService.getAllFormations();
+        public List<Formation> getAllFormations(String sortBy) {
+            return formationService.getAllFormations(sortBy);
         }
 
         // Endpoint to get formation by ID

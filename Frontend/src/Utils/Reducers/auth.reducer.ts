@@ -5,7 +5,7 @@ import { AuthState } from '../app.state';
 export const initialAuthState: AuthState = {
   isLoggedIn: true,
   user: null,
-  role: 'admin',
+  role: 'ADMIN',
 };
 
 export const authReducer = createReducer(

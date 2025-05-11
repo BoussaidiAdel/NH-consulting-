@@ -4,6 +4,7 @@ import { Formation } from '../../Models/Formation';
 import { FormationService } from '../../Services/formation.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-slide-container',
@@ -20,11 +21,17 @@ export class SlideContainerComponent implements AfterViewInit {
   errorMessage: string = '';
   loading: boolean = true;
 
-  constructor(private formationService: FormationService) {}
+  constructor(
+    private formationService: FormationService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngAfterViewInit(): void {
     this.loadFormations();
-    this.setupWheelScrolling();
+    // Wait for the view to be fully initialized
+    setTimeout(() => {
+      this.setupWheelScrolling();
+    }, 0);
   }
 
   loadFormations() {
@@ -69,6 +76,10 @@ export class SlideContainerComponent implements AfterViewInit {
 
   private scrollToItem(item: Formation): void {
     setTimeout(() => {
+      if (!this.carouselContainer?.nativeElement || !this.carouselWrapper?.nativeElement) {
+        return;
+      }
+
       const container = this.carouselContainer.nativeElement;
       const wrapper = this.carouselWrapper.nativeElement;
 
@@ -91,6 +102,11 @@ export class SlideContainerComponent implements AfterViewInit {
   }
 
   private setupWheelScrolling(): void {
+    if (!this.carouselContainer?.nativeElement) {
+      console.warn('Carousel container not found');
+      return;
+    }
+
     const container = this.carouselContainer.nativeElement;
 
     container.addEventListener('wheel', (e: WheelEvent) => {
@@ -107,41 +123,41 @@ export class SlideContainerComponent implements AfterViewInit {
     });
   }
 
-
   private updateActiveOnScroll(): void {
+    if (!this.carouselContainer?.nativeElement || !this.carouselWrapper?.nativeElement) {
+      return;
+    }
+
     const container = this.carouselContainer.nativeElement;
     const wrapper = this.carouselWrapper.nativeElement;
 
-    if (!wrapper) return;
-
     const containerCenter = container.scrollLeft + (container.clientWidth / 2);
-    const items = Array.from(wrapper.querySelectorAll('.item'));
+    const items = Array.from(wrapper.querySelectorAll('.item')) as HTMLElement[];
 
-    let closestItem: Element | null = null;
+    let closestItem: HTMLElement | null = null;
     let smallestDistance = Infinity;
 
-    items.forEach((item) => {
-      const element = item as HTMLElement;
-      const itemLeft = element.offsetLeft;
-      const itemWidth = element.offsetWidth;
+    for (const item of items) {
+      const itemLeft = item.offsetLeft;
+      const itemWidth = item.offsetWidth;
       const itemCenter = itemLeft + (itemWidth / 2);
       const distance = Math.abs(containerCenter - itemCenter);
 
       if (distance < smallestDistance) {
         smallestDistance = distance;
-        closestItem = element;
+        closestItem = item;
       }
-    });
+    }
 
-    if (closestItem) {
-      // @ts-ignore
+    if (closestItem !== null) {
       const id = closestItem.getAttribute('data-id');
-      const shouldUpdate = !this.formations.find(f => f.id === id)?.active;
-
-      if (shouldUpdate) {
-        this.formations.forEach(formation => {
-          formation.active = formation.id === id;
-        });
+      if (id) {
+        const shouldUpdate = !this.formations.find(f => f.id === id)?.active;
+        if (shouldUpdate) {
+          this.formations.forEach(formation => {
+            formation.active = formation.id === id;
+          });
+        }
       }
     }
   }
@@ -160,6 +176,32 @@ export class SlideContainerComponent implements AfterViewInit {
 
     const prevIndex = (activeIndex - 1 + this.formations.length) % this.formations.length;
     this.toggleActive(this.formations[prevIndex]);
+  }
+
+  register(formation: Formation): void {
+    // Here you would typically open a registration dialog or navigate to a registration page
+    // For now, we'll just show a snackbar message
+    this.snackBar.open(
+      `Inscription à la formation "${formation.title}" en cours...`,
+      'Fermer',
+      {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      }
+    );
+
+    // You can implement the actual registration logic here
+    // For example:
+    // this.formationService.registerForFormation(formation.id).subscribe({
+    //   next: () => {
+    //     this.snackBar.open('Inscription réussie!', 'Fermer', { duration: 3000 });
+    //   },
+    //   error: (error) => {
+    //     this.snackBar.open('Erreur lors de l\'inscription', 'Fermer', { duration: 3000 });
+    //     console.error('Registration error:', error);
+    //   }
+    // });
   }
 
   @HostListener('window:keydown', ['$event'])

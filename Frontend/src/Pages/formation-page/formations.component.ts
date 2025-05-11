@@ -1,233 +1,326 @@
-  import { Component, OnInit } from '@angular/core';
-  import { CommonModule } from '@angular/common';
-  import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-  import { Formation } from '../../Models/Formation';
-  import { FormationService } from '../../Services/formation.service';
-  import { AuthService } from '../../Services/auth.service';
-  import { Store } from '@ngrx/store';
-  import { AppState } from '../../Utils/app.state';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Formation } from '../../Models/Formation';
+import { FormationService } from '../../Services/formation.service';
+import { AuthService } from '../../Services/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../Utils/app.state';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
-  @Component({
-    selector: 'app-formations',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './formations.component.html',
-    styleUrls: ['./formations.component.scss']
-  })
-  export class FormationsComponent implements OnInit {
-    formations: Formation[] = [];
-    selectedFormation: Formation | null = null;
-    errorMessage: string = '';
+@Component({
+  selector: 'app-formations',
+  standalone: false,
+  templateUrl: './formations.component.html',
+  styleUrls: ['./formations.component.css']
+})
+export class FormationsComponent implements OnInit {
+  formations: Formation[] = [];
+  selectedFormation: Formation | null = null;
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
-    // Admin functionality properties
-    isLoggedIn: boolean = false;
-    userRole: string | null = null;
+  // Admin functionality properties
+  isLoggedIn: boolean = false;
+  userRole: string | null = null;
 
-    // Form management
-    formationForm!: FormGroup;
-    showFormationForm: boolean = false;
-    editMode: boolean = false;
+  // Form management
+  formationForm!: FormGroup;
+  showFormationForm: boolean = false;
+  editMode: boolean = false;
 
-    // Delete confirmation
-    showDeleteConfirmation: boolean = false;
-    formationToDelete: Formation | null = null;
+  // Delete confirmation
+  showDeleteConfirmation: boolean = false;
+  formationToDelete: Formation | null = null;
 
-    constructor(
-      private formationService: FormationService,
-      private authService: AuthService,
-      private store: Store<AppState>,
-      private fb: FormBuilder
-    ) {}
+  // Search and filter
+  searchTerm: string = '';
+  selectedNiveau: string = '';
+  selectedEtat: string = '';
+  sortBy: string = '';
 
-    ngOnInit(): void {
-      // Load formations
-      this.loadFormations();
+  constructor(
+    private formationService: FormationService,
+    private authService: AuthService,
+    private store: Store<AppState>,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {}
 
-      // Subscribe to auth state
-      this.store.select(state => state.auth).subscribe(authState => {
-        this.isLoggedIn = authState.isLoggedIn;
-        this.userRole = authState.role;
-      });
+  ngOnInit(): void {
+    this.loadFormations();
+    this.subscribeToAuthState();
+    this.initFormationForm();
+  }
 
-      // Initialize form
-      this.initFormationForm();
-    }
+  private subscribeToAuthState(): void {
+    this.store.select(state => state.auth).subscribe(authState => {
+      this.isLoggedIn = authState.isLoggedIn;
+      this.userRole = authState.role;
+    });
+  }
 
-    // Initialize the form
-    initFormationForm(): void {
-      this.formationForm = this.fb.group({
-        id: [null],
-        title: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-        prix: [0, [Validators.required, Validators.min(0)]],
-        imageUrl: ['', [Validators.required]],
-        duree: [0, [Validators.required, Validators.min(1)]],
-        nomFormateur: ['', [Validators.required]],
-        etat: ['En ligne', [Validators.required]],
-        niveau: ['Débutant', [Validators.required]],
-        active: [true]
-      });
-    }
+  initFormationForm(): void {
+    this.formationForm = this.fb.group({
+      id: [null],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+      prix: [0, [Validators.required, Validators.min(0)]],
+      image: ['', [Validators.required]],
+      duree: [0, [Validators.required, Validators.min(1)]],
+      nomFormateur: ['', [Validators.required]],
+      etat: ['En ligne', [Validators.required]],
+      niveau: ['Débutant', [Validators.required]],
+      active: [true],
+      dateDebut: ['', [Validators.required]],
+      dateFin: ['', [Validators.required]],
+      placesDisponibles: [0, [Validators.required, Validators.min(0)]],
+      prerequis: ['', [Validators.required]],
+      programme: ['', [Validators.required]]
+    });
+  }
 
-    // Load formations from service
-    loadFormations(): void {
-      this.formationService.getAllFormations().subscribe({
+  loadFormations(): void {
+    this.isLoading = true;
+    this.formationService.getAllFormations(this.sortBy).subscribe({
+      next: (data) => {
+        this.formations = data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage = `Error fetching formations: ${error.message || 'Unknown error'}`;
+        this.showError(this.errorMessage);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  searchFormations(): void {
+    if (this.searchTerm.trim()) {
+      this.formationService.searchFormations(this.searchTerm).subscribe({
         next: (data) => {
           this.formations = data;
         },
         error: (error) => {
-          this.errorMessage = error.message;
-          console.error('Error fetching formations:', error);
+          this.showError('Error searching formations');
         }
+      });
+    } else {
+      this.loadFormations();
+    }
+  }
+
+  filterByNiveau(): void {
+    if (this.selectedNiveau) {
+      this.formationService.getFormationsByNiveau(this.selectedNiveau).subscribe({
+        next: (data) => {
+          this.formations = data;
+        },
+        error: (error) => {
+          this.showError('Error filtering formations by level');
+        }
+      });
+    } else {
+      this.loadFormations();
+    }
+  }
+
+  filterByEtat(): void {
+    if (this.selectedEtat) {
+      this.formationService.getFormationsByEtat(this.selectedEtat).subscribe({
+        next: (data) => {
+          this.formations = data;
+        },
+        error: (error) => {
+          this.showError('Error filtering formations by mode');
+        }
+      });
+    } else {
+      this.loadFormations();
+    }
+  }
+
+  private showError(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: ['error-snackbar']
+    });
+  }
+
+  private showSuccess(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  // Open formation details modal
+  openDetails(formation: Formation): void {
+    this.selectedFormation = formation;
+  }
+
+  // Close formation details modal
+  closeDetails(): void {
+    this.selectedFormation = null;
+  }
+
+  // Register for a formation
+  register(formation: Formation): void {
+    // Implement registration logic
+    console.log('Registering for formation:', formation);
+
+    // If user is not logged in, redirect to login
+    if (!this.isLoggedIn) {
+      // Navigate to login page or open login modal
+      console.log('User needs to login first');
+      // this.router.navigate(['/login']);
+    } else {
+      // Process registration
+      console.log('Processing registration for logged in user');
+    }
+  }
+
+  // ADMIN FUNCTIONALITY
+
+  // Open the formation form (add or edit)
+  openFormationForm(formation?: Formation): void {
+    if (formation) {
+      // Edit existing formation
+      this.editMode = true;
+      this.formationForm.patchValue(formation);
+    } else {
+      // Add new formation
+      this.editMode = false;
+      this.formationForm.reset({
+        etat: 'En ligne',
+        niveau: 'Débutant',
+        active: true,
+        prix: 0,
+        duree: 0,
+        placesDisponibles: 0
       });
     }
 
-    // Open formation details modal
-    openDetails(formation: Formation): void {
-      this.selectedFormation = formation;
-    }
+    this.showFormationForm = true;
+  }
 
-    // Close formation details modal
-    closeDetails(): void {
-      this.selectedFormation = null;
-    }
+  // Close the formation form
+  closeFormationForm(): void {
+    this.showFormationForm = false;
+    this.formationForm.reset();
+  }
 
-    // Register for a formation
-    register(formation: Formation): void {
-      // Implement registration logic
-      console.log('Registering for formation:', formation);
+  // Save formation (add or update)
+  saveFormation(): void {
+    if (this.formationForm.invalid) return;
 
-      // If user is not logged in, redirect to login
-      if (!this.isLoggedIn) {
-        // Navigate to login page or open login modal
-        console.log('User needs to login first');
-        // this.router.navigate(['/login']);
-      } else {
-        // Process registration
-        console.log('Processing registration for logged in user');
-      }
-    }
+    const formData = this.formationForm.value;
 
-    // ADMIN FUNCTIONALITY
-
-    // Open the formation form (add or edit)
-    openFormationForm(formation?: Formation): void {
-      if (formation) {
-        // Edit existing formation
-        this.editMode = true;
-        this.formationForm.patchValue(formation);
-      } else {
-        // Add new formation
-        this.editMode = false;
-        this.formationForm.reset({
-          etat: 'En ligne',
-          niveau: 'Débutant',
-          active: true,
-          prix: 0,
-          duree: 0
-        });
-      }
-
-      this.showFormationForm = true;
-    }
-
-    // Close the formation form
-    closeFormationForm(): void {
-      this.showFormationForm = false;
-      this.formationForm.reset();
-    }
-
-    // Save formation (add or update)
-    saveFormation(): void {
-      if (this.formationForm.invalid) return;
-
-      const formData = this.formationForm.value;
-
-      if (this.editMode) {
-        // Update existing formation
-        this.formationService.updateFormation(formData).subscribe({
-          next: (updatedFormation) => {
-            // Update the formation in the local array
-            const index = this.formations.findIndex(f => f.id === updatedFormation.id);
-            if (index !== -1) {
-              this.formations[index] = updatedFormation;
-            }
-
-            // Close form and show notification
-            this.closeFormationForm();
-            this.closeDetails(); // Close details if open
-            console.log('Formation updated successfully');
-          },
-          error: (error) => {
-            console.error('Error updating formation:', error);
-            this.errorMessage = 'Failed to update formation';
-          }
-        });
-      } else {
-        // Add new formation
-        this.formationService.addFormation(formData).subscribe({
-          next: (newFormation) => {
-            // Add to the local array
-            this.formations.push(newFormation);
-
-            // Close form and show notification
-            this.closeFormationForm();
-            console.log('Formation added successfully');
-          },
-          error: (error) => {
-            console.error('Error adding formation:', error);
-            this.errorMessage = 'Failed to add formation';
-          }
-        });
-      }
-    }
-
-    // Edit formation
-    editFormation(formation: Formation, event?: Event): void {
-      if (event) {
-        event.stopPropagation(); // Prevent opening details modal
-      }
-
-      this.openFormationForm(formation);
-    }
-
-    // Initiate delete formation process
-    deleteFormation(formation: Formation, event?: Event): void {
-      if (event) {
-        event.stopPropagation(); // Prevent opening details modal
-      }
-
-      this.formationToDelete = formation;
-      this.showDeleteConfirmation = true;
-    }
-
-    // Cancel delete operation
-    cancelDelete(): void {
-      this.formationToDelete = null;
-      this.showDeleteConfirmation = false;
-    }
-
-    // Confirm and perform delete
-    confirmDelete(): void {
-      if (!this.formationToDelete) return;
-
-      this.formationService.deleteFormation(this.formationToDelete.id.toString()).subscribe({
-        next: () => {
-          // Remove from local array
-          this.formations = this.formations.filter(f => f.id !== this.formationToDelete?.id);
-
-          // Close confirmation and details if open
-          this.cancelDelete();
-          if (this.selectedFormation?.id === this.formationToDelete?.id) {
-            this.closeDetails();
+    if (this.editMode) {
+      // Update existing formation
+      this.formationService.updateFormation(formData).subscribe({
+        next: (updatedFormation) => {
+          // Update the formation in the local array
+          const index = this.formations.findIndex(f => f.id === updatedFormation.id);
+          if (index !== -1) {
+            this.formations[index] = updatedFormation;
           }
 
-          console.log('Formation deleted successfully');
+          // Close form and show notification
+          this.closeFormationForm();
+          this.closeDetails(); // Close details if open
+          this.showSuccess('Formation updated successfully');
         },
         error: (error) => {
-          console.error('Error deleting formation:', error);
-          this.errorMessage = 'Failed to delete formation';
+          console.error('Error updating formation:', error);
+          this.errorMessage = `Failed to update formation: ${error.message || 'Unknown error'}`;
+          this.showError(this.errorMessage);
+        }
+      });
+    } else {
+      // Add new formation
+      this.formationService.addFormation(formData).subscribe({
+        next: (newFormation) => {
+          // Add to the local array
+          this.formations.push(newFormation);
+
+          // Close form and show notification
+          this.closeFormationForm();
+          this.showSuccess('Formation added successfully');
+        },
+        error: (error) => {
+          console.error('Error adding formation:', error);
+          this.errorMessage = `Failed to add formation: ${error.message || 'Unknown error'}`;
+          this.showError(this.errorMessage);
         }
       });
     }
   }
+
+  // Edit formation
+  editFormation(formation: Formation, event?: Event): void {
+    if (event) {
+      event.stopPropagation(); // Prevent opening details modal
+    }
+
+    this.openFormationForm(formation);
+  }
+
+  // Initiate delete formation process
+  deleteFormation(formation: Formation, event?: Event): void {
+    if (event) {
+      event.stopPropagation(); // Prevent opening details modal
+    }
+
+    this.formationToDelete = formation;
+    this.showDeleteConfirmation = true;
+  }
+
+  // Cancel delete operation
+  cancelDelete(): void {
+    this.formationToDelete = null;
+    this.showDeleteConfirmation = false;
+  }
+
+  // Confirm and perform delete
+  confirmDelete(): void {
+    if (!this.formationToDelete) return;
+
+    this.formationService.deleteFormation(this.formationToDelete.id.toString()).subscribe({
+      next: () => {
+        // Remove from local array
+        this.formations = this.formations.filter(f => f.id !== this.formationToDelete?.id);
+
+        // Close confirmation and details if open
+        this.cancelDelete();
+        if (this.selectedFormation?.id === this.formationToDelete?.id) {
+          this.closeDetails();
+        }
+
+        this.showSuccess('Formation deleted successfully');
+      },
+      error: (error) => {
+        console.error('Error deleting formation:', error);
+        this.errorMessage = `Failed to delete formation: ${error.message || 'Unknown error'}`;
+        this.showError(this.errorMessage);
+      }
+    });
+  }
+}

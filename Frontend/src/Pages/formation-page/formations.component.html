@@ -1,75 +1,152 @@
 <!-- formations.component.html -->
 <div class="formations-container">
-  <!-- Admin Controls Panel -->
-  <div *ngIf="isLoggedIn && userRole === 'admin'" class="admin-controls">
-    <button class="admin-btn add-btn" (click)="openFormationForm()">
-      <i class="fas fa-plus-circle"></i> Ajouter une Formation
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <div class="search-box">
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher une formation</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (keyup.enter)="searchFormations()" placeholder="Titre, description...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-box">
+      <mat-form-field appearance="outline">
+        <mat-label>Niveau</mat-label>
+        <mat-select [(ngModel)]="selectedNiveau" (selectionChange)="filterByNiveau()">
+          <mat-option value="">Tous les niveaux</mat-option>
+          <mat-option value="Débutant">Débutant</mat-option>
+          <mat-option value="Intermédiaire">Intermédiaire</mat-option>
+          <mat-option value="Avancé">Avancé</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-box">
+      <mat-form-field appearance="outline">
+        <mat-label>Mode</mat-label>
+        <mat-select [(ngModel)]="selectedEtat" (selectionChange)="filterByEtat()">
+          <mat-option value="">Tous les modes</mat-option>
+          <mat-option value="En ligne">En ligne</mat-option>
+          <mat-option value="Présentiel">Présentiel</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-box">
+      <mat-form-field appearance="outline">
+        <mat-label>Trier par</mat-label>
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="loadFormations()">
+          <mat-option value="">Par défaut</mat-option>
+          <mat-option value="price_asc">Prix croissant</mat-option>
+          <mat-option value="price_desc">Prix décroissant</mat-option>
+          <mat-option value="duration_asc">Durée croissante</mat-option>
+          <mat-option value="duration_desc">Durée décroissante</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Admin Controls -->
+  <div class="admin-controls" *ngIf="isLoggedIn && userRole === 'ADMIN'">
+    <button class="admin-btn" (click)="openFormationForm()">
+      <mat-icon>add</mat-icon>
+      Ajouter une formation
     </button>
   </div>
 
-  <div
-    *ngFor="let formation of formations"
-    class="formation-card"
-    (click)="openDetails(formation)"
-  >
-    <!-- Admin Actions on Card -->
-    <div *ngIf="isLoggedIn && userRole === 'admin'" class="admin-card-actions">
-      <button
-        class="admin-card-btn edit-btn"
-        (click)="editFormation(formation, $event)"
-      >
-        <i class="fas fa-edit"></i>
-      </button>
-      <button
-        class="admin-card-btn delete-btn"
-        (click)="deleteFormation(formation, $event)"
-      >
-        <i class="fas fa-trash-alt"></i>
-      </button>
-    </div>
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loader"></div>
+  </div>
 
-    <div
-      class="card-image"
-      [style.backgroundImage]="'url(' + formation.imageUrl + ')'"
-    ></div>
-    <div class="card-content">
-      <h3>{{ formation.title }}</h3>
-      <p class="description">{{ formation.description }}</p>
-      <div class="price-tag">
-        {{ formation.prix | currency : "EUR" : "symbol" : "1.2-2" }}
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Formations Grid -->
+  <div class="formations-grid" *ngIf="!isLoading && formations.length > 0">
+    <div class="formation-card" *ngFor="let formation of formations">
+      <div class="formation-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
+        <span class="status-badge" [ngClass]="formation?.etat?.toLowerCase() || ''">
+          {{ formation?.etat }}
+        </span>
+      </div>
+
+      <div class="formation-content">
+        <h3 class="formation-title">{{ formation.title }}</h3>
+        <p class="formation-description">{{ formation.description }}</p>
+
+        <div class="formation-meta">
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ formation.duree }} semaines</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>school</mat-icon>
+            <span>{{ formation.niveau }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>person</mat-icon>
+            <span>{{ formation.nomFormateur }}</span>
+          </div>
+        </div>
+
+        <div class="formation-price">
+          <span class="original-price" *ngIf="formation.prix > 0">{{ formation.prix * 1.2 | currency:'EUR' }}</span>
+          <span>{{ formation.prix | currency:'EUR' }}</span>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" (click)="openDetails(formation)">
+            <mat-icon>info</mat-icon>
+            Détails
+          </button>
+          <button class="btn btn-secondary" (click)="register(formation)">
+            <mat-icon>how_to_reg</mat-icon>
+            S'inscrire
+          </button>
+        </div>
+
+        <!-- Admin Actions -->
+        <div class="admin-card-actions" *ngIf="isLoggedIn && userRole === 'ADMIN'">
+          <button class="admin-card-btn edit-btn" (click)="editFormation(formation, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button class="admin-card-btn delete-btn" (click)="deleteFormation(formation, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && formations.length === 0 && !errorMessage">
+    <mat-icon>school</mat-icon>
+    <h3>Aucune formation disponible</h3>
+    <p>Il n'y a actuellement aucune formation disponible dans notre catalogue.</p>
+    <button class="btn btn-primary" (click)="loadFormations()">
+      <mat-icon>refresh</mat-icon>
+      Rafraîchir
+    </button>
+  </div>
 </div>
 
-<!-- Details Modal -->
-<div *ngIf="selectedFormation" class="modal-overlay" (click)="closeDetails()">
+<!-- Formation Details Modal -->
+<div class="modal-overlay" *ngIf="selectedFormation" (click)="closeDetails()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <button class="close-btn" (click)="closeDetails()">&times;</button>
+    <button class="close-btn" (click)="closeDetails()">
+      <mat-icon>close</mat-icon>
+    </button>
 
-    <!-- Admin Actions in Detail View -->
-    <div
-      *ngIf="isLoggedIn && userRole === 'admin'"
-      class="admin-detail-actions"
-    >
-      <button
-        class="admin-detail-btn"
-        (click)="editFormation(selectedFormation, $event)"
-      >
-        <i class="fas fa-edit"></i> Modifier
-      </button>
-      <button
-        class="admin-detail-btn delete-detail-btn"
-        (click)="deleteFormation(selectedFormation, $event)"
-      >
-        <i class="fas fa-trash-alt"></i> Supprimer
-      </button>
+    <div class="modal-header">
+      <div class="modal-image" [style.backgroundImage]="'url(' + (selectedFormation.imageUrl || selectedFormation.image) + ')'">
+        <span class="modal-tag">{{ selectedFormation.etat }}</span>
+      </div>
     </div>
-
-    <div
-      class="modal-image"
-      [style.backgroundImage]="'url(' + selectedFormation.imageUrl + ')'"
-    ></div>
 
     <div class="modal-body">
       <h2>{{ selectedFormation.title }}</h2>
@@ -77,224 +154,146 @@
 
       <div class="details-grid">
         <div class="detail-item">
-          <i class="fas fa-clock"></i>
-          <span>Durée: {{ selectedFormation.duree }} heures</span>
+          <mat-icon>schedule</mat-icon>
+          <span><strong>Durée:</strong> {{ selectedFormation.duree }} semaines</span>
         </div>
         <div class="detail-item">
-          <i class="fas fa-user-tie"></i>
-          <span>Formateur: {{ selectedFormation.nomFormateur }}</span>
+          <mat-icon>school</mat-icon>
+          <span><strong>Niveau:</strong> {{ selectedFormation.niveau }}</span>
         </div>
         <div class="detail-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>Mode: {{ selectedFormation.etat }}</span>
+          <mat-icon>person</mat-icon>
+          <span><strong>Formateur:</strong> {{ selectedFormation.nomFormateur }}</span>
         </div>
         <div class="detail-item">
-          <i class="fas fa-layer-group"></i>
-          <span>Niveau: {{ selectedFormation.niveau }}</span>
+          <mat-icon>event</mat-icon>
+          <span><strong>Date de début:</strong> {{ selectedFormation.dateDebut | date }}</span>
+        </div>
+        <div class="detail-item">
+          <mat-icon>event</mat-icon>
+          <span><strong>Date de fin:</strong> {{ selectedFormation.dateFin | date }}</span>
+        </div>
+        <div class="detail-item">
+          <mat-icon>group</mat-icon>
+          <span><strong>Places disponibles:</strong> {{ selectedFormation.placesDisponibles }}</span>
         </div>
       </div>
 
       <div class="price-section">
-        <span class="modal-price">{{
-          selectedFormation.prix | currency : "EUR" : "symbol" : "1.2-2"
-        }}</span>
-        <button class="register-btn" (click)="register(selectedFormation)">
-          S'inscrire
+        <div class="price-info">
+          <div class="modal-price">
+            <span class="original-price" *ngIf="selectedFormation.prix > 0">
+              {{ selectedFormation.prix * 1.2 | currency:'EUR' }}
+            </span>
+            {{ selectedFormation.prix | currency:'EUR' }}
+          </div>
+          <span class="price-note">Prix TTC</span>
+        </div>
+        <button class="btn btn-primary" (click)="register(selectedFormation)">
+          <mat-icon>how_to_reg</mat-icon>
+          S'inscrire maintenant
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Formation Form Modal (Add/Edit) -->
-<div
-  *ngIf="showFormationForm"
-  class="modal-overlay"
-  (click)="closeFormationForm()"
->
-  <div class="modal-content form-modal" (click)="$event.stopPropagation()">
-    <button class="close-btn" (click)="closeFormationForm()">&times;</button>
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showDeleteConfirmation">
+  <div class="confirmation-modal" (click)="$event.stopPropagation()">
+    <h3>Confirmer la suppression</h3>
+    <p>Êtes-vous sûr de vouloir supprimer cette formation ? Cette action est irréversible.</p>
+    <div class="confirmation-actions">
+      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+      <button class="btn btn-primary" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
 
-    <div class="modal-body">
-      <h2>
-        {{ editMode ? "Modifier la Formation" : "Ajouter une Formation" }}
-      </h2>
-
-      <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
+<!-- Formation Form Modal -->
+<div class="modal-overlay" *ngIf="showFormationForm">
+  <div class="form-dialog" (click)="$event.stopPropagation()">
+    <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
+      <div class="form-dialog-content">
+        <h2>{{ editMode ? 'Modifier' : 'Ajouter' }} une formation</h2>
+        
         <div class="form-group">
           <label for="title">Titre</label>
-          <input
-            type="text"
-            id="title"
-            formControlName="title"
-            class="form-control"
-          />
-          <div
-            *ngIf="
-              formationForm.get('title')?.invalid &&
-              formationForm.get('title')?.touched
-            "
-            class="error-message"
-          >
-            Le titre est obligatoire
-          </div>
+          <input type="text" id="title" formControlName="title" class="form-control">
         </div>
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea
-            id="description"
-            formControlName="description"
-            class="form-control"
-            rows="4"
-          ></textarea>
-          <div
-            *ngIf="
-              formationForm.get('description')?.invalid &&
-              formationForm.get('description')?.touched
-            "
-            class="error-message"
-          >
-            La description est obligatoire
-          </div>
+          <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group half">
             <label for="prix">Prix (€)</label>
-            <input
-              type="number"
-              id="prix"
-              formControlName="prix"
-              class="form-control"
-            />
-            <div
-              *ngIf="
-                formationForm.get('prix')?.invalid &&
-                formationForm.get('prix')?.touched
-              "
-              class="error-message"
-            >
-              Le prix est obligatoire
-            </div>
+            <input type="number" id="prix" formControlName="prix" class="form-control">
           </div>
-
           <div class="form-group half">
-            <label for="duree">Durée (heures)</label>
-            <input
-              type="number"
-              id="duree"
-              formControlName="duree"
-              class="form-control"
-            />
-            <div
-              *ngIf="
-                formationForm.get('duree')?.invalid &&
-                formationForm.get('duree')?.touched
-              "
-              class="error-message"
-            >
-              La durée est obligatoire
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="imageUrl">URL de l'image</label>
-          <input
-            type="text"
-            id="imageUrl"
-            formControlName="imageUrl"
-            class="form-control"
-          />
-          <div
-            *ngIf="
-              formationForm.get('imageUrl')?.invalid &&
-              formationForm.get('imageUrl')?.touched
-            "
-            class="error-message"
-          >
-            L'URL de l'image est obligatoire
+            <label for="duree">Durée (semaines)</label>
+            <input type="number" id="duree" formControlName="duree" class="form-control">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group half">
             <label for="niveau">Niveau</label>
-            <select id="niveau" formControlName="niveau" class="form-control">
-              <option value="Débutant">Débutant</option>
-              <option value="Intermediaire">Intermédiaire</option>
-              <option value="Avancé">Avancé</option>
-            </select>
+            <mat-select id="niveau" formControlName="niveau" class="form-control">
+              <mat-option value="Débutant">Débutant</mat-option>
+              <mat-option value="Intermédiaire">Intermédiaire</mat-option>
+              <mat-option value="Avancé">Avancé</mat-option>
+            </mat-select>
           </div>
-
           <div class="form-group half">
             <label for="etat">Mode</label>
-            <select id="etat" formControlName="etat" class="form-control">
-              <option value="En ligne">En ligne</option>
-              <option value="Présentiel">Présentiel</option>
-              <option value="Hybride">Hybride</option>
-            </select>
+            <mat-select id="etat" formControlName="etat" class="form-control">
+              <mat-option value="En ligne">En ligne</mat-option>
+              <mat-option value="Présentiel">Présentiel</mat-option>
+            </mat-select>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="nomFormateur">Nom du formateur</label>
-          <input
-            type="text"
-            id="nomFormateur"
-            formControlName="nomFormateur"
-            class="form-control"
-          />
-          <div
-            *ngIf="
-              formationForm.get('nomFormateur')?.invalid &&
-              formationForm.get('nomFormateur')?.touched
-            "
-            class="error-message"
-          >
-            Le nom du formateur est obligatoire
+          <label for="nomFormateur">Formateur</label>
+          <input type="text" id="nomFormateur" formControlName="nomFormateur" class="form-control">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="dateDebut">Date de début</label>
+            <input type="date" id="dateDebut" formControlName="dateDebut" class="form-control">
+          </div>
+          <div class="form-group half">
+            <label for="dateFin">Date de fin</label>
+            <input type="date" id="dateFin" formControlName="dateFin" class="form-control">
           </div>
         </div>
 
-        <div class="form-actions">
-          <button
-            type="button"
-            class="cancel-btn"
-            (click)="closeFormationForm()"
-          >
-            Annuler
-          </button>
-          <button
-            type="submit"
-            class="save-btn"
-            [disabled]="formationForm.invalid"
-          >
-            {{ editMode ? "Sauvegarder" : "Ajouter" }}
-          </button>
+        <div class="form-group">
+          <label for="placesDisponibles">Places disponibles</label>
+          <input type="number" id="placesDisponibles" formControlName="placesDisponibles" class="form-control">
         </div>
-      </form>
-    </div>
-  </div>
-</div>
 
-<!-- Confirmation Dialog for Delete -->
-<div
-  *ngIf="showDeleteConfirmation"
-  class="modal-overlay"
-  (click)="cancelDelete()"
->
-  <div class="confirmation-modal" (click)="$event.stopPropagation()">
-    <h3>Confirmer la suppression</h3>
-    <p>Êtes-vous sûr de vouloir supprimer cette formation ?</p>
-    <p>
-      <strong>{{ formationToDelete?.title }}</strong>
-    </p>
-    <div class="confirmation-actions">
-      <button class="cancel-btn" (click)="cancelDelete()">Annuler</button>
-      <button class="delete-confirm-btn" (click)="confirmDelete()">
-        Supprimer
-      </button>
-    </div>
+        <div class="form-group">
+          <label for="prerequis">Prérequis</label>
+          <textarea id="prerequis" formControlName="prerequis" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="programme">Programme</label>
+          <textarea id="programme" formControlName="programme" class="form-control" rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="form-dialog-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeFormationForm()">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="formationForm.invalid">
+          {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>
