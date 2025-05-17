@@ -49,20 +49,7 @@ export class FormationService {
       catchError(this.handleError<void>('deleteFormation'))
     );
   }
-
-  getFormationsByEtat(etat: string): Observable<Formation[]> {
-    const url = `${this.apiUrl}/etat/${etat}`;
-    return this.http.get<Formation[]>(url).pipe(
-      catchError(this.handleError<Formation[]>('getFormationsByEtat', []))
-    );
-  }
-
-  getFormationsByNiveau(niveau: string): Observable<Formation[]> {
-    const url = `${this.apiUrl}/niveau/${niveau}`;
-    return this.http.get<Formation[]>(url).pipe(
-      catchError(this.handleError<Formation[]>('getFormationsByNiveau', []))
-    );
-  }
+  
 
   searchFormations(keyword: string): Observable<Formation[]> {
     const url = `${this.apiUrl}/search?keyword=${encodeURIComponent(keyword)}`;
@@ -71,19 +58,7 @@ export class FormationService {
     );
   }
 
-  getFormationsByPriceRange(minPrice: number, maxPrice: number): Observable<Formation[]> {
-    const url = `${this.apiUrl}/price-range?minPrice=${minPrice}&maxPrice=${maxPrice}`;
-    return this.http.get<Formation[]>(url).pipe(
-      catchError(this.handleError<Formation[]>('getFormationsByPriceRange', []))
-    );
-  }
 
-  getFormationsByDurationRange(minDuration: number, maxDuration: number): Observable<Formation[]> {
-    const url = `${this.apiUrl}/duration-range?minDuration=${minDuration}&maxDuration=${maxDuration}`;
-    return this.http.get<Formation[]>(url).pipe(
-      catchError(this.handleError<Formation[]>('getFormationsByDurationRange', []))
-    );
-  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: HttpErrorResponse): Observable<T> => {

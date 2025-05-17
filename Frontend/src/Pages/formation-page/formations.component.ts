@@ -18,6 +18,7 @@ import { selectUserRole } from '../../Utils/Selectors/auth.selectors';
 })
 export class FormationsComponent implements OnInit {
   formations: Formation[] = [];
+  filteredFormations: Formation[] = [];
   selectedFormation: Formation | null = null;
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -85,9 +86,10 @@ export class FormationsComponent implements OnInit {
 
   loadFormations(): void {
     this.isLoading = true;
-    this.formationService.getAllFormations(this.sortBy).subscribe({
+    this.formationService.getAllFormations().subscribe({
       next: (data) => {
         this.formations = data;
+        this.applyFilters(); // Apply initial filters
         this.isLoading = false;
       },
       error: (error) => {
@@ -98,49 +100,63 @@ export class FormationsComponent implements OnInit {
     });
   }
 
-  searchFormations(): void {
+  applyFilters(): void {
+    let filtered = [...this.formations];
+
+    // Apply search filter
     if (this.searchTerm.trim()) {
-      this.formationService.searchFormations(this.searchTerm).subscribe({
-        next: (data) => {
-          this.formations = data;
-        },
-        error: (error) => {
-          this.showError('Error searching formations');
-        }
-      });
-    } else {
-      this.loadFormations();
+      const searchLower = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(formation => 
+        formation.title.toLowerCase().includes(searchLower) ||
+        formation.description.toLowerCase().includes(searchLower)
+      );
     }
+
+    // Apply niveau filter
+    if (this.selectedNiveau) {
+      filtered = filtered.filter(formation => 
+        formation.niveau === this.selectedNiveau
+      );
+    }
+
+    // Apply etat filter
+    if (this.selectedEtat) {
+      filtered = filtered.filter(formation => 
+        formation.etat === this.selectedEtat
+      );
+    }
+
+    // Apply sorting
+    if (this.sortBy) {
+      switch (this.sortBy) {
+        case 'price_asc':
+          filtered.sort((a, b) => a.prix - b.prix);
+          break;
+        case 'price_desc':
+          filtered.sort((a, b) => b.prix - a.prix);
+          break;
+        case 'duration_asc':
+          filtered.sort((a, b) => a.duree - b.duree);
+          break;
+        case 'duration_desc':
+          filtered.sort((a, b) => b.duree - a.duree);
+          break;
+      }
+    }
+
+    this.filteredFormations = filtered;
+  }
+
+  searchFormations(): void {
+    this.applyFilters();
   }
 
   filterByNiveau(): void {
-    if (this.selectedNiveau) {
-      this.formationService.getFormationsByNiveau(this.selectedNiveau).subscribe({
-        next: (data) => {
-          this.formations = data;
-        },
-        error: (error) => {
-          this.showError('Error filtering formations by level');
-        }
-      });
-    } else {
-      this.loadFormations();
-    }
+    this.applyFilters();
   }
 
   filterByEtat(): void {
-    if (this.selectedEtat) {
-      this.formationService.getFormationsByEtat(this.selectedEtat).subscribe({
-        next: (data) => {
-          this.formations = data;
-        },
-        error: (error) => {
-          this.showError('Error filtering formations by mode');
-        }
-      });
-    } else {
-      this.loadFormations();
-    }
+    this.applyFilters();
   }
 
   private showError(message: string): void {

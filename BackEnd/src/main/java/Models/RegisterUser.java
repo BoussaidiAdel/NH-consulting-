@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.lang.annotation.*;
+import java.util.regex.Pattern;
 
 @Data
 @AllArgsConstructor
@@ -23,33 +24,31 @@ public class RegisterUser {
     private String lastName;
 
     @NotEmpty(message = "Email is required")
-    @MinotoreEmail(message = "Email must end with @minotore.com")
+    @ValidEmail(message = "Please provide a valid email address")
     private String email;
 
     @NotEmpty(message = "Password is required")
     private String password;
-
 }
-
-
 
 @Documented
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = MinotoreEmailValidator.class)
-@interface MinotoreEmail {
+@Constraint(validatedBy = EmailValidator.class)
+@interface ValidEmail {
     String message() default "Invalid email";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
-
 }
 
-class MinotoreEmailValidator implements ConstraintValidator<MinotoreEmail, String> {
+class EmailValidator implements ConstraintValidator<ValidEmail, String> {
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        return email != null && email.toLowerCase().endsWith("@minotore.com");
+        if (email == null) {
+            return false;
+        }
+        return Pattern.compile(EMAIL_PATTERN).matcher(email).matches();
     }
 }

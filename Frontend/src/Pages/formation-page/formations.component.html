@@ -5,7 +5,7 @@
     <div class="search-box">
       <mat-form-field appearance="outline">
         <mat-label>Rechercher une formation</mat-label>
-        <input matInput [(ngModel)]="searchTerm" (keyup.enter)="searchFormations()" placeholder="Titre, description...">
+        <input matInput [(ngModel)]="searchTerm" (keyup)="searchFormations()" placeholder="Titre, description...">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
@@ -36,7 +36,7 @@
     <div class="filter-box">
       <mat-form-field appearance="outline">
         <mat-label>Trier par</mat-label>
-        <mat-select [(ngModel)]="sortBy" (selectionChange)="loadFormations()">
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="applyFilters()">
           <mat-option value="">Par défaut</mat-option>
           <mat-option value="price_asc">Prix croissant</mat-option>
           <mat-option value="price_desc">Prix décroissant</mat-option>
@@ -67,8 +67,8 @@
   </div>
 
   <!-- Formations Grid -->
-  <div class="formations-grid" *ngIf="!isLoading && formations.length > 0">
-    <div class="formation-card" *ngFor="let formation of formations">
+  <div class="formations-grid" *ngIf="!isLoading && filteredFormations.length > 0">
+    <div class="formation-card" *ngFor="let formation of filteredFormations">
       <div class="formation-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
         <span class="status-badge" [ngClass]="formation?.etat?.toLowerCase() || ''">
           {{ formation?.etat }}
@@ -124,7 +124,7 @@
   </div>
 
   <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && formations.length === 0 && !errorMessage">
+  <div class="empty-state" *ngIf="!isLoading && filteredFormations.length === 0 && !errorMessage">
     <mat-icon>school</mat-icon>
     <h3>Aucune formation disponible</h3>
     <p>Il n'y a actuellement aucune formation disponible dans notre catalogue.</p>
