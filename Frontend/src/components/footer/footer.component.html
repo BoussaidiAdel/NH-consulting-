@@ -7,84 +7,46 @@
         <h3>NH Consulting</h3>
       </div>
       <p class="footer-description">
-        Nous accompagnons votre développement professionnel avec des formations de qualité, 
-        animées par des experts passionnés et expérimentés.
+        {{ 'footer.company_description' | translate }}
       </p>
       <div class="social-links">
-        <a href="#" class="social-link" aria-label="Facebook">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" class="social-link" aria-label="Twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#" class="social-link" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="#" class="social-link" aria-label="Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
+        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 
     <!-- Quick Links Section -->
     <div class="footer-section">
-      <h4 class="footer-title">Liens Rapides</h4>
+      <h4 class="footer-title">{{ 'footer.quick_links' | translate }}</h4>
       <div class="footer-links">
-        <a routerLink="/formations" class="footer-link">
-          <i class="fas fa-chevron-right"></i>
-          Nos Formations
-        </a>
-        <a routerLink="/about" class="footer-link">
-          <i class="fas fa-chevron-right"></i>
-          À Propos
-        </a>
-        <a routerLink="/contact" class="footer-link">
-          <i class="fas fa-chevron-right"></i>
-          Contact
-        </a>
-        <a routerLink="/blog" class="footer-link">
-          <i class="fas fa-chevron-right"></i>
-          Blog
-        </a>
-        <a routerLink="/faq" class="footer-link">
-          <i class="fas fa-chevron-right"></i>
-          FAQ
-        </a>
+        <a routerLink="/formations" class="footer-link"><i class="fas fa-chevron-right"></i> {{ 'footer.links.formations' | translate }}</a>
+        <a routerLink="/about" class="footer-link"><i class="fas fa-chevron-right"></i> {{ 'footer.links.about' | translate }}</a>
+        <a routerLink="/contact" class="footer-link"><i class="fas fa-chevron-right"></i> {{ 'footer.links.contact' | translate }}</a>
+        <a routerLink="/blog" class="footer-link"><i class="fas fa-chevron-right"></i> {{ 'footer.links.blog' | translate }}</a>
+        <a routerLink="/faq" class="footer-link"><i class="fas fa-chevron-right"></i> {{ 'footer.links.faq' | translate }}</a>
       </div>
     </div>
 
     <!-- Contact Info Section -->
     <div class="footer-section">
-      <h4 class="footer-title">Contact</h4>
+      <h4 class="footer-title">{{ 'footer.contact' | translate }}</h4>
       <div class="contact-info">
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>123 Rue de la Formation, 75000 Paris, France</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-phone"></i>
-          <span>+33 1 23 45 67 89</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-envelope"></i>
-          <span>contact&#64;nhconsulting.fr</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-clock"></i>
-          <span>Lun - Ven: 9h00 - 18h00</span>
-        </div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>{{ 'footer.address' | translate }}</span></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><span>{{ 'footer.phone' | translate }}</span></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><span>{{ 'footer.email' | translate }}</span></div>
+        <div class="contact-item"><i class="fas fa-clock"></i><span>{{ 'footer.hours' | translate }}</span></div>
       </div>
     </div>
 
     <!-- Newsletter Section -->
     <div class="footer-section">
-      <h4 class="footer-title">Newsletter</h4>
-      <p class="footer-description">
-        Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres spéciales.
-      </p>
+      <h4 class="footer-title">{{ 'footer.newsletter_title' | translate }}</h4>
+      <p class="footer-description">{{ 'footer.newsletter_description' | translate }}</p>
       <form class="newsletter-form">
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Votre email" required>
+          <input type="email" class="form-control" [placeholder]="'footer.newsletter_placeholder' | translate" required>
           <button type="submit" class="btn btn-primary">
             <i class="fas fa-paper-plane"></i>
           </button>
@@ -97,15 +59,13 @@
   <div class="footer-bottom">
     <div class="footer-bottom-content">
       <div class="copyright">
-        © {{currentYear}} NH Consulting. Tous droits réservés.
+        © {{ currentYear }} NH Consulting. {{ 'footer.rights' | translate }}
       </div>
       <div class="footer-bottom-links">
-        <a href="#" class="footer-bottom-link">Mentions Légales</a>
-        <a href="#" class="footer-bottom-link">Politique de Confidentialité</a>
-        <a href="#" class="footer-bottom-link">Conditions d'Utilisation</a>
+        <a href="#" class="footer-bottom-link">{{ 'footer.legal' | translate }}</a>
+        <a href="#" class="footer-bottom-link">{{ 'footer.privacy' | translate }}</a>
+        <a href="#" class="footer-bottom-link">{{ 'footer.terms' | translate }}</a>
       </div>
     </div>
   </div>
 </footer>
-
-

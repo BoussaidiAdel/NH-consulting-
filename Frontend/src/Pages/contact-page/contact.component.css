@@ -1,3 +1,4 @@
+/* Base Styles - Mobile First */
 .container {
   width: 100%;
   padding-right: 15px;
@@ -29,8 +30,7 @@
   font-weight: 300;
   line-height: 1.2;
 }
-.text-danger,
-.text-primary { color: #ff0000; }
+.text-danger, .text-primary { color: #007bff; }
 .fw-bold { font-weight: 700; }
 
 /* Form Elements */
@@ -42,29 +42,27 @@
   border-radius: 0.25rem;
 }
 
-/* Input Group Fixes */
+/* Fix for input groups - make them display as flex row always */
 .input-group {
   display: flex;
-  flex-direction: row; /* Always row, not column */
+  flex-direction: row; /* Always keep horizontal layout */
   width: 100%;
-  align-items: stretch;
-  margin-bottom: 1rem;
 }
 
 .input-group-text {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.75rem;
-  background-color: #f8f9fa;
+  padding: 0.375rem 0.75rem;
   border: 1px solid #ced4da;
   border-right: none;
   border-radius: 0.25rem 0 0 0.25rem;
-  min-width: 40px; /* Ensure icon area has enough space */
+  background-color: #f8f9fa;
 }
 
+/* Make the input take the remaining width */
 .input-group .form-control {
   flex: 1;
+  border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -74,7 +72,7 @@
   display: block;
   width: 100%;
   padding: 0.75rem;
-  background-color: #ff0000;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 0.25rem;
@@ -86,12 +84,29 @@
   max-width: 100%;
 }
 
+/* SVG Icons - proper sizing and alignment */
+.bi-geo, .bi-envelope-at, .bi-alarm, .bi-envelope, .bi-telephone {
+  fill: #007bff;
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+/* Link Styles */
+.link-secondary {
+  color: #888;
+  transition: color 0.2s;
+}
+.link-secondary:hover {
+  color: #007bff;
+}
+
 /* Mobile-specific adjustments */
 @media (max-width: 575.98px) {
   .display-5 {
     font-size: 1.75rem;
   }
-
+  
   .p-5, .py-md-5 {
     padding: 2rem;
   }
@@ -102,7 +117,7 @@
   .py-md-5 { padding: 3rem 0; }
   .col-md-6 { flex: 0 0 50%; max-width: 50%; }
   .col-md-10 { flex: 0 0 83.333%; max-width: 83.333%; }
-
+  
   .btn {
     display: inline-block;
     width: auto;
@@ -114,7 +129,7 @@
   .py-xl-8 { padding: 6rem 0; }
   .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
   .col-lg-8 { flex: 0 0 66.667%; max-width: 66.667%; }
-
+  
   .display-5 {
     font-size: 2.5rem;
   }
@@ -135,61 +150,21 @@
 .align-items-center { align-items: center; }
 .justify-content-center { justify-content: center; }
 
-/* SVG Icons */
-.bi-geo, .bi-envelope-at, .bi-alarm, .bi-envelope, .bi-telephone {
-  fill: #ff0000;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
+/* Form Validation Colors */
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* Link Styles */
-.link-secondary {
-  color: #888;
-  transition: color 0.2s;
+/* Button hover effect */
+.btn:hover {
+  background-color: #007bff;
+  cursor: pointer;
 }
 
-.link-secondary:hover {
-  color: #ff0000;
-}
-
-/* Border Styles */
-.border {
-  border: 1px solid #dee2e6;
-}
-
-.border-dark-subtle {
-  border-color: #adb5bd;
-}
-
-/* Width Utilities */
-.w-50 {
-  width: 50%;
-}
-
-.w-75 {
-  width: 75%;
-}
-
-/* Margin Utilities */
-.me-5 {
-  margin-right: 3rem;
-}
-
-/* Text Color Utilities */
-.text-secondary {
-  color: #6c757d;
-}
-
-/* Address Reset */
-address {
-  margin-bottom: 1rem;
-  font-style: normal;
-  line-height: inherit;
-}
-
-/* Form Label */
-.form-label {
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+/* Fix for input group on mobile devices */
+@media (max-width: 767.98px) {
+  .input-group .form-control {
+    width: calc(100% - 40px);
+  }
 }

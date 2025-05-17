@@ -8,8 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-slide-container',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './slide-container.component.html',
   styleUrls: ['./slide-container.component.css']
 })

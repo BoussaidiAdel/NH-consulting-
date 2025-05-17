@@ -1,9 +1,14 @@
 import { createSelector } from '@ngrx/store';
-import { AppState } from '../app.state';
+import { AppState, AuthState } from '../app.state';
 
 export const selectAuthState = (state: AppState) => state.auth;
 
-export const selectRole = createSelector(
+export const selectUserRole = createSelector(
   selectAuthState,
-  (auth) => auth.role
+  (authState: AuthState) => authState.role
+);
+
+export const selectUserID = createSelector(
+  selectAuthState,
+  (authState: AuthState) => authState.userId
 );

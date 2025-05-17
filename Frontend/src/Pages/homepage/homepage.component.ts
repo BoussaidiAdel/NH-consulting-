@@ -5,9 +5,8 @@ import { SlideContainerComponent } from '../../components/slide-container/slide-
 
 @Component({
   selector: 'app-homepage',
-  imports: [CommonModule, SlideContainerComponent],
   templateUrl: './homepage.component.html',
-  standalone: true,
+  standalone: false,
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent implements OnInit {

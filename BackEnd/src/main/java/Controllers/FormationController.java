@@ -11,7 +11,8 @@
     import java.util.Optional;
 
     @RestController
-    @RequestMapping("/api/formations")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping("/api/public/formations")
     public class FormationController {
 
         @Autowired

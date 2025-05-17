@@ -97,8 +97,8 @@ a:hover {
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
   color: #495057;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -125,10 +125,11 @@ a:hover {
   margin: 0 -20px;
   scrollbar-width: thin;
   scrollbar-color: #007bff #e9ecef;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-container::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
 
 .carousel-container::-webkit-scrollbar-track {
@@ -144,38 +145,44 @@ a:hover {
 .carousel-wrapper {
   display: flex;
   padding: 20px 20px 40px;
+  gap: 30px;
 }
 
 .item {
-  margin: 0 15px 20px;
-  width: 300px;
-  height: 420px;
+  margin: 0;
+  width: 320px;
+  height: 450px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
   transition: all 0.4s ease-out;
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e9ecef;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
+  background-color: #fff;
 }
 
-.item::before {
-  content: "";
+.formation-image {
+  width: 100%;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.item-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom, 
-            rgba(0,0,0,0) 0%,
-            rgba(0,0,0,0.8) 70%, 
-            rgba(0,0,0,0.95) 100%);
+            rgba(0,0,0,0.2) 0%,
+            rgba(0,0,0,0.5) 100%);
   z-index: 1;
 }
 
@@ -186,9 +193,13 @@ a:hover {
   box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
 }
 
+.item.active .formation-image {
+  height: 250px;
+}
+
 .item-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 6px 12px;
   background-color: #007bff;
   color: white;
   border-radius: 4px;
@@ -199,6 +210,7 @@ a:hover {
   top: 15px;
   right: 15px;
   z-index: 2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .item-badge.en {
@@ -215,22 +227,22 @@ a:hover {
 
 .item-desc {
   padding: 24px;
-  color: #fff;
+  color: #333;
   position: relative;
   z-index: 2;
-  transform: translateY(calc(100% - 80px));
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.item.active .item-desc {
-  transform: translateY(0);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
 }
 
 .item h4 {
   font-size: 22px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   position: relative;
   padding-bottom: 12px;
+  color: #212529;
+  line-height: 1.3;
 }
 
 .item h4::after {
@@ -245,38 +257,38 @@ a:hover {
 
 .item p {
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 15px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease 0.2s;
+  color: #495057;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .item.active p {
-  opacity: 1;
-  transform: translateY(0);
+  -webkit-line-clamp: 4;
 }
 
 .item-meta {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: auto;
   margin-bottom: 15px;
   font-size: 14px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease 0.3s;
-}
-
-.item.active .item-meta {
-  opacity: 1;
-  transform: translateY(0);
+  color: #6c757d;
 }
 
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+}
+
+.meta-item i {
+  color: #007bff;
+  font-size: 16px;
 }
 
 .enroll-btn {
@@ -284,8 +296,8 @@ a:hover {
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 12px 20px;
+  font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   display: flex;
@@ -294,18 +306,17 @@ a:hover {
   gap: 8px;
   margin-top: 15px;
   transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease 0.4s;
+  width: 100%;
 }
 
 .enroll-btn:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.3);
 }
 
-.item.active .enroll-btn {
-  opacity: 1;
-  transform: translateY(0);
+.enroll-btn i {
+  font-size: 16px;
 }
 
 /* Loading State */
@@ -318,6 +329,20 @@ a:hover {
   width: 100%;
   color: #6c757d;
   gap: 20px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e9ecef;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Error State */
@@ -373,12 +398,12 @@ a:hover {
   }
   
   .item {
-    width: 280px;
-    height: 380px;
+    width: 300px;
+    height: 430px;
   }
   
   .item.active {
-    width: 400px;
+    width: 420px;
   }
 }
 
@@ -388,12 +413,20 @@ a:hover {
   }
   
   .item {
-    width: 260px;
-    height: 360px;
+    width: 280px;
+    height: 400px;
   }
   
   .item.active {
-    width: 320px;
+    width: 340px;
+  }
+  
+  .formation-image {
+    height: 180px;
+  }
+  
+  .item.active .formation-image {
+    height: 200px;
   }
   
   .line-title {
@@ -408,22 +441,34 @@ a:hover {
   }
   
   .item {
-    width: 220px;
-    height: 320px;
+    width: 240px;
+    height: 380px;
   }
   
   .item.active {
-    width: 260px;
+    width: 280px;
+  }
+  
+  .formation-image {
+    height: 160px;
+  }
+  
+  .item.active .formation-image {
+    height: 180px;
   }
   
   .item-badge {
     font-size: 10px;
-    padding: 3px 8px;
+    padding: 4px 8px;
   }
   
   .item-meta {
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
+  }
+  
+  .carousel-wrapper {
+    gap: 20px;
   }
 }

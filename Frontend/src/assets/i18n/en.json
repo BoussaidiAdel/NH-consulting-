@@ -12,65 +12,155 @@
       "OUR_WIDGETS": "Our Courses",
       "CONTACT": "Contact"
     },
-    "LOGIN": {
-      "USERNAME": "Username",
+  "LOGIN": {
+      "EMAIL": "Email Address",
       "PASSWORD": "Password",
       "REMEMBER_ME": "Remember Me",
       "LOG_IN": "Log In",
-      "FORGOT_PASSWORD": "Forgot password?"
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SEND_RESET_LINK": "Send Reset Link",
+      "BACK_TO_LOGIN": "Back to Login",
+      "RESET_PASSWORD": "Reset Password"},
+      "LOGOUT": {
+      "USER_MANAGE" : "User Management",
+      "LOG_OUT": "Log Out"
     }
+    
   },
-  "CONTACT": {
-    "HEADER": "We're always on the lookout to work with new clients...",
+"CONTACT": {
+    "HEADER": "Contact Us",
     "FORM": {
       "FULL_NAME": "Full Name",
-      "EMAIL": "Email",
+      "EMAIL": "Email Address",
       "PHONE": "Phone Number",
       "SUBJECT": "Subject",
-      "MESSAGE": "Message",
-      "SEND_MESSAGE": "Send Message"
+      "MESSAGE": "Your Message",
+      "SEND_MESSAGE": "Send Message",
+      "SENDING": "Sending...",
+      "SUCCESS_MESSAGE": "Your message has been sent successfully. We'll get back to you soon!"
+    },
+    "ERRORS": {
+      "REQUIRED": "This field is required",
+      "EMAIL": "Please enter a valid email address",
+      "MIN_LENGTH": "This field must be at least {{minLength}} characters long",
+      "PATTERN": "Please enter a valid format",
+      "GENERIC": "An error occurred. Please try again later."
     },
     "OFFICE": {
-      "TITLE": "Office",
-      "DESCRIPTION": "Please visit us for further information.",
-      "ADDRESS": "3rd floor, Panorama building..."
+      "TITLE": "Our Office",
+      "DESCRIPTION": "Visit us at our headquarters",
+      "ADDRESS": "3rd floor, Panorama Building , Les Berges du Lac, Avenue de la Bourse, located in Jardin du Lac, 1053 Tunis"
     },
     "EMAIL": {
-      "TITLE": "Email",
-      "DESCRIPTION": "Please write to us directly."
+      "TITLE": "Email Us",
+      "DESCRIPTION": "We'll respond within 24 hours"
     },
     "OPENING_HOURS": {
       "TITLE": "Opening Hours",
-      "DESCRIPTION": "Explore our business opening hours.",
-      "MON_FRI": "Mon - Fri",
-      "TIME": "9am - 6pm"
+      "DESCRIPTION": "We're available during business hours",
+      "MON_FRI": "Monday - Friday",
+      "TIME": "9:00 AM - 5:00 PM"
     }
   },
-  "FOOTER": {
-    "LOGO": {
-      "DESCRIPTION": "Digital innovation for market finance."
+  "footer": {
+    "company_description": "We support your professional development with high-quality training delivered by passionate and experienced experts.",
+    "quick_links": "Quick Links",
+    "links": {
+      "formations": "Our Trainings",
+      "about": "About Us",
+      "contact": "Contact",
+      "blog": "Blog",
+      "faq": "FAQ"
     },
-    "NEWSLETTER": {
-      "TITLE": "Mailing-list",
-      "DESCRIPTION": "Stay up to date with our latest courses",
-      "EMAIL_PLACEHOLDER": "Your email",
-      "SUBSCRIBE_BUTTON": "Subscribe"
+    "contact": "Contact",
+    "address": "123 Training Street, 75000 Paris, France",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@nhconsulting.fr",
+    "hours": "Mon - Fri: 9:00 AM - 6:00 PM",
+    "newsletter_title": "Newsletter",
+    "newsletter_description": "Subscribe to our newsletter to receive our latest news and special offers.",
+    "newsletter_placeholder": "Your email",
+    "rights": "All rights reserved.",
+    "legal": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  
+  "HOME": {
+    "WELCOME": {
+      "TITLE": "Welcome",
+      "P1": "At",
+      "P2": ", we specialize in supporting investors and professionals living abroad, especially in France.",
+      "P3": "We offer comprehensive support to help you succeed with your projects in Tunisia, from company creation to remote management.",
+      "P4": "With our local and international expertise, we are here to support you and provide all the necessary solutions for your success."
     },
-    "SOCIAL": {
-      "TITLE": "Follow Us",
-      "LINKEDIN": "LinkedIn",
-      "FACEBOOK": "Facebook"
+    "TEAM": {
+      "TITLE": "Our Team",
+      "DESCRIPTION": "is a dedicated, dynamic, and attentive team that ensures your training runs smoothly and provides a professional path adapted to your ambitions!"
     },
-    "LINKS": {
-      "TITLE": "Quick Access",
-      "CONTACT_US": "Contact us",
-      "OFFICIAL_WEBSITE": "Our Courses"
+    "WHY": {
+      "TITLE": "Why Choose NH Consulting?",
+      "INTRO": "offers you:",
+      "ITEM1": "Local and international expertise to ensure your success.",
+      "ITEM2": "A network of reliable partners and professionals at your service.",
+      "ITEM3": "Personalized support for each project."
     },
-    "COPYRIGHT": "2025  NH consulting. All rights reserved.",
-    "LEGAL": {
-      "PRIVACY": "Privacy",
-      "TERMS": "Terms",
-      "COOKIES": "Cookies"
+    "SERVICES": {
+      "TITLE": "Our Services",
+      "INTRO": "offers you:",
+      "ITEM1": "Company creation in Tunisia",
+      "ITEM2": "Remote administrative management",
+      "ITEM3": "Investment consulting",
+      "ITEM4": "Legal and tax assistance"
+    },
+    "VALUES": {
+      "TITLE": "Our Values",
+      "INTRO": "we are committed to",
+      "ITEM1": {
+        "LABEL": "Transparency",
+        "DESC": "Clear and honest relationships"
+      },
+      "ITEM2": {
+        "LABEL": "Excellence",
+        "DESC": "High-quality service"
+      },
+      "ITEM3": {
+        "LABEL": "Commitment",
+        "DESC": "Personalized follow-up for every client"
+      },
+      "ITEM4": {
+        "LABEL": "Innovation",
+        "DESC": "Solutions tailored to new challenges"
+      }
     }
+  },
+  "formations": {
+    "searchPlaceholder": "Search for a training",
+    "placeholder": "Title, description...",
+    "level": "Level",
+    "allLevels": "All levels",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "mode": "Mode",
+    "allModes": "All modes",
+    "online": "Online",
+    "onsite": "Onsite",
+    "sortBy": "Sort by",
+    "defaultSort": "Default",
+    "priceAsc": "Price (low to high)",
+    "priceDesc": "Price (high to low)",
+    "durationAsc": "Duration (shortest)",
+    "durationDesc": "Duration (longest)",
+    "addFormation": "Add training",
+    "weeks": "weeks",
+    "details": "Details",
+    "register": "Register",
+    "noFormationTitle": "No training available",
+    "noFormationDescription": "There are currently no trainings in our catalog.",
+    "refresh": "Refresh"
   }
 }
+
+
+

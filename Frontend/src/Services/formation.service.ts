@@ -2,14 +2,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Formation } from '../Models/Formation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationService {
-  private apiUrl = 'http://localhost:9000/api/formations';
+  private apiUrl = 'http://localhost:8080/api/public/formations';
 
   constructor(private http: HttpClient) {}
 

@@ -48,7 +48,7 @@
   </div>
 
   <!-- Admin Controls -->
-  <div class="admin-controls" *ngIf="isLoggedIn && userRole === 'ADMIN'">
+  <div class="admin-controls" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
     <button class="admin-btn" (click)="openFormationForm()">
       <mat-icon>add</mat-icon>
       Ajouter une formation
@@ -111,7 +111,7 @@
         </div>
 
         <!-- Admin Actions -->
-        <div class="admin-card-actions" *ngIf="isLoggedIn && userRole === 'ADMIN'">
+        <div class="admin-card-actions" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
           <button class="admin-card-btn edit-btn" (click)="editFormation(formation, $event)">
             <mat-icon>edit</mat-icon>
           </button>

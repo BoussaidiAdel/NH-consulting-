@@ -12,65 +12,151 @@
       "OUR_WIDGETS": "Nos formations",
       "CONTACT": "Contact"
     },
-    "LOGIN": {
-      "USERNAME": "Nom d'utilisateur",
+      "LOGIN": {
+      "EMAIL": "Adresse e-mail",
       "PASSWORD": "Mot de passe",
       "REMEMBER_ME": "Se souvenir de moi",
       "LOG_IN": "Se connecter",
-      "FORGOT_PASSWORD": "Mot de passe oublié ?"
+      "SEND_RESET_LINK": "Envoyer le lien de réinitialisation",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?"  ,
+      "BACK_TO_LOGIN": "Retour à la connexion",
+      "RESET_PASSWORD": "Réinitialiser le mot de passe"},
+    "LOGOUT": {
+       "USER_MANAGE" : "Gestion des utilisateurs",
+      "LOG_OUT": "Se déconnecter"
     }
   },
   "CONTACT": {
-    "HEADER": "Nous sommes toujours à la recherche de nouveaux clients...",
-    "FORM": {
-      "FULL_NAME": "Nom complet",
-      "EMAIL": "Email",
-      "PHONE": "Numéro de téléphone",
-      "SUBJECT": "Objet",
-      "MESSAGE": "Message",
-      "SEND_MESSAGE": "Envoyer le message"
+  "HEADER": "Contactez-nous",
+  "FORM": {
+    "FULL_NAME": "Nom complet",
+    "EMAIL": "Adresse e-mail",
+    "PHONE": "Numéro de téléphone",
+    "SUBJECT": "Sujet",
+    "MESSAGE": "Votre message",
+    "SEND_MESSAGE": "Envoyer le message",
+    "SENDING": "Envoi en cours...",
+    "SUCCESS_MESSAGE": "Votre message a été envoyé avec succès. Nous vous répondrons bientôt !"
+  },
+  "ERRORS": {
+    "REQUIRED": "Ce champ est requis",
+    "EMAIL": "Veuillez saisir une adresse e-mail valide",
+    "MIN_LENGTH": "Ce champ doit contenir au moins {{minLength}} caractères",
+    "PATTERN": "Veuillez saisir un format valide",
+    "GENERIC": "Une erreur s'est produite. Veuillez réessayer plus tard."
+  },
+  "OFFICE": {
+    "TITLE": "Notre bureau",
+    "DESCRIPTION": "Rendez-nous visite à notre siège",
+    "ADDRESS": "3éme étage ,Immeuble Panorama ,les Berges du Lac, Avenue de la Bourse, sis au Jardin du Lac de 1053 Tunis"
+  },
+  "EMAIL": {
+    "TITLE": "Envoyez-nous un e-mail",
+    "DESCRIPTION": "Nous répondrons dans les 24 heures"
+  },
+  "OPENING_HOURS": {
+    "TITLE": "Heures d'ouverture",
+    "DESCRIPTION": "Nous sommes disponibles pendant les heures de bureau",
+    "MON_FRI": "Lundi - Vendredi",
+    "TIME": "9h00 - 17h00"
+  }
+},
+ "footer": {
+    "company_description": "Nous accompagnons votre développement professionnel avec des formations de qualité, animées par des experts passionnés et expérimentés.",
+    "quick_links": "Liens Rapides",
+    "links": {
+      "formations": "Nos Formations",
+      "about": "À Propos",
+      "contact": "Contact",
+      "blog": "Blog",
+      "faq": "FAQ"
     },
-    "OFFICE": {
-      "TITLE": "Bureau",
-      "DESCRIPTION": "Veuillez nous rendre visite pour plus d'informations.",
-      "ADDRESS": "3ème étage, immeuble Panorama..."
+    "contact": "Contact",
+    "address": "123 Rue de la Formation, 75000 Paris, France",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@nhconsulting.fr",
+    "hours": "Lun - Ven: 9h00 - 18h00",
+    "newsletter_title": "Newsletter",
+    "newsletter_description": "Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres spéciales.",
+    "newsletter_placeholder": "Votre email",
+    "rights": "Tous droits réservés.",
+    "legal": "Mentions Légales",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation"
+  }
+  ,
+    "HOME": {
+    "WELCOME": {
+      "TITLE": "Bienvenue",
+      "P1": "Chez",
+      "P2": ", nous sommes spécialisés dans l'accompagnement des investisseurs et des experts vivant à l'étranger, notamment en France.",
+      "P3": "Nous vous offrons un accompagnement complet pour réussir vos projets en Tunisie, depuis la création de votre entreprise jusqu'à sa gestion à distance.",
+      "P4": "Avec notre expertise locale et internationale, nous sommes là pour vous soutenir et vous fournir toutes les solutions nécessaires pour réussir."
     },
-    "EMAIL": {
-      "TITLE": "Email",
-      "DESCRIPTION": "Veuillez nous écrire directement."
+    "TEAM": {
+      "TITLE": "Notre équipe",
+      "DESCRIPTION": "est une équipe à l'écoute, engagée et dynamique, qui veille au bon déroulement de votre formation afin de vous offrir un parcours professionnel réussi et adapté à vos ambitions !"
     },
-    "OPENING_HOURS": {
-      "TITLE": "Heures d'ouverture",
-      "DESCRIPTION": "Découvrez nos horaires d'ouverture.",
-      "MON_FRI": "Lun - Ven",
-      "TIME": "9h - 18h"
+    "WHY": {
+      "TITLE": "Pourquoi choisir NH Consulting ?",
+      "INTRO": "met à votre disposition :",
+      "ITEM1": "Une expertise locale et internationale pour garantir votre succès.",
+      "ITEM2": "Un réseau de partenaires fiables et de professionnels à votre service.",
+      "ITEM3": "Un accompagnement personnalisé pour chaque projet."
+    },
+    "SERVICES": {
+      "TITLE": "Nos services",
+      "INTRO": "vous propose :",
+      "ITEM1": "Création d'entreprise en Tunisie",
+      "ITEM2": "Gestion administrative à distance",
+      "ITEM3": "Conseil en investissement",
+      "ITEM4": "Accompagnement juridique et fiscal"
+    },
+    "VALUES": {
+      "TITLE": "Nos valeurs",
+      "INTRO": "nous nous engageons sur",
+      "ITEM1": {
+        "LABEL": "Transparence",
+        "DESC": "Des relations claires et honnêtes"
+      },
+      "ITEM2": {
+        "LABEL": "Excellence",
+        "DESC": "Un service de qualité supérieure"
+      },
+      "ITEM3": {
+        "LABEL": "Engagement",
+        "DESC": "Un suivi personnalisé de chaque client"
+      },
+      "ITEM4": {
+        "LABEL": "Innovation",
+        "DESC": "Des solutions adaptées aux nouveaux défis"
+      }
     }
   },
-  "FOOTER": {
-    "LOGO": {
-      "DESCRIPTION": "L'innovation digitale pour la finance de marché."
-    },
-    "NEWSLETTER": {
-      "TITLE": "Mailing-list",
-      "DESCRIPTION": "Restez informé des derniers formations",
-      "EMAIL_PLACEHOLDER": "Votre email",
-      "SUBSCRIBE_BUTTON": "M'abonner"
-    },
-    "SOCIAL": {
-      "TITLE": "Suivez-nous",
-      "LINKEDIN": "LinkedIn",
-      "FACEBOOK": "Facebook"
-    },
-    "LINKS": {
-      "TITLE": "Accès rapide",
-      "CONTACT_US": "Contactez-nous",
-      "OFFICIAL_WEBSITE": "Nos formations"
-    },
-    "COPYRIGHT": "2025 NH consulting. Tous droits réservés.",
-    "LEGAL": {
-      "PRIVACY": "Confidentialité",
-      "TERMS": "Conditions",
-      "COOKIES": "Cookies"
-    }
+  "formations": {
+    "searchPlaceholder": "Rechercher une formation",
+    "placeholder": "Titre, description...",
+    "level": "Niveau",
+    "allLevels": "Tous les niveaux",
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé",
+    "mode": "Mode",
+    "allModes": "Tous les modes",
+    "online": "En ligne",
+    "onsite": "Présentiel",
+    "sortBy": "Trier par",
+    "defaultSort": "Par défaut",
+    "priceAsc": "Prix croissant",
+    "priceDesc": "Prix décroissant",
+    "durationAsc": "Durée croissante",
+    "durationDesc": "Durée décroissante",
+    "addFormation": "Ajouter une formation",
+    "weeks": "semaines",
+    "details": "Détails",
+    "register": "S'inscrire",
+    "noFormationTitle": "Aucune formation disponible",
+    "noFormationDescription": "Il n'y a actuellement aucune formation disponible dans notre catalogue.",
+    "refresh": "Rafraîchir"
   }
 }

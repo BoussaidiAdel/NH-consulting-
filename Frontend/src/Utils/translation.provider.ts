@@ -13,5 +13,5 @@ export const translateModuleProvider = TranslateModule.forRoot({
     useFactory: createTranslateLoader,
     deps: [HttpClient]
   },
-  defaultLanguage: 'en'
+  defaultLanguage: 'fr'
 }); 

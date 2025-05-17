@@ -1,25 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Formation } from '../../Models/Formation';
 import { FormationService } from '../../Services/formation.service';
 import { AuthService } from '../../Services/auth.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '../../Utils/app.state';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBar} from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { selectUserRole } from '../../Utils/Selectors/auth.selectors';
+
 
 @Component({
   selector: 'app-formations',
@@ -32,6 +21,7 @@ export class FormationsComponent implements OnInit {
   selectedFormation: Formation | null = null;
   errorMessage: string = '';
   isLoading: boolean = false;
+  userRole$: Observable<string | null>;
 
   // Admin functionality properties
   isLoggedIn: boolean = false;
@@ -53,24 +43,24 @@ export class FormationsComponent implements OnInit {
   sortBy: string = '';
 
   constructor(
+    private store: Store<AppState>,
     private formationService: FormationService,
     private authService: AuthService,
-    private store: Store<AppState>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+      this.userRole$ = this.store.pipe(select(selectUserRole));
+  }
 
   ngOnInit(): void {
+  
     this.loadFormations();
-    this.subscribeToAuthState();
     this.initFormationForm();
   }
 
-  private subscribeToAuthState(): void {
-    this.store.select(state => state.auth).subscribe(authState => {
-      this.isLoggedIn = authState.isLoggedIn;
-      this.userRole = authState.role;
-    });
+
+    isLoggedInAndAdmin(role: string | null): boolean {
+    return role === 'ADMIN';
   }
 
   initFormationForm(): void {

@@ -54,7 +54,7 @@
            [class.active]="formation.active"
            [attr.data-id]="formation.id"
            (click)="toggleActive(formation)">
-        <div class="item-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
+           <div class="formation-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
           <div class="item-overlay"></div>
         </div>
         <div class="item-desc">
@@ -70,21 +70,14 @@
               <span>{{ formation.niveau }}</span>
             </div>
           </div>
-          <button class="enroll-btn" (click)="register(formation); $event.stopPropagation()">
+          <button class="enroll-btn" [routerLink]="['/formation', formation.id]">
             <i class="fas fa-user-plus"></i>
             S'inscrire
           </button>
         </div>
       </div>
     </div>
-    <div class="carousel-controls">
-      <button class="control-btn prev" (click)="prevFormation()">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      <button class="control-btn next" (click)="nextFormation()">
-        <i class="fas fa-chevron-right"></i>
-      </button>
-    </div>
+
   </div>
 
   <div class="loading-container" *ngIf="loading">

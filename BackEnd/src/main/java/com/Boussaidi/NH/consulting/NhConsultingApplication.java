@@ -2,9 +2,12 @@ package com.Boussaidi.NH.consulting;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication(scanBasePackages = {"Controllers","Repositories","Utils","Services","Models"})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@ComponentScan(basePackages = {"Config","Controllers","Repositories","Utils","Services","Models","Exceptions"})
 @EnableMongoRepositories(basePackages = "Repositories")
 public class NhConsultingApplication {
 
