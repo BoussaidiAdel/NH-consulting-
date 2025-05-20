@@ -1,15 +1,25 @@
 <!-- Error Page -->
-<div class="error">
-    <div class="container-floud">
-        <div class="col-xs-12 ground-color text-center">
-            <div class="container-error-404">
-                <div class="clip"><div class="shadow"><span class="digit thirdDigit">{{ thirdDigit }}</span></div></div>
-                <div class="clip"><div class="shadow"><span class="digit secondDigit">{{ secondDigit }}</span></div></div>
-                <div class="clip"><div class="shadow"><span class="digit firstDigit">{{ firstDigit }}</span></div></div>
-                <div class="msg">OH!<span class="triangle"></span></div>
-            </div>
-            <h2 class="h1">Sorry! Page not found</h2>
-        </div>
+<div class="error-page">
+  <div class="error-container">
+    <div class="error-content">
+      <div class="error-code">
+        <span class="digit">{{ firstDigit }}</span>
+        <span class="digit">{{ secondDigit }}</span>
+        <span class="digit">{{ thirdDigit }}</span>
+      </div>
+      <h1 class="error-title">{{ 'ERROR.TITLE' | translate }}</h1>
+      <p class="error-message">{{ 'ERROR.MESSAGE' | translate }}</p>
+      <div class="error-actions">
+        <a routerLink="/" class="btn btn-primary">
+          <i class="fas fa-home"></i>
+          {{ 'ERROR.BACK_HOME' | translate }}
+        </a>
+        <button class="btn btn-secondary" (click)="goBack()">
+          <i class="fas fa-arrow-left"></i>
+          {{ 'ERROR.GO_BACK' | translate }}
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 <!-- Error Page -->

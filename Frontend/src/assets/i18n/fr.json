@@ -18,7 +18,7 @@
       "REMEMBER_ME": "Se souvenir de moi",
       "LOG_IN": "Se connecter",
       "SEND_RESET_LINK": "Envoyer le lien de réinitialisation",
-      "FORGOT_PASSWORD": "Mot de passe oublié ?"  ,
+      "FORGOT_PASSWORD": "Mot de passe oublié ?",
       "BACK_TO_LOGIN": "Retour à la connexion",
       "RESET_PASSWORD": "Réinitialiser le mot de passe"},
     "LOGOUT": {
@@ -86,16 +86,26 @@
   }
   ,
     "HOME": {
+    "HERO": {
+      "TITLE": "Votre Partenaire de Confiance pour la Réussite",
+      "SUBTITLE": "Services de conseil experts pour les investisseurs et professionnels en Tunisie",
+      "CTA": {
+        "PRIMARY": "Commencer",
+        "SECONDARY": "Nos Services"
+      }
+    },
     "WELCOME": {
       "TITLE": "Bienvenue",
       "P1": "Chez",
       "P2": ", nous sommes spécialisés dans l'accompagnement des investisseurs et des experts vivant à l'étranger, notamment en France.",
       "P3": "Nous vous offrons un accompagnement complet pour réussir vos projets en Tunisie, depuis la création de votre entreprise jusqu'à sa gestion à distance.",
-      "P4": "Avec notre expertise locale et internationale, nous sommes là pour vous soutenir et vous fournir toutes les solutions nécessaires pour réussir."
+      "P4": "Avec notre expertise locale et internationale, nous sommes là pour vous soutenir et vous fournir toutes les solutions nécessaires pour réussir.",
+      "CTA": "Contactez-nous"
     },
     "TEAM": {
       "TITLE": "Notre équipe",
-      "DESCRIPTION": "est une équipe à l'écoute, engagée et dynamique, qui veille au bon déroulement de votre formation afin de vous offrir un parcours professionnel réussi et adapté à vos ambitions !"
+      "DESCRIPTION": "est une équipe à l'écoute, engagée et dynamique, qui veille au bon déroulement de votre formation afin de vous offrir un parcours professionnel réussi et adapté à vos ambitions !",
+      "CTA": "Découvrir Notre Équipe"
     },
     "WHY": {
       "TITLE": "Pourquoi choisir NH Consulting ?",
@@ -110,7 +120,8 @@
       "ITEM1": "Création d'entreprise en Tunisie",
       "ITEM2": "Gestion administrative à distance",
       "ITEM3": "Conseil en investissement",
-      "ITEM4": "Accompagnement juridique et fiscal"
+      "ITEM4": "Accompagnement juridique et fiscal",
+      "CTA": "Voir Tous les Services"
     },
     "VALUES": {
       "TITLE": "Nos valeurs",
@@ -131,6 +142,12 @@
         "LABEL": "Innovation",
         "DESC": "Des solutions adaptées aux nouveaux défis"
       }
+    },
+    "STATS": {
+      "CLIENTS": "Clients Satisfaits",
+      "PROJECTS": "Projets Réussis",
+      "EXPERIENCE": "Années d'Expérience",
+      "PARTNERS": "Partenaires de Confiance"
     }
   },
   "formations": {

@@ -36,6 +36,7 @@ import { HomepageComponent } from '../Pages/homepage/homepage.component';
 import { SlideContainerComponent } from '../components/slide-container/slide-container.component';
 import { UserManagementComponent } from '../Pages/user-management/user-management.component';
 import { AuthInterceptor } from '../Utils/auth.interceptor';
+import { ErrorPageComponent } from '../Pages/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AuthInterceptor } from '../Utils/auth.interceptor';
     FormationsComponent,
     HomepageComponent,
     SlideContainerComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

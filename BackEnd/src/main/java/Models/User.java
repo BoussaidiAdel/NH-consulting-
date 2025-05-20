@@ -32,4 +32,5 @@ public class User {
         return this.role != null ? this.role.name() : null;
     }
 
+
 }

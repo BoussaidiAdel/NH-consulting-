@@ -1,12 +1,13 @@
 .m-global-menu {
-    position: relative;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1030;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
 .m-super-header {
@@ -35,11 +36,14 @@
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
+    padding: 0.5rem;
+    border-radius: 4px;
 }
 
 .super-header-search button:hover {
     color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
 }
 
 .super-header-dropdown button {
@@ -50,19 +54,42 @@
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.super-header-dropdown button:hover {
+    background: rgba(0, 123, 255, 0.1);
 }
 
 .super-header-dropdown .dropdown-menu {
     border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .super-header-dropdown .dropdown-item {
-    padding: 0.5rem 1.5rem;
+    padding: 0.75rem 1.5rem;
     color: #495057;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .super-header-dropdown .dropdown-item:hover,
@@ -82,11 +109,17 @@
 
 .navbar-brand {
     padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.02);
 }
 
 .navbar-brand img {
     height: 40px;
     width: auto;
+    object-fit: contain;
 }
 
 .navbar-nav {
@@ -96,14 +129,16 @@
 .nav-link {
     color: #212529 !important;
     font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: color 0.2s;
+    padding: 0.75rem 1rem !important;
+    transition: all 0.2s ease;
     position: relative;
+    border-radius: 4px;
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: #007bff !important;
+    background: rgba(0, 123, 255, 0.1);
 }
 
 .nav-link::after {
@@ -114,13 +149,13 @@
     width: 0;
     height: 2px;
     background: #007bff;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     transform: translateX(-50%);
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
-    width: 100%;
+    width: 80%;
 }
 
 /* Login Dropdown Styles */
@@ -132,10 +167,18 @@
     padding: 1.5rem;
     width: 320px;
     background: white;
+    animation: dropdownFadeIn 0.2s ease;
 }
 
 .login-dropdown-triangle {
-    display: none;
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
 }
 
 .login-box {
@@ -150,18 +193,25 @@
     gap: 1rem;
 }
 
+.form-group {
+    position: relative;
+}
+
 .login-input {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid #e9ecef;
     border-radius: 6px;
     font-size: 0.9rem;
-    transition: border-color 0.2s;
+    transition: all 0.2s ease;
+    background: #f8f9fa;
 }
 
 .login-input:focus {
     border-color: #007bff;
     outline: none;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
 .login-remember {
@@ -176,11 +226,19 @@
     height: 16px;
     border: 1px solid #e9ecef;
     border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-checkbox:checked {
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 .login-remember-text {
     color: #6c757d;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .login-button {
@@ -191,11 +249,18 @@
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    text-align: center;
 }
 
 .login-button:hover {
     background: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.login-button:active {
+    transform: translateY(0);
 }
 
 .login-forgot {
@@ -203,11 +268,33 @@
     text-decoration: none;
     font-size: 0.9rem;
     text-align: center;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
+    padding: 0.5rem;
+    border-radius: 4px;
 }
 
 .login-forgot:hover {
     color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+/* User Info Styles */
+.user-info {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.user-role {
+    color: #495057;
+    font-weight: 500;
+}
+
+.logout-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 /* Mobile Styles */
@@ -222,6 +309,8 @@
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         margin-top: 1rem;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
     }
 
     .nav-link {
@@ -235,6 +324,25 @@
     .login-dropdown {
         width: 100%;
         margin-top: 0.5rem;
+        position: static !important;
+        transform: none !important;
+    }
+
+    .login-dropdown-triangle {
+        display: none;
+    }
+
+    .navbar-nav {
+        gap: 0.5rem;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: left;
     }
 }
 
@@ -242,12 +350,32 @@
 .navbar-toggler {
     border: none;
     padding: 0.5rem;
+    transition: all 0.2s ease;
 }
 
 .navbar-toggler:focus {
     box-shadow: none;
+    outline: none;
 }
 
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+.navbar-toggler:hover {
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Reset Message Styles */
+.reset-message {
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.reset-message.text-success {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.reset-message.text-danger {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
 }

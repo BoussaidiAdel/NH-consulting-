@@ -87,16 +87,26 @@
   },
   
   "HOME": {
+    "HERO": {
+      "TITLE": "Your Trusted Partner in Business Success",
+      "SUBTITLE": "Expert consulting services for investors and professionals in Tunisia",
+      "CTA": {
+        "PRIMARY": "Get Started",
+        "SECONDARY": "Our Services"
+      }
+    },
     "WELCOME": {
       "TITLE": "Welcome",
       "P1": "At",
       "P2": ", we specialize in supporting investors and professionals living abroad, especially in France.",
       "P3": "We offer comprehensive support to help you succeed with your projects in Tunisia, from company creation to remote management.",
-      "P4": "With our local and international expertise, we are here to support you and provide all the necessary solutions for your success."
+      "P4": "With our local and international expertise, we are here to support you and provide all the necessary solutions for your success.",
+      "CTA": "Contact Us"
     },
     "TEAM": {
       "TITLE": "Our Team",
-      "DESCRIPTION": "is a dedicated, dynamic, and attentive team that ensures your training runs smoothly and provides a professional path adapted to your ambitions!"
+      "DESCRIPTION": "is a dedicated, dynamic, and attentive team that ensures your training runs smoothly and provides a professional path adapted to your ambitions!",
+      "CTA": "Meet Our Team"
     },
     "WHY": {
       "TITLE": "Why Choose NH Consulting?",
@@ -111,7 +121,8 @@
       "ITEM1": "Company creation in Tunisia",
       "ITEM2": "Remote administrative management",
       "ITEM3": "Investment consulting",
-      "ITEM4": "Legal and tax assistance"
+      "ITEM4": "Legal and tax assistance",
+      "CTA": "View All Services"
     },
     "VALUES": {
       "TITLE": "Our Values",
@@ -132,6 +143,12 @@
         "LABEL": "Innovation",
         "DESC": "Solutions tailored to new challenges"
       }
+    },
+    "STATS": {
+      "CLIENTS": "Satisfied Clients",
+      "PROJECTS": "Successful Projects",
+      "EXPERIENCE": "Years of Experience",
+      "PARTNERS": "Trusted Partners"
     }
   },
   "formations": {

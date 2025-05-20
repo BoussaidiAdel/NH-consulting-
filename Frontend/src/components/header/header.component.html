@@ -1,154 +1,173 @@
-<header>
-    <div class="m-global-menu">
-        <div class="m-super-header d-lg-block d-none">
-            <div class="m-super-header-wrapper">
-                <div class="m-super-header-content">
-                    <div class="super-header-search">
-                        <button type="button" class="nav-search-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Search
-                        </button>
-                    </div>
-                    <div class="super-header-dropdown">
-                        <button id="dropdownCountries" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-globe"></i>
-                            <span>{{ currentLanguage === 'en' ? 'English' : 'Français' }}</span>
-                            <i class="fa fa-chevron-down"></i>
-                        </button>
-                        <ul aria-labelledby="dropdownCountries" class="dropdown-menu">
-                            <li [class.active]="currentLanguage === 'en'">
-                                <a class="dropdown-item" (click)="changeLanguage('en')">
-                                    <i class="fa fa-flag-usa"></i>
-                                    {{ 'COMMON.LANGUAGE_SELECTOR.ENGLISH' | translate }}
-                                </a>
-                            </li>   
-                            <li [class.active]="currentLanguage === 'fr'">
-                                <a class="dropdown-item" (click)="changeLanguage('fr')">
-                                    <i class="fa fa-flag"></i>
-                                    {{ 'COMMON.LANGUAGE_SELECTOR.FRENCH' | translate }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+<header class="m-global-menu">
+    <!-- Super Header -->
+    <div class="m-super-header d-lg-block d-none">
+        <div class="container">
+            <div class="m-super-header-content">
+                <div class="super-header-search">
+                    <button type="button" class="nav-search-btn" aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Search</span>
+                    </button>
+                </div>
+                <div class="super-header-dropdown">
+                    <button id="dropdownCountries" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Language selector">
+                        <i class="fa fa-globe"></i>
+                        <span>{{ currentLanguage === 'en' ? 'English' : 'Français' }}</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <ul aria-labelledby="dropdownCountries" class="dropdown-menu">
+                        <li [class.active]="currentLanguage === 'en'">
+                            <a class="dropdown-item" (click)="changeLanguage('en')" role="button">
+                                <i class="fa fa-flag-usa"></i>
+                                {{ 'COMMON.LANGUAGE_SELECTOR.ENGLISH' | translate }}
+                            </a>
+                        </li>   
+                        <li [class.active]="currentLanguage === 'fr'">
+                            <a class="dropdown-item" (click)="changeLanguage('fr')" role="button">
+                                <i class="fa fa-flag"></i>
+                                {{ 'COMMON.LANGUAGE_SELECTOR.FRENCH' | translate }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="m-header-wrapper">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a class="navbar-brand" routerLink="/Home">
-                        <img src="../../assets/images/logo.png" alt="NH Consulting"  />
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+    </div>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a routerLink="/Home" routerLinkActive="active" class="nav-link">
-                                    {{ 'HEADER.MENU.HOME_PAGE' | translate }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a routerLink="/formation" routerLinkActive="active" class="nav-link">
-                                    {{ 'HEADER.MENU.OUR_WIDGETS' | translate }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a routerLink="/contact" routerLinkActive="active" class="nav-link">
-                                    {{ 'HEADER.MENU.CONTACT' | translate }}
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end login-dropdown" >
-                                    <div class="login-dropdown-triangle"></div>
-                                        <ng-container *ngIf="!(isLoggedIn(userRole$) | async)">
-                                            <div class="login-box">
-                                                <!-- Login View -->
-                                                <form class="login-form" *ngIf="!isForgotPasswordView">
-                                                    <input
+    <!-- Main Header -->
+    <div class="m-header-wrapper">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" routerLink="/Home" aria-label="NH Consulting Home">
+                    <img src="../../assets/images/logo.png" alt="NH Consulting" width="150" height="40" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a routerLink="/Home" routerLinkActive="active" class="nav-link" 
+                               [attr.aria-current]="isActive('/Home') ? 'page' : null">
+                                {{ 'HEADER.MENU.HOME_PAGE' | translate }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/formation" routerLinkActive="active" class="nav-link"
+                               [attr.aria-current]="isActive('/formation') ? 'page' : null">
+                                {{ 'HEADER.MENU.OUR_WIDGETS' | translate }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/contact" routerLinkActive="active" class="nav-link"
+                               [attr.aria-current]="isActive('/contact') ? 'page' : null">
+                                {{ 'HEADER.MENU.CONTACT' | translate }}
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false" aria-label="User menu">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end login-dropdown">
+                                <div class="login-dropdown-triangle"></div>
+                                <ng-container *ngIf="!(isLoggedIn(userRole$) | async)">
+                                    <div class="login-box">
+                                        <!-- Login Form -->
+                                        <form class="login-form" *ngIf="!isForgotPasswordView" (ngSubmit)="onLogin()">
+                                            <div class="form-group">
+                                                <input
                                                     class="login-input"
                                                     [(ngModel)]="email"
                                                     name="email"
+                                                    type="email"
                                                     placeholder="{{ 'HEADER.LOGIN.EMAIL' | translate }}"
-                                                    />
-                                                    <input
+                                                    required
+                                                />
+                                            </div>
+                                            <div class="form-group">
+                                                <input
                                                     class="login-input"
                                                     [(ngModel)]="password"
                                                     name="password"
                                                     type="password"
                                                     placeholder="{{ 'HEADER.LOGIN.PASSWORD' | translate }}"
-                                                    />
-                                                    <div class="login-remember">
-                                                    <input
-                                                        class="login-checkbox"
-                                                        [(ngModel)]="rememberMe"
-                                                        name="rememberMe"
-                                                        type="checkbox"
-                                                        id="rememberMe"
-                                                    />
-                                                    <label class="login-remember-text" for="rememberMe">
-                                                        {{ 'HEADER.LOGIN.REMEMBER_ME' | translate }}
-                                                    </label>
-                                                    </div>
-                                                    <button class="login-button" type="button" (click)="onLogin()">
-                                                        {{ 'HEADER.LOGIN.LOG_IN' | translate }}
-                                                    </button>
-                                                    <a href="javascript:void(0)" class="login-forgot" (click)="showForgotPasswordView($event)">
-                                                        {{ 'HEADER.LOGIN.FORGOT_PASSWORD' | translate }}
-                                                    </a>
-                                                </form>
-                                        
-                                            <!-- In forgot password view -->
-                                                <form class="login-form" *ngIf="isForgotPasswordView" (click)="preventDropdownClose($event)">
-                                                    <h3 class="login-forgot-title text-white text-center mb-3">
-                                                        {{ 'HEADER.LOGIN.RESET_PASSWORD' | translate }}
-                                                    </h3>
-                                                    <input
+                                                    required
+                                                />
+                                            </div>
+                                            <div class="login-remember">
+                                                <input
+                                                    class="login-checkbox"
+                                                    [(ngModel)]="rememberMe"
+                                                    name="rememberMe"
+                                                    type="checkbox"
+                                                    id="rememberMe"
+                                                />
+                                                <label class="login-remember-text" for="rememberMe">
+                                                    {{ 'HEADER.LOGIN.REMEMBER_ME' | translate }}
+                                                </label>
+                                            </div>
+                                            <button class="login-button" type="submit">
+                                                {{ 'HEADER.LOGIN.LOG_IN' | translate }}
+                                            </button>
+                                            <a href="javascript:void(0)" class="login-forgot" (click)="showForgotPasswordView($event)">
+                                                {{ 'HEADER.LOGIN.FORGOT_PASSWORD' | translate }}
+                                            </a>
+                                        </form>
+
+                                        <!-- Forgot Password Form -->
+                                        <form class="login-form" *ngIf="isForgotPasswordView" (ngSubmit)="onResetPassword($event)">
+                                            <h3 class="login-forgot-title text-center mb-3">
+                                                {{ 'HEADER.LOGIN.RESET_PASSWORD' | translate }}
+                                            </h3>
+                                            <div class="form-group">
+                                                <input
                                                     class="login-input"
                                                     [(ngModel)]="resetEmail"
                                                     name="resetEmail"
+                                                    type="email"
                                                     placeholder="{{ 'HEADER.LOGIN.EMAIL' | translate }}"
-                                                    (click)="preventDropdownClose($event)"
-                                                    />
-                                                    <button class="login-button" type="button" (click)="onResetPassword($event)">
-                                                        {{ 'HEADER.LOGIN.SEND_RESET_LINK' | translate }}
-                                                    </button>
-                                                    <div *ngIf="resetMessage" class="reset-message text-center mt-2" 
-                                                        [ngClass]="{'text-success': resetMessage.includes('sent'), 'text-danger': resetMessage.includes('Failed')}">
-                                                        {{ resetMessage }}
-                                                    </div>
-                                                    <a href="javascript:void(0)" class="login-forgot" (click)="showLoginView($event)">
-                                                        {{ 'HEADER.LOGIN.BACK_TO_LOGIN' | translate }}
-                                                    </a>
-                                                </form>
+                                                    required
+                                                />
                                             </div>
-                                        </ng-container>
-                                    <ng-container *ngIf="isLoggedIn(userRole$) | async">
-                                        <div class="login-box">
-                                            <div class="user-info">
-                                                <span class="user-role">{{ (userRole$ | async) || 'HEADER.USER.GUEST' | translate }}</span>
+                                            <button class="login-button" type="submit">
+                                                {{ 'HEADER.LOGIN.SEND_RESET_LINK' | translate }}
+                                            </button>
+                                            <div *ngIf="resetMessage" class="reset-message text-center mt-2" 
+                                                [ngClass]="{'text-success': resetMessage.includes('sent'), 'text-danger': resetMessage.includes('Failed')}">
+                                                {{ resetMessage }}
                                             </div>
-                                            <div class="logout-actions">
-                                                <button class="login-button" type="button"  [routerLink]="['/user-manage', userId]">
-                                                    {{ 'HEADER.LOGOUT.USER_MANAGE' | translate }}
-                                                </button>
-                                                <button class="login-button" type="button" (click)="onLogout()" routerLink="/Home" >
-                                                    {{ 'HEADER.LOGOUT.LOG_OUT' | translate }}
-                                                </button>
-                                            </div>
+                                            <a href="javascript:void(0)" class="login-forgot" (click)="showLoginView($event)">
+                                                {{ 'HEADER.LOGIN.BACK_TO_LOGIN' | translate }}
+                                            </a>
+                                        </form>
+                                    </div>
+                                </ng-container>
+
+                                <!-- Logged In User View -->
+                                <ng-container *ngIf="isLoggedIn(userRole$) | async">
+                                    <div class="login-box">
+                                        <div class="user-info">
+                                            <span class="user-role">{{ (userRole$ | async) || 'HEADER.USER.GUEST' | translate }}</span>
                                         </div>
-                                    </ng-container>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                                        <div class="logout-actions">
+                                            <button class="login-button" type="button" [routerLink]="['/user-manage', userId]">
+                                                {{ 'HEADER.LOGOUT.USER_MANAGE' | translate }}
+                                            </button>
+                                            <button class="login-button" type="button" (click)="onLogout()" routerLink="/Home">
+                                                {{ 'HEADER.LOGOUT.LOG_OUT' | translate }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </div>
 </header>

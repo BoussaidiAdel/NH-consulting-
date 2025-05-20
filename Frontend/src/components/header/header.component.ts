@@ -7,6 +7,7 @@ import { AuthService } from '../../Services/auth.service';
 import { selectAuthState, selectUserID, selectUserRole } from '../../Utils/Selectors/auth.selectors';
 import { AppState, AuthState } from '../../Utils/app.state';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +33,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private store: Store<AppState>, 
     private authService: AuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.authState$ = this.store.select(selectAuthState);
     this.userRole$ = this.store.pipe(select(selectUserRole));
@@ -132,5 +134,9 @@ export class HeaderComponent implements OnInit {
   preventDropdownClose(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  isActive(path: string): boolean {
+    return this.router.url === path;
   }
 }

@@ -1,3 +1,16 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">{{ 'HOME.HERO.TITLE' | translate }}</h1>
+    <p class="hero-subtitle">{{ 'HOME.HERO.SUBTITLE' | translate }}</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">{{ 'HOME.HERO.CTA.PRIMARY' | translate }}</a>
+      <a href="#services" class="btn-secondary">{{ 'HOME.HERO.CTA.SECONDARY' | translate }}</a>
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+</section>
+
 <app-slide-container></app-slide-container>
 
 <div class="about-container">
@@ -13,6 +26,9 @@
     </p>
     <p>{{ 'HOME.WELCOME.P3' | translate }}</p>
     <p>{{ 'HOME.WELCOME.P4' | translate }}</p>
+    <div class="card-cta">
+      <a href="#contact" class="btn-primary">{{ 'HOME.WELCOME.CTA' | translate }}</a>
+    </div>
   </div>
 
   <!-- Team Card -->
@@ -22,6 +38,9 @@
     </div>
     <h1>{{ 'HOME.TEAM.TITLE' | translate }}</h1>
     <p><span class="highlight">NH Consulting</span> {{ 'HOME.TEAM.DESCRIPTION' | translate }}</p>
+    <div class="card-cta">
+      <a href="#team" class="btn-secondary">{{ 'HOME.TEAM.CTA' | translate }}</a>
+    </div>
   </div>
 
   <!-- Why Choose Us Card -->
@@ -32,9 +51,18 @@
     <h1>{{ 'HOME.WHY.TITLE' | translate }}</h1>
     <p><span class="highlight">NH Consulting</span> {{ 'HOME.WHY.INTRO' | translate }}</p>
     <ul>
-      <li>{{ 'HOME.WHY.ITEM1' | translate }}</li>
-      <li>{{ 'HOME.WHY.ITEM2' | translate }}</li>
-      <li>{{ 'HOME.WHY.ITEM3' | translate }}</li>
+      <li>
+        <i class="fas fa-check-circle"></i>
+        {{ 'HOME.WHY.ITEM1' | translate }}
+      </li>
+      <li>
+        <i class="fas fa-check-circle"></i>
+        {{ 'HOME.WHY.ITEM2' | translate }}
+      </li>
+      <li>
+        <i class="fas fa-check-circle"></i>
+        {{ 'HOME.WHY.ITEM3' | translate }}
+      </li>
     </ul>
   </div>
 
@@ -46,11 +74,26 @@
     <h1>{{ 'HOME.SERVICES.TITLE' | translate }}</h1>
     <p><span class="highlight">NH Consulting</span> {{ 'HOME.SERVICES.INTRO' | translate }}</p>
     <ul>
-      <li>{{ 'HOME.SERVICES.ITEM1' | translate }}</li>
-      <li>{{ 'HOME.SERVICES.ITEM2' | translate }}</li>
-      <li>{{ 'HOME.SERVICES.ITEM3' | translate }}</li>
-      <li>{{ 'HOME.SERVICES.ITEM4' | translate }}</li>
+      <li>
+        <i class="fas fa-arrow-right"></i>
+        {{ 'HOME.SERVICES.ITEM1' | translate }}
+      </li>
+      <li>
+        <i class="fas fa-arrow-right"></i>
+        {{ 'HOME.SERVICES.ITEM2' | translate }}
+      </li>
+      <li>
+        <i class="fas fa-arrow-right"></i>
+        {{ 'HOME.SERVICES.ITEM3' | translate }}
+      </li>
+      <li>
+        <i class="fas fa-arrow-right"></i>
+        {{ 'HOME.SERVICES.ITEM4' | translate }}
+      </li>
     </ul>
+    <div class="card-cta">
+      <a href="#services" class="btn-secondary">{{ 'HOME.SERVICES.CTA' | translate }}</a>
+    </div>
   </div>
 
   <!-- Values Card -->
@@ -61,11 +104,61 @@
     <h1>{{ 'HOME.VALUES.TITLE' | translate }}</h1>
     <p>{{ 'HOME.VALUES.INTRO' | translate }} <span class="highlight">NH Consulting</span></p>
     <ul>
-      <li><strong>{{ 'HOME.VALUES.ITEM1.LABEL' | translate }}</strong>: {{ 'HOME.VALUES.ITEM1.DESC' | translate }}</li>
-      <li><strong>{{ 'HOME.VALUES.ITEM2.LABEL' | translate }}</strong>: {{ 'HOME.VALUES.ITEM2.DESC' | translate }}</li>
-      <li><strong>{{ 'HOME.VALUES.ITEM3.LABEL' | translate }}</strong>: {{ 'HOME.VALUES.ITEM3.DESC' | translate }}</li>
-      <li><strong>{{ 'HOME.VALUES.ITEM4.LABEL' | translate }}</strong>: {{ 'HOME.VALUES.ITEM4.DESC' | translate }}</li>
+      <li>
+        <i class="fas fa-gem"></i>
+        <div class="value-item">
+          <strong>{{ 'HOME.VALUES.ITEM1.LABEL' | translate }}</strong>
+          <span>{{ 'HOME.VALUES.ITEM1.DESC' | translate }}</span>
+        </div>
+      </li>
+      <li>
+        <i class="fas fa-gem"></i>
+        <div class="value-item">
+          <strong>{{ 'HOME.VALUES.ITEM2.LABEL' | translate }}</strong>
+          <span>{{ 'HOME.VALUES.ITEM2.DESC' | translate }}</span>
+        </div>
+      </li>
+      <li>
+        <i class="fas fa-gem"></i>
+        <div class="value-item">
+          <strong>{{ 'HOME.VALUES.ITEM3.LABEL' | translate }}</strong>
+          <span>{{ 'HOME.VALUES.ITEM3.DESC' | translate }}</span>
+        </div>
+      </li>
+      <li>
+        <i class="fas fa-gem"></i>
+        <div class="value-item">
+          <strong>{{ 'HOME.VALUES.ITEM4.LABEL' | translate }}</strong>
+          <span>{{ 'HOME.VALUES.ITEM4.DESC' | translate }}</span>
+        </div>
+      </li>
     </ul>
   </div>
 
 </div>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-item">
+      <i class="fas fa-users"></i>
+      <h3>{{ 'HOME.STATS.CLIENTS' | translate }}</h3>
+      <p class="stat-number">500+</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-project-diagram"></i>
+      <h3>{{ 'HOME.STATS.PROJECTS' | translate }}</h3>
+      <p class="stat-number">1000+</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-award"></i>
+      <h3>{{ 'HOME.STATS.EXPERIENCE' | translate }}</h3>
+      <p class="stat-number">15+</p>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-handshake"></i>
+      <h3>{{ 'HOME.STATS.PARTNERS' | translate }}</h3>
+      <p class="stat-number">50+</p>
+    </div>
+  </div>
+</section>
