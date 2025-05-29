@@ -11,33 +11,7 @@ import { SlideContainerComponent } from '../../components/slide-container/slide-
 })
 export class HomepageComponent implements OnInit {
 
-  @Input() slides: any[] = [
-    {
-      title: 'Malacca',
-      image: 'https://farm9.staticflickr.com/8059/28286750501_dcc27b1332_h_d.jpg',
-      position: 'top-left'
-    },
-    {
-      title: 'Cameron Highland',
-      image: 'https://farm6.staticflickr.com/5812/23394215774_b76cd33a87_h_d.jpg',
-      position: 'bottom-right'
-    },
-    {
-      title: 'New Delhi',
-      image: 'https://farm8.staticflickr.com/7455/27879053992_ef3f41c4a0_h_d.jpg',
-      position: 'bottom-left'
-    },
-    {
-      title: 'Ladakh',
-      image: 'https://farm8.staticflickr.com/7367/27980898905_72d106e501_h_d.jpg',
-      position: 'top-right'
-    },
-    {
-      title: 'Nubra Valley',
-      image: 'https://farm8.staticflickr.com/7356/27980899895_9b6c394fec_h_d.jpg',
-      position: 'bottom-left'
-    }
-  ];
+  @Input() slides: any[] = [];
 
   currentSlide = 0;
   autoSlideInterval: any;

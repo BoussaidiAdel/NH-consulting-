@@ -28,8 +28,9 @@
   margin: 0 auto;
   padding: 0 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 50px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  min-height: 0; /* Prevent grid from growing */
 }
 
 .footer-section {
@@ -37,6 +38,7 @@
   flex-direction: column;
   gap: 25px;
   animation: fadeInUp 0.6s ease-out;
+  min-width: 0; /* Allow sections to shrink */
 }
 
 @keyframes fadeInUp {
@@ -250,6 +252,7 @@
   position: relative;
   display: flex;
   gap: 10px;
+  flex-direction: column; /* Stack input and button vertically to save space */
 }
 
 .form-control {
@@ -363,19 +366,31 @@
   width: 100%;
 }
 
-/* Mobile Styles */
-@media (max-width: 991.98px) {
-  .footer {
-    padding: 60px 0 25px;
-  }
-
+/* Mobile Styles - Keep responsive behavior for smaller screens */
+@media (max-width: 1200px) {
   .footer-content {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: 20px;
+  }
+  
+  .footer-title {
+    font-size: 1.2rem;
+  }
+  
+  .footer-description,
+  .footer-link,
+  .contact-item {
+    font-size: 0.9rem;
   }
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 992px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
   .footer {
     padding: 50px 0 20px;
   }
@@ -406,7 +421,7 @@
   }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .footer {
     padding: 40px 0 15px;
   }
@@ -416,7 +431,7 @@
   }
 
   .footer-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .social-links {

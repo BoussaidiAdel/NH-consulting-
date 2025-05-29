@@ -48,7 +48,7 @@
   "OFFICE": {
     "TITLE": "Notre bureau",
     "DESCRIPTION": "Rendez-nous visite à notre siège",
-    "ADDRESS": "3éme étage ,Immeuble Panorama ,les Berges du Lac, Avenue de la Bourse, sis au Jardin du Lac de 1053 Tunis"
+    "ADDRESS": "43 rue de l'orge 91000 Evry, France"
   },
   "EMAIL": {
     "TITLE": "Envoyez-nous un e-mail",
@@ -72,7 +72,7 @@
       "faq": "FAQ"
     },
     "contact": "Contact",
-    "address": "123 Rue de la Formation, 75000 Paris, France",
+    "address": "43 rue de l'orge 91000 evry, France",
     "phone": "+33 753 4863 83",
     "email": "contact@nhconsulting.fr",
     "hours": "Lun - Ven: 9h00 - 18h00",
@@ -91,7 +91,7 @@
       "SUBTITLE": "Services de conseil experts pour les investisseurs et professionnels en Tunisie",
       "CTA": {
         "PRIMARY": "Commencer",
-        "SECONDARY": "Nos Services"
+        "SECONDARY": "Nos formations"
       }
     },
     "WELCOME": {

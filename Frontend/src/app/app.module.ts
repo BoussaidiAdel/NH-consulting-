@@ -37,6 +37,7 @@ import { SlideContainerComponent } from '../components/slide-container/slide-con
 import { UserManagementComponent } from '../Pages/user-management/user-management.component';
 import { AuthInterceptor } from '../Utils/auth.interceptor';
 import { ErrorPageComponent } from '../Pages/error-page/error-page.component';
+import { SignInComponent } from '../Pages/signin-page/signin.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ErrorPageComponent } from '../Pages/error-page/error-page.component';
     HomepageComponent,
     SlideContainerComponent,
     UserManagementComponent,
+    SignInComponent,
     ErrorPageComponent
   ],
   imports: [

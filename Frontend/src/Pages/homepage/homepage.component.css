@@ -584,7 +584,7 @@
   margin-top: 2rem;
 }
 
-/* Stats Section */
+/* Stats Section - Single Row Layout */
 .stats-section {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   padding: 5rem 0;
@@ -608,8 +608,9 @@
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 3rem;
+  /* Force all items in a single row */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
 }
 
 .stat-item {
@@ -621,6 +622,8 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  /* Ensure items don't get too narrow */
+  min-width: 0;
 }
 
 .stat-item:hover {
@@ -645,6 +648,9 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  /* Prevent text from breaking awkwardly */
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .stat-number {
@@ -656,6 +662,105 @@
   background: linear-gradient(135deg, #3A5199 0%, #FFD700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Responsive Styles - Maintain single row but adjust spacing and sizing */
+@media (max-width: 1024px) {
+  .stats-container {
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+  
+  .stat-item {
+    padding: 1.5rem 1rem;
+  }
+  
+  .stat-item h3 {
+    font-size: 1.1rem;
+  }
+  
+  .stat-number {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-section {
+    padding: 3rem 0;
+  }
+
+  .stats-container {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .stat-item {
+    padding: 1.5rem 0.8rem;
+  }
+
+  .stat-item i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-item h3 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .stats-container {
+    gap: 0.8rem;
+    padding: 0 0.8rem;
+  }
+
+  .stat-item {
+    padding: 1.2rem 0.5rem;
+  }
+
+  .stat-item i {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .stat-item h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .stats-container {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .stat-item {
+    padding: 1rem 0.3rem;
+  }
+
+  .stat-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .stat-item h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
 }
 
 /* Responsive Styles for Hero Section */

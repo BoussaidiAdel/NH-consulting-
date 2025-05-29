@@ -1,0 +1,73 @@
+<div class="signin-container">
+  <div class="signin-card">
+    <div class="signin-header">
+      <h2>Inscription à la formation</h2>
+      <div class="formation-info" *ngIf="formationTitle">
+        <h3>{{ formationTitle }}</h3>
+        <p class="price" *ngIf="formationPrice">Prix: {{ formationPrice | currency:'EUR' }}</p>
+      </div>
+    </div>
+
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="signin-form">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" placeholder="Votre prénom">
+          <mat-error *ngIf="signinForm.get('firstName')?.hasError('required')">Le prénom est requis</mat-error>
+          <mat-error *ngIf="signinForm.get('firstName')?.hasError('minlength')">Le prénom doit contenir au moins 2 caractères</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName" placeholder="Votre nom">
+          <mat-error *ngIf="signinForm.get('lastName')?.hasError('required')">Le nom est requis</mat-error>
+          <mat-error *ngIf="signinForm.get('lastName')?.hasError('minlength')">Le nom doit contenir au moins 2 caractères</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Votre email">
+          <mat-error *ngIf="signinForm.get('email')?.hasError('required')">L'email est requis</mat-error>
+          <mat-error *ngIf="signinForm.get('email')?.hasError('email')">Format d'email invalide</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="phone" placeholder="Votre numéro de téléphone">
+          <mat-error *ngIf="signinForm.get('phone')?.hasError('required')">Le numéro de téléphone est requis</mat-error>
+          <mat-error *ngIf="signinForm.get('phone')?.hasError('pattern')">Format de téléphone invalide</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address" placeholder="Votre adresse">
+        <mat-error *ngIf="signinForm.get('address')?.hasError('required')">L'adresse est requise</mat-error>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input matInput formControlName="city" placeholder="Votre ville">
+          <mat-error *ngIf="signinForm.get('city')?.hasError('required')">La ville est requise</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Code postal</mat-label>
+          <input matInput formControlName="postalCode" placeholder="Code postal">
+          <mat-error *ngIf="signinForm.get('postalCode')?.hasError('required')">Le code postal est requis</mat-error>
+          <mat-error *ngIf="signinForm.get('postalCode')?.hasError('pattern')">Format de code postal invalide</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.valid || isLoading">
+          <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+          <span *ngIf="!isLoading">S'inscrire</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

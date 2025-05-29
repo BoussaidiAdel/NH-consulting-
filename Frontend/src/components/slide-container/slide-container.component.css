@@ -472,3 +472,21 @@ a:hover {
     gap: 20px;
   }
 }
+
+.formation-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.price-item {
+  display: flex;
+  align-items: center;
+}
+
+.amount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c5282;
+}

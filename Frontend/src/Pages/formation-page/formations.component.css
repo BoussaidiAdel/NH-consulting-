@@ -110,13 +110,30 @@
 }
 
 .formation-price {
-  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.price-item {
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  background: #edf2f7;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.amount {
+  font-size: 1.25rem;
   font-weight: 700;
   color: #2c5282;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
 }
 
 .formation-price .original-price {

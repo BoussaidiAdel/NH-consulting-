@@ -70,7 +70,15 @@
               <span>{{ formation.niveau }}</span>
             </div>
           </div>
-          <button class="enroll-btn" [routerLink]="['/formation', formation.id]">
+          <div class="formation-price">
+            <div class="price-item">
+              <span class="amount">{{ formation.prix | currency:'EUR' }}</span>
+            </div>
+            <div class="price-item">
+              <span class="amount">{{ formation.prix * 3.3 | currency:'TND' }}</span>
+            </div>
+          </div>
+          <button class="enroll-btn" (click)="register(formation)">
             <i class="fas fa-user-plus"></i>
             S'inscrire
           </button>

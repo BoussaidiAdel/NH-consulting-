@@ -5,6 +5,7 @@ import { FormationService } from '../../Services/formation.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-slide-container',
@@ -22,7 +23,8 @@ export class SlideContainerComponent implements AfterViewInit {
 
   constructor(
     private formationService: FormationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngAfterViewInit(): void {
@@ -178,29 +180,14 @@ export class SlideContainerComponent implements AfterViewInit {
   }
 
   register(formation: Formation): void {
-    // Here you would typically open a registration dialog or navigate to a registration page
-    // For now, we'll just show a snackbar message
-    this.snackBar.open(
-      `Inscription à la formation "${formation.title}" en cours...`,
-      'Fermer',
-      {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
+    // Navigate to signin page with formation data
+    this.router.navigate(['/signin'], {
+      queryParams: {
+        formationId: formation.id,
+        formationTitle: formation.title,
+        formationPrice: formation.prix
       }
-    );
-
-    // You can implement the actual registration logic here
-    // For example:
-    // this.formationService.registerForFormation(formation.id).subscribe({
-    //   next: () => {
-    //     this.snackBar.open('Inscription réussie!', 'Fermer', { duration: 3000 });
-    //   },
-    //   error: (error) => {
-    //     this.snackBar.open('Erreur lors de l\'inscription', 'Fermer', { duration: 3000 });
-    //     console.error('Registration error:', error);
-    //   }
-    // });
+    });
   }
 
   @HostListener('window:keydown', ['$event'])

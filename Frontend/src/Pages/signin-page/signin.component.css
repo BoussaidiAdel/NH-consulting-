@@ -1,0 +1,86 @@
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f8fafc;
+}
+
+.signin-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.signin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.signin-header h2 {
+  color: #2c5282;
+  margin-bottom: 1rem;
+}
+
+.formation-info {
+  background: #f7fafc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.formation-info h3 {
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  color: #2c5282;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+button[type="submit"] {
+  min-width: 200px;
+  padding: 0.75rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .signin-container {
+    padding: 1rem;
+  }
+
+  .signin-card {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

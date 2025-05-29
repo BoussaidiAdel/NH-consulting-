@@ -8,6 +8,7 @@ import { AppState } from '../../Utils/app.state';
 import { MatSnackBar} from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { selectUserRole } from '../../Utils/Selectors/auth.selectors';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -48,7 +49,8 @@ export class FormationsComponent implements OnInit {
     private formationService: FormationService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
       this.userRole$ = this.store.pipe(select(selectUserRole));
   }
@@ -189,18 +191,14 @@ export class FormationsComponent implements OnInit {
 
   // Register for a formation
   register(formation: Formation): void {
-    // Implement registration logic
-    console.log('Registering for formation:', formation);
-
-    // If user is not logged in, redirect to login
-    if (!this.isLoggedIn) {
-      // Navigate to login page or open login modal
-      console.log('User needs to login first');
-      // this.router.navigate(['/login']);
-    } else {
-      // Process registration
-      console.log('Processing registration for logged in user');
-    }
+    // Navigate to signin page with formation data
+    this.router.navigate(['/signin'], {
+        queryParams: {
+            formationId: formation.id,
+            formationTitle: formation.title,
+            formationPrice: formation.prix
+        }
+    });
   }
 
   // ADMIN FUNCTIONALITY

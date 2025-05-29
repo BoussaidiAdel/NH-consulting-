@@ -58,7 +58,9 @@ export class FormationService {
     );
   }
 
-
+  subscribeToFormation(subscriptionData: any) {
+    return this.http.post(`${this.apiUrl}/formations/subscribe`, subscriptionData);
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: HttpErrorResponse): Observable<T> => {

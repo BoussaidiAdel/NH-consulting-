@@ -4,8 +4,8 @@
     <h1 class="hero-title">{{ 'HOME.HERO.TITLE' | translate }}</h1>
     <p class="hero-subtitle">{{ 'HOME.HERO.SUBTITLE' | translate }}</p>
     <div class="hero-cta">
-      <a href="#contact" class="btn-primary">{{ 'HOME.HERO.CTA.PRIMARY' | translate }}</a>
-      <a href="#services" class="btn-secondary">{{ 'HOME.HERO.CTA.SECONDARY' | translate }}</a>
+      <a [routerLink]="'/contact'" class="btn-primary">{{ 'HOME.HERO.CTA.PRIMARY' | translate }}</a>
+      <a [routerLink]="'/formation'" class="btn-secondary">{{ 'HOME.HERO.CTA.SECONDARY' | translate }}</a>
     </div>
   </div>
   <div class="hero-overlay"></div>
@@ -27,7 +27,7 @@
     <p>{{ 'HOME.WELCOME.P3' | translate }}</p>
     <p>{{ 'HOME.WELCOME.P4' | translate }}</p>
     <div class="card-cta">
-      <a href="#contact" class="btn-primary">{{ 'HOME.WELCOME.CTA' | translate }}</a>
+      <a [routerLink]="'/contact'" class="btn-primary">{{ 'HOME.WELCOME.CTA' | translate }}</a>
     </div>
   </div>
 
@@ -38,9 +38,6 @@
     </div>
     <h1>{{ 'HOME.TEAM.TITLE' | translate }}</h1>
     <p><span class="highlight">NH Consulting</span> {{ 'HOME.TEAM.DESCRIPTION' | translate }}</p>
-    <div class="card-cta">
-      <a href="#team" class="btn-secondary">{{ 'HOME.TEAM.CTA' | translate }}</a>
-    </div>
   </div>
 
   <!-- Why Choose Us Card -->
@@ -91,9 +88,6 @@
         {{ 'HOME.SERVICES.ITEM4' | translate }}
       </li>
     </ul>
-    <div class="card-cta">
-      <a href="#services" class="btn-secondary">{{ 'HOME.SERVICES.CTA' | translate }}</a>
-    </div>
   </div>
 
   <!-- Values Card -->
