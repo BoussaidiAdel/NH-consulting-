@@ -14,7 +14,6 @@ public class FormationService {
     @Autowired
     private FormationRepository formationRepository;
 
-    // Create or update a formation
     public Formation saveFormation(Formation formation) {
         validateFormation(formation);
         return formationRepository.save(formation);
@@ -27,12 +26,10 @@ public class FormationService {
         return formationRepository.findAll();
     }
 
-    // Get formation by ID
     public Optional<Formation> getFormationById(String id) {
         return formationRepository.findById(id);
     }
 
-    // Delete a formation by ID
     public void deleteFormation(String id) {
         if (!formationRepository.existsById(id)) {
             throw new RuntimeException("Formation not found with id: " + id);
@@ -40,37 +37,33 @@ public class FormationService {
         formationRepository.deleteById(id);
     }
 
-    // Get formations by their 'etat' (online or in-person)
-    public List<Formation> getFormationsByEtat(String etat) {
-        return formationRepository.findByEtat(etat);
+    // Since etat and niveau are maps, you should search by a value inside the map,
+    // e.g., find formations where etat map contains a value matching the parameter.
+    public List<Formation> getFormationsByEtat(String etatValue) {
+        return formationRepository.findByEtatValue(etatValue);
     }
 
-    // Get formations by their 'niveau' (beginner, intermediate, advanced)
-    public List<Formation> getFormationsByNiveau(String niveau) {
-        return formationRepository.findByNiveau(niveau);
+    public List<Formation> getFormationsByNiveau(String niveauValue) {
+        return formationRepository.findByNiveauValue(niveauValue);
     }
 
-    // Search formations by title or description
     public List<Formation> searchFormations(String keyword) {
-        return formationRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
+        return formationRepository.findByTitleValueContainingIgnoreCaseOrDescriptionValueContainingIgnoreCase(keyword, keyword);
     }
 
-    // Get formations by price range
     public List<Formation> getFormationsByPriceRange(Double minPrice, Double maxPrice) {
         return formationRepository.findByPrixBetween(minPrice, maxPrice);
     }
 
-    // Get formations by duration range
     public List<Formation> getFormationsByDurationRange(Integer minDuration, Integer maxDuration) {
         return formationRepository.findByDureeBetween(minDuration, maxDuration);
     }
 
-    // Validate formation data
     private void validateFormation(Formation formation) {
-        if (formation.getTitle() == null || formation.getTitle().trim().isEmpty()) {
+        if (formation.getTitle() == null || formation.getTitle().isEmpty() || formation.getTitle().values().stream().allMatch(String::isBlank)) {
             throw new IllegalArgumentException("Formation title cannot be empty");
         }
-        if (formation.getDescription() == null || formation.getDescription().trim().isEmpty()) {
+        if (formation.getDescription() == null || formation.getDescription().isEmpty() || formation.getDescription().values().stream().allMatch(String::isBlank)) {
             throw new IllegalArgumentException("Formation description cannot be empty");
         }
         if (formation.getPrix() == null || formation.getPrix() <= 0) {
@@ -82,10 +75,10 @@ public class FormationService {
         if (formation.getNomFormateur() == null || formation.getNomFormateur().trim().isEmpty()) {
             throw new IllegalArgumentException("Trainer name cannot be empty");
         }
-        if (formation.getEtat() == null || formation.getEtat().trim().isEmpty()) {
+        if (formation.getEtat() == null || formation.getEtat().isEmpty() || formation.getEtat().values().stream().allMatch(String::isBlank)) {
             throw new IllegalArgumentException("Formation state cannot be empty");
         }
-        if (formation.getNiveau() == null || formation.getNiveau().trim().isEmpty()) {
+        if (formation.getNiveau() == null || formation.getNiveau().isEmpty() || formation.getNiveau().values().stream().allMatch(String::isBlank)) {
             throw new IllegalArgumentException("Formation level cannot be empty");
         }
     }

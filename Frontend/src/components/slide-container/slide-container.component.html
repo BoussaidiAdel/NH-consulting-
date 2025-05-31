@@ -54,7 +54,7 @@
            [class.active]="formation.active"
            [attr.data-id]="formation.id"
            (click)="toggleActive(formation)">
-           <div class="formation-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
+           <div class="formation-image" [style.backgroundImage]="'url(' + (formation.image) + ')'">
           <div class="item-overlay"></div>
         </div>
         <div class="item-desc">

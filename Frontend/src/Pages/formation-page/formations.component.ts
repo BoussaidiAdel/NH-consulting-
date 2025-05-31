@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Formation } from '../../Models/Formation';
 import { FormationService } from '../../Services/formation.service';
 import { AuthService } from '../../Services/auth.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../Utils/app.state';
-import { MatSnackBar} from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { selectUserRole } from '../../Utils/Selectors/auth.selectors';
+import { selectSelectedLanguage } from '../../Utils/Selectors/language.selectors';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-formations',
@@ -17,13 +17,16 @@ import { Router } from '@angular/router';
   templateUrl: './formations.component.html',
   styleUrls: ['./formations.component.css']
 })
-export class FormationsComponent implements OnInit {
+export class FormationsComponent implements OnInit, OnDestroy {
   formations: Formation[] = [];
   filteredFormations: Formation[] = [];
   selectedFormation: Formation | null = null;
   errorMessage: string = '';
   isLoading: boolean = false;
   userRole$: Observable<string | null>;
+  selectedLanguage$: Observable<string>;
+  currentLanguage: string = 'fr';
+  private subscriptions: Subscription[] = [];
 
   // Admin functionality properties
   isLoggedIn: boolean = false;
@@ -52,37 +55,79 @@ export class FormationsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
   ) {
-      this.userRole$ = this.store.pipe(select(selectUserRole));
+    this.userRole$ = this.store.pipe(select(selectUserRole));
+    this.selectedLanguage$ = this.store.pipe(select(selectSelectedLanguage));
   }
 
   ngOnInit(): void {
-  
+    // Subscribe to language changes
+    this.subscriptions.push(
+      this.selectedLanguage$.subscribe(language => {
+        this.currentLanguage = language;
+        this.applyFilters();
+      })
+    );
+
     this.loadFormations();
     this.initFormationForm();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 
-    isLoggedInAndAdmin(role: string | null): boolean {
+  isLoggedInAndAdmin(role: string | null): boolean {
     return role === 'ADMIN';
+  }
+
+  // Helper methods for getting localized values
+  getTitleValue(title: { fr: string; en: string }): string {
+    return title[this.currentLanguage as keyof typeof title] || title.fr;
+  }
+
+  getDescriptionValue(description: { fr: string; en: string }): string {
+    return description[this.currentLanguage as keyof typeof description] || description.fr;
+  }
+
+  getNiveauValue(niveau: { fr: string; en: string }): string {
+    return niveau[this.currentLanguage as keyof typeof niveau] || niveau.fr;
+  }
+
+  getEtatValue(etat: { fr: string; en: string }): string {
+    return etat[this.currentLanguage as keyof typeof etat] || etat.fr;
+  }
+
+  getPrerequisValue(prerequis: string | { fr: string; en: string }): string {
+    if (typeof prerequis === 'string') return prerequis;
+    return prerequis[this.currentLanguage as keyof typeof prerequis] || prerequis.fr;
+  }
+
+  getProgrammeValue(programme: string | { fr: string; en: string }): string {
+    if (typeof programme === 'string') return programme;
+    return programme[this.currentLanguage as keyof typeof programme] || programme.fr;
   }
 
   initFormationForm(): void {
     this.formationForm = this.fb.group({
-      id: [null],
-      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-      prix: [0, [Validators.required, Validators.min(0)]],
-      image: ['', [Validators.required]],
-      duree: [0, [Validators.required, Validators.min(1)]],
-      nomFormateur: ['', [Validators.required]],
-      etat: ['En ligne', [Validators.required]],
-      niveau: ['Débutant', [Validators.required]],
-      active: [true],
-      dateDebut: ['', [Validators.required]],
-      dateFin: ['', [Validators.required]],
-      placesDisponibles: [0, [Validators.required, Validators.min(0)]],
-      prerequis: ['', [Validators.required]],
-      programme: ['', [Validators.required]]
+      titleFr: ['', Validators.required],
+      titleEn: ['', Validators.required],
+      descriptionFr: ['', Validators.required],
+      descriptionEn: ['', Validators.required],
+      prix: ['', [Validators.required, Validators.min(0)]],
+      image: ['', Validators.required],
+      duree: ['', [Validators.required, Validators.min(1)]],
+      nomFormateur: ['', Validators.required],
+      etatFr: ['', Validators.required],
+      etatEn: ['', Validators.required],
+      niveauFr: ['', Validators.required],
+      niveauEn: ['', Validators.required],
+      prerequisFr: [''],
+      prerequisEn: [''],
+      programmeFr: [''],
+      programmeEn: [''],
+      dateDebut: [''],
+      dateFin: [''],
+      placesDisponibles: ['', [Validators.min(0)]]
     });
   }
 
@@ -91,7 +136,7 @@ export class FormationsComponent implements OnInit {
     this.formationService.getAllFormations().subscribe({
       next: (data) => {
         this.formations = data;
-        this.applyFilters(); // Apply initial filters
+        this.applyFilters();
         this.isLoading = false;
       },
       error: (error) => {
@@ -108,24 +153,32 @@ export class FormationsComponent implements OnInit {
     // Apply search filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase();
-      filtered = filtered.filter(formation => 
-        formation.title.toLowerCase().includes(searchLower) ||
-        formation.description.toLowerCase().includes(searchLower)
-      );
+      filtered = filtered.filter(formation => {
+        const titleMatch = this.getTitleValue(formation.title).toLowerCase().includes(searchLower);
+        const descriptionMatch = this.getDescriptionValue(formation.description).toLowerCase().includes(searchLower);
+        return titleMatch || descriptionMatch;
+      });
     }
 
     // Apply niveau filter
     if (this.selectedNiveau) {
-      filtered = filtered.filter(formation => 
-        formation.niveau === this.selectedNiveau
-      );
+      filtered = filtered.filter(formation => {
+        const niveauValue = this.getNiveauValue(formation.niveau);
+        return niveauValue === this.selectedNiveau || 
+               (this.selectedNiveau === 'Débutant' && niveauValue === 'Beginner') ||
+               (this.selectedNiveau === 'Intermédiaire' && niveauValue === 'Intermediate') ||
+               (this.selectedNiveau === 'Avancé' && niveauValue === 'Advanced');
+      });
     }
 
     // Apply etat filter
     if (this.selectedEtat) {
-      filtered = filtered.filter(formation => 
-        formation.etat === this.selectedEtat
-      );
+      filtered = filtered.filter(formation => {
+        const etatValue = this.getEtatValue(formation.etat);
+        return etatValue === this.selectedEtat ||
+               (this.selectedEtat === 'En ligne' && etatValue === 'Online') ||
+               (this.selectedEtat === 'Présentiel' && etatValue === 'In-person');
+      });
     }
 
     // Apply sorting
@@ -161,158 +214,178 @@ export class FormationsComponent implements OnInit {
     this.applyFilters();
   }
 
-  private showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 5000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['error-snackbar']
-    });
-  }
-
-  private showSuccess(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['success-snackbar']
-    });
-  }
-
-  // Open formation details modal
+  // Formation details modal methods
   openDetails(formation: Formation): void {
     this.selectedFormation = formation;
   }
 
-  // Close formation details modal
   closeDetails(): void {
     this.selectedFormation = null;
   }
 
-  // Register for a formation
-  register(formation: Formation): void {
-    // Navigate to signin page with formation data
-    this.router.navigate(['/signin'], {
-        queryParams: {
-            formationId: formation.id,
-            formationTitle: formation.title,
-            formationPrice: formation.prix
-        }
-    });
-  }
 
-  // ADMIN FUNCTIONALITY
-
-  // Open the formation form (add or edit)
-  openFormationForm(formation?: Formation): void {
-    this.editMode = !!formation;
+  // Admin methods for managing formations
+  openFormationForm(): void {
+    this.editMode = false;
+    this.formationForm.reset();
+    this.initFormationForm();
     this.showFormationForm = true;
-    
-    if (formation) {
-      // Convert dates to YYYY-MM-DD format for the form
-      const formationToEdit = {
-        ...formation,
-        dateDebut: formation.dateDebut ? new Date(formation.dateDebut).toISOString().split('T')[0] : '',
-        dateFin: formation.dateFin ? new Date(formation.dateFin).toISOString().split('T')[0] : ''
-      };
-      this.formationForm.patchValue(formationToEdit);
-    } else {
-      this.formationForm.reset({
-        etat: 'En ligne',
-        niveau: 'Débutant',
-        active: true,
-        placesDisponibles: 0,
-        prix: 0,
-        duree: 1
-      });
-    }
   }
 
-  // Close the formation form
+  editFormation(formation: Formation, event: Event): void {
+    event.stopPropagation();
+    this.editMode = true;
+    this.selectedFormation = formation;
+    
+    // Populate form with formation data
+    this.formationForm.patchValue({
+      id: formation.id,
+      titleFr: typeof formation.title === 'string' ? formation.title : formation.title.fr,
+      titleEn: typeof formation.title === 'string' ? formation.title : formation.title.en,
+      descriptionFr: typeof formation.description === 'string' ? formation.description : formation.description.fr,
+      descriptionEn: typeof formation.description === 'string' ? formation.description : formation.description.en,
+      prix: formation.prix,
+      image: formation.image,
+      duree: formation.duree,
+      nomFormateur: formation.nomFormateur,
+      etatFr: typeof formation.etat === 'string' ? formation.etat : formation.etat.fr,
+      etatEn: typeof formation.etat === 'string' ? formation.etat : formation.etat.en,
+      niveauFr: typeof formation.niveau === 'string' ? formation.niveau : formation.niveau.fr,
+      niveauEn: typeof formation.niveau === 'string' ? formation.niveau : formation.niveau.en,
+      active: formation.active,
+      dateDebut: formation.dateDebut,
+      dateFin: formation.dateFin,
+      placesDisponibles: formation.placesDisponibles,
+      prerequisFr: typeof formation.prerequis === 'string' ? formation.prerequis : formation.prerequis.fr,
+      prerequisEn: typeof formation.prerequis === 'string' ? formation.prerequis : formation.prerequis.en,
+      programmeFr: typeof formation.programme === 'string' ? formation.programme : formation.programme.fr,
+      programmeEn: typeof formation.programme === 'string' ? formation.programme : formation.programme.en
+    });
+    
+    this.showFormationForm = true;
+  }
+
   closeFormationForm(): void {
     this.showFormationForm = false;
     this.editMode = false;
+    this.selectedFormation = null;
     this.formationForm.reset();
   }
 
-  // Save formation (add or update)
   saveFormation(): void {
     if (this.formationForm.valid) {
-      const formationData = this.formationForm.value;
-      
-      if (this.editMode) {
+      const formValue = this.formationForm.value;
+      const formationData: Formation = {
+        id: this.editMode ? this.selectedFormation?.id : undefined,
+        title: {
+          fr: formValue.titleFr,
+          en: formValue.titleEn
+        },
+        description: {
+          fr: formValue.descriptionFr,
+          en: formValue.descriptionEn
+        },
+        prix: formValue.prix,
+        image: formValue.image,
+        duree: formValue.duree,
+        nomFormateur: formValue.nomFormateur,
+        etat: {
+          fr: formValue.etatFr,
+          en: formValue.etatEn
+        },
+        niveau: {
+          fr: formValue.niveauFr,
+          en: formValue.niveauEn
+        },
+        prerequis: {
+          fr: formValue.prerequisFr,
+          en: formValue.prerequisEn
+        },
+        programme: {
+          fr: formValue.programmeFr,
+          en: formValue.programmeEn
+        },
+        dateDebut: formValue.dateDebut,
+        dateFin: formValue.dateFin,
+        placesDisponibles: formValue.placesDisponibles
+      };
+
+      if (this.editMode && formationData.id) {
         this.formationService.updateFormation(formationData).subscribe({
           next: () => {
-            this.showSuccess('Formation mise à jour avec succès');
-            this.closeFormationForm();
+            this.showSuccess('Formation updated successfully');
             this.loadFormations();
+            this.closeFormationForm();
           },
           error: (error) => {
-            this.showError(`Erreur lors de la mise à jour: ${error.message}`);
+            this.showError(`Error updating formation: ${error.message || 'Unknown error'}`);
           }
         });
       } else {
         this.formationService.addFormation(formationData).subscribe({
           next: () => {
-            this.showSuccess('Formation ajoutée avec succès');
-            this.closeFormationForm();
+            this.showSuccess('Formation created successfully');
             this.loadFormations();
+            this.closeFormationForm();
           },
           error: (error) => {
-            this.showError(`Erreur lors de l'ajout: ${error.message}`);
+            this.showError(`Error creating formation: ${error.message || 'Unknown error'}`);
           }
         });
       }
+    } else {
+      this.showError('Please fill all required fields correctly');
     }
   }
 
-  // Edit formation
-  editFormation(formation: Formation, event?: Event): void {
-    if (event) {
-      event.stopPropagation(); // Prevent opening details modal
-    }
-
-    this.openFormationForm(formation);
-  }
-
-  // Initiate delete formation process
-  deleteFormation(formation: Formation, event?: Event): void {
-    if (event) {
-      event.stopPropagation(); // Prevent opening details modal
-    }
-
+  deleteFormation(formation: Formation, event: Event): void {
+    event.stopPropagation();
     this.formationToDelete = formation;
     this.showDeleteConfirmation = true;
   }
 
-  // Cancel delete operation
   cancelDelete(): void {
-    this.formationToDelete = null;
     this.showDeleteConfirmation = false;
+    this.formationToDelete = null;
   }
 
-  // Confirm and perform delete
   confirmDelete(): void {
-    if (!this.formationToDelete) return;
-
-    this.formationService.deleteFormation(this.formationToDelete.id.toString()).subscribe({
-      next: () => {
-        // Remove from local array
-        this.formations = this.formations.filter(f => f.id !== this.formationToDelete?.id);
-
-        // Close confirmation and details if open
-        this.cancelDelete();
-        if (this.selectedFormation?.id === this.formationToDelete?.id) {
-          this.closeDetails();
+    if (this.formationToDelete && this.formationToDelete.id) {
+      this.formationService.deleteFormation(this.formationToDelete.id).subscribe({
+        next: () => {
+          this.showSuccess('Formation deleted successfully');
+          this.loadFormations();
+          this.showDeleteConfirmation = false;
+          this.formationToDelete = null;
+        },
+        error: (error) => {
+          this.showError(`Error deleting formation: ${error.message || 'Unknown error'}`);
+          this.showDeleteConfirmation = false;
+          this.formationToDelete = null;
         }
+      });
+    }
+  }
 
-        this.showSuccess('Formation deleted successfully');
-      },
-      error: (error) => {
-        console.error('Error deleting formation:', error);
-        this.errorMessage = `Failed to delete formation: ${error.message || 'Unknown error'}`;
-        this.showError(this.errorMessage);
-      }
+  // Utility methods for showing messages
+  showSuccess(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  showError(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['error-snackbar']
+    });
+  }
+
+  showInfo(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
     });
   }
 }

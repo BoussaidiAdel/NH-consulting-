@@ -35,7 +35,7 @@ export class AuthService {
     return this.userId;
   }
 
-  private checkAuthStatus(): void {
+  public  checkAuthStatus(): void {
     // Since we're using HttpOnly cookies, we need to make a request to the server
     // to check if the user is logged in
     this.refreshToken().subscribe({

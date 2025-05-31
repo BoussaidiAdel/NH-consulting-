@@ -1,319 +1,408 @@
-<!-- formations.component.html -->
-<div class="formations-container">
-  <!-- Search and Filter Section -->
-  <div class="search-filter-section">
-    <div class="search-box">
-      <mat-form-field appearance="outline">
-        <mat-label>Rechercher une formation</mat-label>
-        <input matInput [(ngModel)]="searchTerm" (keyup)="searchFormations()" placeholder="Titre, description...">
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
-
-    <div class="filter-box">
-      <mat-form-field appearance="outline">
-        <mat-label>Niveau</mat-label>
-        <mat-select [(ngModel)]="selectedNiveau" (selectionChange)="filterByNiveau()">
-          <mat-option value="">Tous les niveaux</mat-option>
-          <mat-option value="Débutant">Débutant</mat-option>
-          <mat-option value="Intermédiaire">Intermédiaire</mat-option>
-          <mat-option value="Avancé">Avancé</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="filter-box">
-      <mat-form-field appearance="outline">
-        <mat-label>Mode</mat-label>
-        <mat-select [(ngModel)]="selectedEtat" (selectionChange)="filterByEtat()">
-          <mat-option value="">Tous les modes</mat-option>
-          <mat-option value="En ligne">En ligne</mat-option>
-          <mat-option value="Présentiel">Présentiel</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="filter-box">
-      <mat-form-field appearance="outline">
-        <mat-label>Trier par</mat-label>
-        <mat-select [(ngModel)]="sortBy" (selectionChange)="applyFilters()">
-          <mat-option value="">Par défaut</mat-option>
-          <mat-option value="price_asc">Prix croissant</mat-option>
-          <mat-option value="price_desc">Prix décroissant</mat-option>
-          <mat-option value="duration_asc">Durée croissante</mat-option>
-          <mat-option value="duration_desc">Durée décroissante</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-
-  <!-- Admin Controls -->
-  <div class="admin-controls" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
-    <button class="admin-btn" (click)="openFormationForm()">
-      <mat-icon>add</mat-icon>
-      Ajouter une formation
-    </button>
-  </div>
-
-  <!-- Loading State -->
-  <div class="loading-container" *ngIf="isLoading">
-    <div class="loader"></div>
-  </div>
-
-  <!-- Error Message -->
-  <div class="error-message" *ngIf="errorMessage">
-    <mat-icon>error_outline</mat-icon>
-    <span>{{ errorMessage }}</span>
-  </div>
-
-  <!-- Formations Grid -->
-  <div class="formations-grid" *ngIf="!isLoading && filteredFormations.length > 0">
-    <div class="formation-card" *ngFor="let formation of filteredFormations">
-      <div class="formation-image" [style.backgroundImage]="'url(' + (formation.imageUrl || formation.image) + ')'">
-        <span class="status-badge" [ngClass]="formation?.etat?.toLowerCase() || ''">
-          {{ formation?.etat }}
-        </span>
+  <!-- formations.component.html -->
+  <div class="formations-container">
+    <!-- Search and Filter Section -->
+    <div class="search-filter-section">
+      <div class="search-box">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'FORMATIONS.SEARCH.PLACEHOLDER' | translate }}</mat-label>
+          <input matInput [(ngModel)]="searchTerm" (keyup)="searchFormations()" [placeholder]="'FORMATIONS.SEARCH.HINT' | translate">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
       </div>
 
-      <div class="formation-content">
-        <h3 class="formation-title">{{ formation.title }}</h3>
-        <p class="formation-description">{{ formation.description }}</p>
+      <div class="filter-box">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'FORMATIONS.FILTER.LEVEL' | translate }}</mat-label>
+          <mat-select [(ngModel)]="selectedNiveau" (selectionChange)="filterByNiveau()">
+            <mat-option value="">{{ 'FORMATIONS.FILTER.ALL_LEVELS' | translate }}</mat-option>
+            <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">{{ 'FORMATIONS.LEVEL.BEGINNER' | translate }}</mat-option>
+            <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">{{ 'FORMATIONS.LEVEL.INTERMEDIATE' | translate }}</mat-option>
+            <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">{{ 'FORMATIONS.LEVEL.ADVANCED' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div class="formation-meta">
-          <div class="meta-item">
+      <div class="filter-box">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'FORMATIONS.FILTER.MODE' | translate }}</mat-label>
+          <mat-select [(ngModel)]="selectedEtat" (selectionChange)="filterByEtat()">
+            <mat-option value="">{{ 'FORMATIONS.FILTER.ALL_MODES' | translate }}</mat-option>
+            <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">{{ 'FORMATIONS.MODE.ONLINE' | translate }}</mat-option>
+            <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">{{ 'FORMATIONS.MODE.IN_PERSON' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-box">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'FORMATIONS.FILTER.SORT_BY' | translate }}</mat-label>
+          <mat-select [(ngModel)]="sortBy" (selectionChange)="applyFilters()">
+            <mat-option value="">{{ 'FORMATIONS.SORT.DEFAULT' | translate }}</mat-option>
+            <mat-option value="price_asc">{{ 'FORMATIONS.SORT.PRICE_ASC' | translate }}</mat-option>
+            <mat-option value="price_desc">{{ 'FORMATIONS.SORT.PRICE_DESC' | translate }}</mat-option>
+            <mat-option value="duration_asc">{{ 'FORMATIONS.SORT.DURATION_ASC' | translate }}</mat-option>
+            <mat-option value="duration_desc">{{ 'FORMATIONS.SORT.DURATION_DESC' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Admin Controls -->
+    <div class="admin-controls" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
+      <button class="admin-btn" (click)="openFormationForm()">
+        <mat-icon>add</mat-icon>
+        {{ 'FORMATIONS.ADMIN.ADD_FORMATION' | translate }}
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Formations Grid -->
+    <div class="formations-grid" *ngIf="!isLoading && filteredFormations.length > 0">
+      <div class="formation-card" *ngFor="let formation of filteredFormations">
+        <div class="formation-image" [style.backgroundImage]="'url(' + formation.image + ')'">
+          <span class="status-badge" [ngClass]="getEtatValue(formation.etat)?.toLowerCase() || ''">
+            {{ getEtatValue(formation.etat) }}
+          </span>
+        </div>
+
+        <div class="formation-content">
+          <h3 class="formation-title">{{ getTitleValue(formation.title) }}</h3>
+          <p class="formation-description">{{ getDescriptionValue(formation.description) }}</p>
+
+          <div class="formation-meta">
+            <div class="meta-item">
+              <mat-icon>schedule</mat-icon>
+              <span>{{ formation.duree }} {{ 'FORMATIONS.CARD.WEEKS' | translate }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>school</mat-icon>
+              <span>{{ getNiveauValue(formation.niveau) }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>person</mat-icon>
+              <span>{{ formation.nomFormateur }}</span>
+            </div>
+          </div>
+
+          <div class="formation-price">
+            <div class="price-item">
+              <span class="amount">{{ formation.prix | currency:'EUR' }}</span>
+            </div>
+            <div class="price-item">
+              <span class="amount">{{ formation.prix * 3.3 | currency:'TND' }}</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary" (click)="openDetails(formation)">
+              <mat-icon>info</mat-icon>
+              {{ 'FORMATIONS.CARD.DETAILS' | translate }}
+            </button>
+            <button class="btn btn-secondary" [routerLink]="'/signin'">
+              <mat-icon>how_to_reg</mat-icon>
+              {{ 'FORMATIONS.CARD.REGISTER' | translate }}
+            </button>
+          </div>
+
+          <!-- Admin Actions -->
+          <div class="admin-card-actions" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
+            <button class="admin-card-btn edit-btn" (click)="editFormation(formation, $event)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="admin-card-btn delete-btn" (click)="deleteFormation(formation, $event)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && filteredFormations.length === 0 && !errorMessage">
+      <mat-icon>school</mat-icon>
+      <h3>{{ 'FORMATIONS.EMPTY.TITLE' | translate }}</h3>
+      <p>{{ 'FORMATIONS.EMPTY.MESSAGE' | translate }}</p>
+      <button class="btn btn-primary" (click)="loadFormations()">
+        <mat-icon>refresh</mat-icon>
+        {{ 'FORMATIONS.EMPTY.REFRESH' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Formation Details Modal -->
+  <div class="modal-overlay" *ngIf="selectedFormation" (click)="closeDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeDetails()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <div class="modal-header">
+        <div class="modal-image" [style.backgroundImage]="'url(' + selectedFormation.image + ')'">
+          <span class="modal-tag">{{ getEtatValue(selectedFormation.etat) }}</span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <h2>{{ getTitleValue(selectedFormation.title) }}</h2>
+        <p class="modal-description">{{ getDescriptionValue(selectedFormation.description) }}</p>
+
+        <div class="details-grid">
+          <div class="detail-item">
             <mat-icon>schedule</mat-icon>
-            <span>{{ formation.duree }} semaines</span>
+            <span><strong>{{ 'FORMATIONS.DETAILS.DURATION' | translate }}:</strong> {{ selectedFormation.duree }} {{ 'FORMATIONS.CARD.WEEKS' | translate }}</span>
           </div>
-          <div class="meta-item">
+          <div class="detail-item">
             <mat-icon>school</mat-icon>
-            <span>{{ formation.niveau }}</span>
+            <span><strong>{{ 'FORMATIONS.DETAILS.LEVEL' | translate }}:</strong> {{ getNiveauValue(selectedFormation.niveau) }}</span>
           </div>
-          <div class="meta-item">
+          <div class="detail-item">
             <mat-icon>person</mat-icon>
-            <span>{{ formation.nomFormateur }}</span>
+            <span><strong>{{ 'FORMATIONS.DETAILS.INSTRUCTOR' | translate }}:</strong> {{ selectedFormation.nomFormateur }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>event</mat-icon>
+            <span><strong>{{ 'FORMATIONS.DETAILS.START_DATE' | translate }}:</strong> {{ selectedFormation.dateDebut | date }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>event</mat-icon>
+            <span><strong>{{ 'FORMATIONS.DETAILS.END_DATE' | translate }}:</strong> {{ selectedFormation.dateFin | date }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>group</mat-icon>
+            <span><strong>{{ 'FORMATIONS.DETAILS.AVAILABLE_PLACES' | translate }}:</strong> {{ selectedFormation.placesDisponibles }}</span>
           </div>
         </div>
 
-        <div class="formation-price">
-          <div class="price-item">
-            <span class="amount">{{ formation.prix | currency:'EUR' }}</span>
-          </div>
-          <div class="price-item">
-            <span class="amount">{{ formation.prix * 3.3 | currency:'TND' }}</span>
-          </div>
+        <div class="prerequisites-section" *ngIf="getPrerequisValue(selectedFormation.prerequis)">
+          <h4>{{ 'FORMATIONS.DETAILS.PREREQUISITES' | translate }}</h4>
+          <p>{{ getPrerequisValue(selectedFormation.prerequis) }}</p>
         </div>
 
-        <div class="action-buttons">
-          <button class="btn btn-primary" (click)="openDetails(formation)">
-            <mat-icon>info</mat-icon>
-            Détails
-          </button>
-          <button class="btn btn-secondary" (click)="register(formation)">
+        <div class="program-section" *ngIf="getProgrammeValue(selectedFormation.programme)">
+          <h4>{{ 'FORMATIONS.DETAILS.PROGRAM' | translate }}</h4>
+          <p>{{ getProgrammeValue(selectedFormation.programme) }}</p>
+        </div>
+
+        <div class="price-section">
+          <div class="price-info">
+            <div class="modal-price">
+              <div class="price-item">
+                <span class="amount">{{ selectedFormation.prix | currency:'EUR' }}</span>
+              </div>
+              <div class="price-item">
+                <span class="amount">{{ selectedFormation.prix * 3.3 | currency:'TND' }}</span>
+              </div>
+            </div>
+            <span class="price-note">{{ 'FORMATIONS.DETAILS.PRICE_INCLUSIVE' | translate }}</span>
+          </div>
+          <button class="btn btn-primary" [routerLink]="'signin'">
             <mat-icon>how_to_reg</mat-icon>
-            S'inscrire
-          </button>
-        </div>
-
-        <!-- Admin Actions -->
-        <div class="admin-card-actions" *ngIf="isLoggedInAndAdmin(userRole$ | async)">
-          <button class="admin-card-btn edit-btn" (click)="editFormation(formation, $event)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button class="admin-card-btn delete-btn" (click)="deleteFormation(formation, $event)">
-            <mat-icon>delete</mat-icon>
+            {{ 'FORMATIONS.DETAILS.REGISTER_NOW' | translate }}
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && filteredFormations.length === 0 && !errorMessage">
-    <mat-icon>school</mat-icon>
-    <h3>Aucune formation disponible</h3>
-    <p>Il n'y a actuellement aucune formation disponible dans notre catalogue.</p>
-    <button class="btn btn-primary" (click)="loadFormations()">
-      <mat-icon>refresh</mat-icon>
-      Rafraîchir
-    </button>
-  </div>
-</div>
+  <!-- Formation Form Dialog -->
+  <div class="modal-overlay" *ngIf="showFormationForm" (click)="closeFormationForm()">
+    <div class="modal-content form-modal" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeFormationForm()">
+        <mat-icon>close</mat-icon>
+      </button>
 
-<!-- Formation Details Modal -->
-<div class="modal-overlay" *ngIf="selectedFormation" (click)="closeDetails()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <button class="close-btn" (click)="closeDetails()">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <div class="modal-header">
-      <div class="modal-image" [style.backgroundImage]="'url(' + (selectedFormation.imageUrl || selectedFormation.image) + ')'">
-        <span class="modal-tag">{{ selectedFormation.etat }}</span>
-      </div>
-    </div>
-
-    <div class="modal-body">
-      <h2>{{ selectedFormation.title }}</h2>
-      <p class="modal-description">{{ selectedFormation.description }}</p>
-
-      <div class="details-grid">
-        <div class="detail-item">
-          <mat-icon>schedule</mat-icon>
-          <span><strong>Durée:</strong> {{ selectedFormation.duree }} semaines</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>school</mat-icon>
-          <span><strong>Niveau:</strong> {{ selectedFormation.niveau }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>person</mat-icon>
-          <span><strong>Formateur:</strong> {{ selectedFormation.nomFormateur }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>event</mat-icon>
-          <span><strong>Date de début:</strong> {{ selectedFormation.dateDebut | date }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>event</mat-icon>
-          <span><strong>Date de fin:</strong> {{ selectedFormation.dateFin | date }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>group</mat-icon>
-          <span><strong>Places disponibles:</strong> {{ selectedFormation.placesDisponibles }}</span>
-        </div>
-      </div>
-
-      <div class="price-section">
-        <div class="price-info">
-          <div class="modal-price">
-            <div class="price-item">
-              <span class="amount">{{ selectedFormation.prix | currency:'EUR' }}</span>
-            </div>
-            <div class="price-item">
-              <span class="amount">{{ selectedFormation.prix * 3.3 | currency:'TND' }}</span>
+      <div class="modal-body">
+        <h2>{{ editMode ? ('FORMATIONS.FORM.EDIT_TITLE' | translate) : ('FORMATIONS.FORM.ADD_TITLE' | translate) }}</h2>
+        
+        <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
+          <!-- Title Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.TITLE_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="titleFr">{{ 'FORMATIONS.FORM.TITLE_FR' | translate }}</label>
+                <input type="text" id="titleFr" formControlName="titleFr" class="form-control" matInput>
+              </div>
+              <div class="form-group half">
+                <label for="titleEn">{{ 'FORMATIONS.FORM.TITLE_EN' | translate }}</label>
+                <input type="text" id="titleEn" formControlName="titleEn" class="form-control" matInput>
+              </div>
             </div>
           </div>
-          <span class="price-note">Prix TTC</span>
-        </div>
-        <button class="btn btn-primary" (click)="register(selectedFormation)">
-          <mat-icon>how_to_reg</mat-icon>
-          S'inscrire maintenant
+
+          <!-- Description Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.DESCRIPTION_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="descriptionFr">{{ 'FORMATIONS.FORM.DESCRIPTION_FR' | translate }}</label>
+                <textarea id="descriptionFr" formControlName="descriptionFr" class="form-control" rows="4"></textarea>
+              </div>
+              <div class="form-group half">
+                <label for="descriptionEn">{{ 'FORMATIONS.FORM.DESCRIPTION_EN' | translate }}</label>
+                <textarea id="descriptionEn" formControlName="descriptionEn" class="form-control" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Basic Info -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.BASIC_INFO' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="prix">{{ 'FORMATIONS.FORM.PRICE' | translate }}</label>
+                <input type="number" id="prix" formControlName="prix" class="form-control" matInput>
+              </div>
+              <div class="form-group half">
+                <label for="duree">{{ 'FORMATIONS.FORM.DURATION_WEEKS' | translate }}</label>
+                <input type="number" id="duree" formControlName="duree" class="form-control" matInput>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="nomFormateur">{{ 'FORMATIONS.FORM.INSTRUCTOR' | translate }}</label>
+                <input type="text" id="nomFormateur" formControlName="nomFormateur" class="form-control" matInput>
+              </div>
+              <div class="form-group half">
+                <label for="placesDisponibles">{{ 'FORMATIONS.FORM.AVAILABLE_PLACES' | translate }}</label>
+                <input type="number" id="placesDisponibles" formControlName="placesDisponibles" class="form-control" matInput>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.LEVEL_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="niveauFr">{{ 'FORMATIONS.FORM.LEVEL_FR' | translate }}</label>
+                <mat-select id="niveauFr" formControlName="niveauFr" class="form-control">
+                  <mat-option value="Débutant">Débutant</mat-option>
+                  <mat-option value="Intermédiaire">Intermédiaire</mat-option>
+                  <mat-option value="Avancé">Avancé</mat-option>
+                </mat-select>
+              </div>
+              <div class="form-group half">
+                <label for="niveauEn">{{ 'FORMATIONS.FORM.LEVEL_EN' | translate }}</label>
+                <mat-select id="niveauEn" formControlName="niveauEn" class="form-control">
+                  <mat-option value="Beginner">Beginner</mat-option>
+                  <mat-option value="Intermediate">Intermediate</mat-option>
+                  <mat-option value="Advanced">Advanced</mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.MODE_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="etatFr">{{ 'FORMATIONS.FORM.MODE_FR' | translate }}</label>
+                <mat-select id="etatFr" formControlName="etatFr" class="form-control">
+                  <mat-option value="En ligne">En ligne</mat-option>
+                  <mat-option value="Présentiel">Présentiel</mat-option>
+                </mat-select>
+              </div>
+              <div class="form-group half">
+                <label for="etatEn">{{ 'FORMATIONS.FORM.MODE_EN' | translate }}</label>
+                <mat-select id="etatEn" formControlName="etatEn" class="form-control">
+                  <mat-option value="Online">Online</mat-option>
+                  <mat-option value="In-person">In-person</mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dates -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.DATES_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="dateDebut">{{ 'FORMATIONS.FORM.START_DATE' | translate }}</label>
+                <input type="date" id="dateDebut" formControlName="dateDebut" class="form-control" matInput>
+              </div>
+              <div class="form-group half">
+                <label for="dateFin">{{ 'FORMATIONS.FORM.END_DATE' | translate }}</label>
+                <input type="date" id="dateFin" formControlName="dateFin" class="form-control" matInput>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prerequisites Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.PREREQUISITES_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="prerequisFr">{{ 'FORMATIONS.FORM.PREREQUISITES_FR' | translate }}</label>
+                <textarea id="prerequisFr" formControlName="prerequisFr" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-group half">
+                <label for="prerequisEn">{{ 'FORMATIONS.FORM.PREREQUISITES_EN' | translate }}</label>
+                <textarea id="prerequisEn" formControlName="prerequisEn" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Program Section -->
+          <div class="form-section">
+            <h4>{{ 'FORMATIONS.FORM.PROGRAM_SECTION' | translate }}</h4>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="programmeFr">{{ 'FORMATIONS.FORM.PROGRAM_FR' | translate }}</label>
+                <textarea id="programmeFr" formControlName="programmeFr" class="form-control" rows="4"></textarea>
+              </div>
+              <div class="form-group half">
+                <label for="programmeEn">{{ 'FORMATIONS.FORM.PROGRAM_EN' | translate }}</label>
+                <textarea id="programmeEn" formControlName="programmeEn" class="form-control" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="form-section">
+            <div class="form-group">
+              <label for="image">{{ 'FORMATIONS.FORM.IMAGE_URL' | translate }}</label>
+              <input type="text" id="image" formControlName="image" class="form-control" matInput>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="closeFormationForm()">
+              {{ 'FORMATIONS.FORM.CANCEL' | translate }}
+            </button>
+            <button type="submit" class="save-btn" [disabled]="!formationForm.valid">
+              {{ editMode ? ('FORMATIONS.FORM.UPDATE' | translate) : ('FORMATIONS.FORM.ADD' | translate) }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Dialog -->
+  <div class="modal-overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()">
+    <div class="modal-content confirmation-modal" (click)="$event.stopPropagation()">
+      <h3>{{ 'FORMATIONS.DELETE.CONFIRM_TITLE' | translate }}</h3>
+      <p>{{ 'FORMATIONS.DELETE.CONFIRM_MESSAGE' | translate }}</p>
+      <div class="confirmation-actions">
+        <button class="btn btn-secondary" (click)="cancelDelete()">
+          {{ 'FORMATIONS.DELETE.CANCEL' | translate }}
+        </button>
+        <button class="delete-confirm-btn" (click)="confirmDelete()">
+          {{ 'FORMATIONS.DELETE.CONFIRM' | translate }}
         </button>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Formation Form Dialog -->
-<div class="modal-overlay" *ngIf="showFormationForm" (click)="closeFormationForm()">
-  <div class="modal-content form-modal" (click)="$event.stopPropagation()">
-    <button class="close-btn" (click)="closeFormationForm()">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <div class="modal-body">
-      <h2>{{ editMode ? 'Modifier la formation' : 'Ajouter une formation' }}</h2>
-      
-      <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
-        <div class="form-group">
-          <label for="title">Titre</label>
-          <input type="text" id="title" formControlName="title" class="form-control" matInput>
-        </div>
-
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group half">
-            <label for="prix">Prix</label>
-            <input type="number" id="prix" formControlName="prix" class="form-control" matInput>
-          </div>
-
-          <div class="form-group half">
-            <label for="duree">Durée (semaines)</label>
-            <input type="number" id="duree" formControlName="duree" class="form-control" matInput>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group half">
-            <label for="nomFormateur">Formateur</label>
-            <input type="text" id="nomFormateur" formControlName="nomFormateur" class="form-control" matInput>
-          </div>
-
-          <div class="form-group half">
-            <label for="niveau">Niveau</label>
-            <mat-select id="niveau" formControlName="niveau" class="form-control">
-              <mat-option value="Débutant">Débutant</mat-option>
-              <mat-option value="Intermédiaire">Intermédiaire</mat-option>
-              <mat-option value="Avancé">Avancé</mat-option>
-            </mat-select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group half">
-            <label for="etat">Mode</label>
-            <mat-select id="etat" formControlName="etat" class="form-control">
-              <mat-option value="En ligne">En ligne</mat-option>
-              <mat-option value="Présentiel">Présentiel</mat-option>
-            </mat-select>
-          </div>
-
-          <div class="form-group half">
-            <label for="placesDisponibles">Places disponibles</label>
-            <input type="number" id="placesDisponibles" formControlName="placesDisponibles" class="form-control" matInput>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group half">
-            <label for="dateDebut">Date de début</label>
-            <input type="date" id="dateDebut" formControlName="dateDebut" class="form-control" matInput>
-          </div>
-
-          <div class="form-group half">
-            <label for="dateFin">Date de fin</label>
-            <input type="date" id="dateFin" formControlName="dateFin" class="form-control" matInput>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="prerequis">Prérequis</label>
-          <textarea id="prerequis" formControlName="prerequis" class="form-control" rows="3"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="programme">Programme</label>
-          <textarea id="programme" formControlName="programme" class="form-control" rows="4"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="image">Image URL</label>
-          <input type="text" id="image" formControlName="image" class="form-control" matInput>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="cancel-btn" (click)="closeFormationForm()">Annuler</button>
-          <button type="submit" class="save-btn" [disabled]="!formationForm.valid">
-            {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Delete Confirmation Dialog -->
-<div class="modal-overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()">
-  <div class="modal-content confirmation-modal" (click)="$event.stopPropagation()">
-    <h3>Confirmer la suppression</h3>
-    <p>Êtes-vous sûr de vouloir supprimer cette formation ?</p>
-    <div class="confirmation-actions">
-      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
-      <button class="delete-confirm-btn" (click)="confirmDelete()">Supprimer</button>
-    </div>
-  </div>
-</div>

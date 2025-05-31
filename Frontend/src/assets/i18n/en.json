@@ -151,31 +151,130 @@
       "PARTNERS": "Trusted Partners"
     }
   },
-  "formations": {
-    "searchPlaceholder": "Search for a training",
-    "placeholder": "Title, description...",
-    "level": "Level",
-    "allLevels": "All levels",
-    "beginner": "Beginner",
-    "intermediate": "Intermediate",
-    "advanced": "Advanced",
-    "mode": "Mode",
-    "allModes": "All modes",
-    "online": "Online",
-    "onsite": "Onsite",
-    "sortBy": "Sort by",
-    "defaultSort": "Default",
-    "priceAsc": "Price (low to high)",
-    "priceDesc": "Price (high to low)",
-    "durationAsc": "Duration (shortest)",
-    "durationDesc": "Duration (longest)",
-    "addFormation": "Add training",
-    "weeks": "weeks",
-    "details": "Details",
-    "register": "Register",
-    "noFormationTitle": "No training available",
-    "noFormationDescription": "There are currently no trainings in our catalog.",
-    "refresh": "Refresh"
+  "SIGNIN": {
+    "SIGNIN": {
+      "TITLE": "Inscription à la formation",
+      "PRICE_LABEL": "Prix",
+      "SUBMIT_BUTTON": "S'inscrire"
+    },
+    "FORM": {
+      "FIRST_NAME": "Prénom",
+      "FIRST_NAME_PLACEHOLDER": "Votre prénom",
+      "LAST_NAME": "Nom",
+      "LAST_NAME_PLACEHOLDER": "Votre nom",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "Votre adresse email",
+      "PHONE": "Téléphone",
+      "PHONE_PLACEHOLDER": "Votre numéro de téléphone",
+      "ADDRESS": "Adresse",
+      "ADDRESS_PLACEHOLDER": "Votre adresse",
+      "EDUCATION_LEVEL": "Niveau d'études",
+      "AGE": "Âge",
+      "AGE_PLACEHOLDER": "Votre âge",
+      "STUDENT_CLASS": "Classe",
+      "STUDENT_CLASS_PLACEHOLDER": "Votre classe actuelle"
+    },
+    "EDUCATION_LEVELS": {
+      "PRIMARY": "Primaire",
+      "SECONDARY": "Collège",
+      "HIGH_SCHOOL": "Lycée",
+      "BACHELOR": "Licence",
+      "MASTER": "Master",
+      "DOCTORATE": "Doctorat",
+      "OTHER": "Autre"
+    },
+    "VALIDATION": {
+      "FIRST_NAME_REQUIRED": "Le prénom est requis",
+      "FIRST_NAME_MIN_LENGTH": "Le prénom doit contenir au moins 2 caractères",
+      "LAST_NAME_REQUIRED": "Le nom est requis",
+      "LAST_NAME_MIN_LENGTH": "Le nom doit contenir au moins 2 caractères",
+      "EMAIL_REQUIRED": "L'email est requis",
+      "EMAIL_INVALID": "Format d'email invalide",
+      "PHONE_REQUIRED": "Le numéro de téléphone est requis",
+      "PHONE_INVALID": "Format de téléphone invalide",
+      "ADDRESS_REQUIRED": "L'adresse est requise",
+      "EDUCATION_LEVEL_REQUIRED": "Le niveau d'études est requis",
+      "AGE_REQUIRED": "L'âge est requis",
+      "AGE_MIN": "L'âge minimum est de 16 ans",
+      "AGE_MAX": "L'âge maximum est de 100 ans",
+      "STUDENT_CLASS_REQUIRED": "La classe est requise"
+    },
+    "MESSAGES": {
+      "SUBSCRIPTION_SUCCESS": "Inscription réussie ! Vous recevrez un email de confirmation.",
+      "SUBSCRIPTION_ERROR": "Erreur d'inscription. Veuillez réessayer."
+    },
+    "COMMON": {
+      "CLOSE": "Fermer"
+    }
+  },
+  "FORMATIONS": {
+    "SEARCH": {
+      "PLACEHOLDER": "Search formations",
+      "HINT": "Enter title or instructor"
+    },
+    "FILTER": {
+      "LEVEL": "Level",
+      "MODE": "Mode",
+      "SORT_BY": "Sort by",
+      "ALL_LEVELS": "All levels",
+      "ALL_MODES": "All modes"
+    },
+    "LEVEL": {
+      "BEGINNER": "Beginner",
+      "INTERMEDIATE": "Intermediate",
+      "ADVANCED": "Advanced"
+    },
+    "MODE": {
+      "ONLINE": "Online",
+      "IN_PERSON": "In-person"
+    },
+    "SORT": {
+      "DEFAULT": "Default",
+      "PRICE_ASC": "Price: Low to High",
+      "PRICE_DESC": "Price: High to Low",
+      "DURATION_ASC": "Duration: Short to Long",
+      "DURATION_DESC": "Duration: Long to Short"
+    },
+    "ADMIN": {
+      "ADD_FORMATION": "Add Formation"
+    },
+    "CARD": {
+      "DETAILS": "Details",
+      "REGISTER": "Register",
+      "WEEKS": "weeks"
+    },
+    "DETAILS": {
+      "DURATION": "Duration",
+      "LEVEL": "Level",
+      "INSTRUCTOR": "Instructor",
+      "START_DATE": "Start Date",
+      "END_DATE": "End Date",
+      "AVAILABLE_PLACES": "Available Places",
+      "PREREQUISITES": "Prerequisites",
+      "PROGRAM": "Program",
+      "PRICE_INCLUSIVE": "Price includes all fees",
+      "REGISTER_NOW": "Register Now"
+    },
+    "EMPTY": {
+      "TITLE": "No formations found",
+      "MESSAGE": "Try adjusting your filters or refresh the list.",
+      "REFRESH": "Refresh"
+    },
+    "FORM": {
+      "ADD_TITLE": "Add New Formation",
+      "EDIT_TITLE": "Edit Formation",
+      "TITLE_SECTION": "Titles",
+      "TITLE_FR": "Title (French)",
+      "TITLE_EN": "Title (English)",
+      "DESCRIPTION_SECTION": "Descriptions",
+      "DESCRIPTION_FR": "Description (French)",
+      "DESCRIPTION_EN": "Description (English)",
+      "BASIC_INFO": "Basic Information",
+      "PRICE": "Price (€)",
+      "DURATION_WEEKS": "Duration (weeks)",
+      "INSTRUCTOR": "Instructor",
+      "AVAILABLE_PLACES": "Available Places"
+    }
   }
 }
 
