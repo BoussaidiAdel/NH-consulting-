@@ -43,8 +43,8 @@ export class FormationsComponent implements OnInit, OnDestroy {
 
   // Search and filter
   searchTerm: string = '';
-  selectedNiveau: string = '';
-  selectedEtat: string = '';
+  selectedNiveau: { fr: string; en: string; } | null = null;
+  selectedEtat: { fr: string; en: string; } | null = null;
   sortBy: string = '';
 
   constructor(
@@ -117,10 +117,10 @@ export class FormationsComponent implements OnInit, OnDestroy {
       image: ['', Validators.required],
       duree: ['', [Validators.required, Validators.min(1)]],
       nomFormateur: ['', Validators.required],
-      etatFr: ['', Validators.required],
-      etatEn: ['', Validators.required],
-      niveauFr: ['', Validators.required],
-      niveauEn: ['', Validators.required],
+      etatFr: [null, Validators.required],
+      etatEn: [null, Validators.required],
+      niveauFr: [null, Validators.required],
+      niveauEn: [null, Validators.required],
       prerequisFr: [''],
       prerequisEn: [''],
       programmeFr: [''],
@@ -164,10 +164,8 @@ export class FormationsComponent implements OnInit, OnDestroy {
     if (this.selectedNiveau) {
       filtered = filtered.filter(formation => {
         const niveauValue = this.getNiveauValue(formation.niveau);
-        return niveauValue === this.selectedNiveau || 
-               (this.selectedNiveau === 'Débutant' && niveauValue === 'Beginner') ||
-               (this.selectedNiveau === 'Intermédiaire' && niveauValue === 'Intermediate') ||
-               (this.selectedNiveau === 'Avancé' && niveauValue === 'Advanced');
+        const selectedNiveauValue = this.getNiveauValue(this.selectedNiveau!);
+        return niveauValue === selectedNiveauValue;
       });
     }
 
@@ -175,9 +173,8 @@ export class FormationsComponent implements OnInit, OnDestroy {
     if (this.selectedEtat) {
       filtered = filtered.filter(formation => {
         const etatValue = this.getEtatValue(formation.etat);
-        return etatValue === this.selectedEtat ||
-               (this.selectedEtat === 'En ligne' && etatValue === 'Online') ||
-               (this.selectedEtat === 'Présentiel' && etatValue === 'In-person');
+        const selectedEtatValue = this.getEtatValue(this.selectedEtat!);
+        return etatValue === selectedEtatValue;
       });
     }
 
@@ -248,10 +245,10 @@ export class FormationsComponent implements OnInit, OnDestroy {
       image: formation.image,
       duree: formation.duree,
       nomFormateur: formation.nomFormateur,
-      etatFr: typeof formation.etat === 'string' ? formation.etat : formation.etat.fr,
-      etatEn: typeof formation.etat === 'string' ? formation.etat : formation.etat.en,
-      niveauFr: typeof formation.niveau === 'string' ? formation.niveau : formation.niveau.fr,
-      niveauEn: typeof formation.niveau === 'string' ? formation.niveau : formation.niveau.en,
+      etatFr: formation.etat,
+      etatEn: formation.etat,
+      niveauFr: formation.niveau,
+      niveauEn: formation.niveau,
       active: formation.active,
       dateDebut: formation.dateDebut,
       dateFin: formation.dateFin,
@@ -289,14 +286,8 @@ export class FormationsComponent implements OnInit, OnDestroy {
         image: formValue.image,
         duree: formValue.duree,
         nomFormateur: formValue.nomFormateur,
-        etat: {
-          fr: formValue.etatFr,
-          en: formValue.etatEn
-        },
-        niveau: {
-          fr: formValue.niveauFr,
-          en: formValue.niveauEn
-        },
+        etat: formValue.etatFr,
+        niveau: formValue.niveauFr,
         prerequis: {
           fr: formValue.prerequisFr,
           en: formValue.prerequisEn

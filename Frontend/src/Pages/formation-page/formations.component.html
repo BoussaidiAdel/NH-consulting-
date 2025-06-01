@@ -14,7 +14,7 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'FORMATIONS.FILTER.LEVEL' | translate }}</mat-label>
           <mat-select [(ngModel)]="selectedNiveau" (selectionChange)="filterByNiveau()">
-            <mat-option value="">{{ 'FORMATIONS.FILTER.ALL_LEVELS' | translate }}</mat-option>
+            <mat-option [value]="null">{{ 'FORMATIONS.FILTER.ALL_LEVELS' | translate }}</mat-option>
             <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">{{ 'FORMATIONS.LEVEL.BEGINNER' | translate }}</mat-option>
             <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">{{ 'FORMATIONS.LEVEL.INTERMEDIATE' | translate }}</mat-option>
             <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">{{ 'FORMATIONS.LEVEL.ADVANCED' | translate }}</mat-option>
@@ -26,7 +26,7 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'FORMATIONS.FILTER.MODE' | translate }}</mat-label>
           <mat-select [(ngModel)]="selectedEtat" (selectionChange)="filterByEtat()">
-            <mat-option value="">{{ 'FORMATIONS.FILTER.ALL_MODES' | translate }}</mat-option>
+            <mat-option [value]="null">{{ 'FORMATIONS.FILTER.ALL_MODES' | translate }}</mat-option>
             <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">{{ 'FORMATIONS.MODE.ONLINE' | translate }}</mat-option>
             <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">{{ 'FORMATIONS.MODE.IN_PERSON' | translate }}</mat-option>
           </mat-select>
@@ -70,7 +70,7 @@
     <div class="formations-grid" *ngIf="!isLoading && filteredFormations.length > 0">
       <div class="formation-card" *ngFor="let formation of filteredFormations">
         <div class="formation-image" [style.backgroundImage]="'url(' + formation.image + ')'">
-          <span class="status-badge" [ngClass]="getEtatValue(formation.etat)?.toLowerCase() || ''">
+          <span class="status-badge" [ngClass]="getEtatValue(formation.etat).toLowerCase() || ''">
             {{ getEtatValue(formation.etat) }}
           </span>
         </div>
@@ -288,17 +288,17 @@
               <div class="form-group half">
                 <label for="niveauFr">{{ 'FORMATIONS.FORM.LEVEL_FR' | translate }}</label>
                 <mat-select id="niveauFr" formControlName="niveauFr" class="form-control">
-                  <mat-option value="Débutant">Débutant</mat-option>
-                  <mat-option value="Intermédiaire">Intermédiaire</mat-option>
-                  <mat-option value="Avancé">Avancé</mat-option>
+                  <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">Débutant</mat-option>
+                  <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">Intermédiaire</mat-option>
+                  <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">Avancé</mat-option>
                 </mat-select>
               </div>
               <div class="form-group half">
                 <label for="niveauEn">{{ 'FORMATIONS.FORM.LEVEL_EN' | translate }}</label>
                 <mat-select id="niveauEn" formControlName="niveauEn" class="form-control">
-                  <mat-option value="Beginner">Beginner</mat-option>
-                  <mat-option value="Intermediate">Intermediate</mat-option>
-                  <mat-option value="Advanced">Advanced</mat-option>
+                  <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">Beginner</mat-option>
+                  <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">Intermediate</mat-option>
+                  <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">Advanced</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -311,15 +311,15 @@
               <div class="form-group half">
                 <label for="etatFr">{{ 'FORMATIONS.FORM.MODE_FR' | translate }}</label>
                 <mat-select id="etatFr" formControlName="etatFr" class="form-control">
-                  <mat-option value="En ligne">En ligne</mat-option>
-                  <mat-option value="Présentiel">Présentiel</mat-option>
+                  <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">En ligne</mat-option>
+                  <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">Présentiel</mat-option>
                 </mat-select>
               </div>
               <div class="form-group half">
                 <label for="etatEn">{{ 'FORMATIONS.FORM.MODE_EN' | translate }}</label>
                 <mat-select id="etatEn" formControlName="etatEn" class="form-control">
-                  <mat-option value="Online">Online</mat-option>
-                  <mat-option value="In-person">In-person</mat-option>
+                  <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">Online</mat-option>
+                  <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">In-person</mat-option>
                 </mat-select>
               </div>
             </div>

@@ -347,12 +347,16 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  display: block;
 }
 
 .modal-tag {
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  left: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   font-size: 0.875rem;
