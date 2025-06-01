@@ -64,6 +64,10 @@ export class FormationsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.selectedLanguage$.subscribe(language => {
         this.currentLanguage = language;
+        // Update selected formation if it exists
+        if (this.selectedFormation) {
+          this.selectedFormation = { ...this.selectedFormation };
+        }
         this.applyFilters();
       })
     );
