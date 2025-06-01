@@ -299,7 +299,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
+  isolation: isolate;
 }
 
 .modal-content {
@@ -310,6 +311,8 @@
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  z-index: 10000;
+  transform: translateZ(0);
 }
 
 .close-btn {

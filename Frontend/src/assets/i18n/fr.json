@@ -240,7 +240,8 @@
     "CARD": {
       "DETAILS": "Détails",
       "REGISTER": "S'inscrire",
-      "WEEKS": "semaines"
+      "WEEKS": "semaines",
+      "PLACES": "places disponibles"
     },
     "DETAILS": {
       "DURATION": "Durée",
@@ -272,7 +273,33 @@
       "PRICE": "Prix (€)",
       "DURATION_WEEKS": "Durée (semaines)",
       "INSTRUCTOR": "Formateur",
-      "AVAILABLE_PLACES": "Places disponibles"
+      "AVAILABLE_PLACES": "Places disponibles",
+      "LEVEL_SECTION": "Niveau",
+      "LEVEL_FR": "Niveau (Français)",
+      "LEVEL_EN": "Niveau (Anglais)",
+      "MODE_SECTION": "Mode",
+      "MODE_FR": "Mode (Français)",
+      "MODE_EN": "Mode (Anglais)",
+      "DATES_SECTION": "Dates",
+      "START_DATE": "Date de début",
+      "END_DATE": "Date de fin",
+      "PREREQUISITES_SECTION": "Pré-requis",
+      "PREREQUISITES_FR": "Pré-requis (Français)",
+      "PREREQUISITES_EN": "Pré-requis (Anglais)",
+      "PROGRAM_SECTION": "Programme",
+      "PROGRAM_FR": "Programme (Français)",
+      "PROGRAM_EN": "Programme (Anglais)",
+      "IMAGE_URL": "URL de l'image",
+      "CANCEL": "Annuler",
+      "ADD": "Ajouter",
+      "UPDATE": "Mettre à jour",
+      "SAVE": "Enregistrer"
+    },
+    "DELETE": {
+      "CONFIRM_TITLE": "Confirmer la suppression",
+      "CONFIRM_MESSAGE": "Êtes-vous sûr de vouloir supprimer cette formation ? Cette action ne peut pas être annulée.",
+      "CANCEL": "Annuler",
+      "CONFIRM": "Supprimer"
     }
   }
 }

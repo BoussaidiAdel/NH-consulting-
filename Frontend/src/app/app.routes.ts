@@ -7,6 +7,7 @@ import { UserManagementComponent } from '../Pages/user-management/user-managemen
 import { SignInComponent } from '../Pages/signin-page/signin.component';
 
 export const routes: Routes = [
+    { path: '', redirectTo: '/Home', pathMatch: 'full' },
     { path: 'Home' , component : HomepageComponent},
     { path:'contact' , component : ContactComponent},
     {path : 'formation' , component : FormationsComponent},

@@ -28,10 +28,7 @@ export class FormationService {
   }
 
   addFormation(formation: Formation): Observable<Formation> {
-    return this.http.post<Formation>(`${this.apiUrl}/add`, formation).pipe(
-      tap(_ => console.log('Formation added successfully')),
-      catchError(this.handleError<Formation>('addFormation'))
-    );
+    return this.http.post<Formation>(`${this.apiUrl}/formations`, formation);
   }
 
   updateFormation(formation: Formation): Observable<Formation> {
