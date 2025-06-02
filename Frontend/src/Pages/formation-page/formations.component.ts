@@ -86,7 +86,7 @@ export class FormationsComponent implements OnInit, OnDestroy {
 
   // Helper methods for getting localized values
   getTitleValue(title: { fr: string; en: string }): string {
-    return title[this.currentLanguage as keyof typeof title] || title.fr;
+    return title[this.currentLanguage as keyof typeof title] || title.en;
   }
 
   getDescriptionValue(description: { fr: string; en: string }): string {

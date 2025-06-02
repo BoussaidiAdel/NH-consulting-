@@ -129,13 +129,15 @@
 
     <!-- Empty State -->
     <div class="empty-state" *ngIf="!isLoading && filteredFormations.length === 0 && !errorMessage">
-      <mat-icon>school</mat-icon>
-      <h3>{{ 'FORMATIONS.EMPTY.TITLE' | translate }}</h3>
-      <p>{{ 'FORMATIONS.EMPTY.MESSAGE' | translate }}</p>
-      <button class="btn btn-primary" (click)="loadFormations()">
-        <mat-icon>refresh</mat-icon>
-        {{ 'FORMATIONS.EMPTY.REFRESH' | translate }}
-      </button>
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">school</mat-icon>
+        <h3>{{ 'FORMATIONS.EMPTY.TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.EMPTY.MESSAGE' | translate }}</p>
+        <button class="refresh-btn" (click)="loadFormations()">
+          <mat-icon class="refresh-icon">refresh</mat-icon>
+          <span>{{ 'FORMATIONS.EMPTY.REFRESH' | translate }}</span>
+        </button>
+      </div>
     </div>
   </div>
 
