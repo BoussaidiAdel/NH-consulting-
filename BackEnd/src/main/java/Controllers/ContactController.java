@@ -35,7 +35,8 @@ public class ContactController {
         try {
             emailService.sendContactEmail(request);
 
-            ContactResponse response = new ContactResponse(true, "Your message has been sent successfully!");
+            ContactResponse response;
+            response = new ContactResponse(true, "Your message has been sent successfully!");
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {

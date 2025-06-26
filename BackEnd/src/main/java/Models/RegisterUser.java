@@ -16,6 +16,37 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterUser {
+    public @NotEmpty(message = "First name is required") String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(@NotEmpty(message = "First name is required") String firstName) {
+        this.firstName = firstName;
+    }
+
+    public @NotEmpty(message = "Last name is required") String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(@NotEmpty(message = "Last name is required") String lastName) {
+        this.lastName = lastName;
+    }
+
+    public @NotEmpty(message = "Email is required") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotEmpty(message = "Email is required") String email) {
+        this.email = email;
+    }
+
+    public @NotEmpty(message = "Password is required") String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotEmpty(message = "Password is required") String password) {
+        this.password = password;
+    }
 
     @NotEmpty(message = "First name is required")
     private String firstName;
