@@ -1,13 +1,17 @@
     package Controllers;
 
     import Models.Formation;
+    import Models.Inscri;
+    import Services.EmailService;
     import Services.FormationService;
+    import Services.InscriptionService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
 
     import java.util.List;
+    import java.util.Map;
     import java.util.Optional;
 
     @RestController
@@ -78,4 +82,35 @@
         public List<Formation> getFormationsByNiveau(@PathVariable String niveau) {
             return formationService.getFormationsByNiveau(niveau);
         }
+        @Autowired
+        private InscriptionService inscriptionService;
+
+        @Autowired
+        private EmailService emailService;
+
+        @PostMapping("/subscribe")
+        public ResponseEntity<String> subscribe(@RequestBody Inscri inscription) {
+            if (inscription.getFormationId() == null || inscription.getEmail() == null) {
+                return new ResponseEntity<>("formationId ou email manquant", HttpStatus.BAD_REQUEST);
+            }
+
+            inscription.setDateInscription(java.time.LocalDate.now().toString());
+            inscriptionService.saveInscription(inscription);
+
+            // Récupérer le titre de la formation pour le mail
+            Optional<Formation> formationOpt = formationService.getFormationById(inscription.getFormationId());
+            String formationTitle = formationOpt.map(f -> f.getTitle().get("fr")) // ou autre langue
+                    .orElse("formation");
+
+            emailService.sendFormationSubscriptionConfirmationEmail(
+                    inscription.getEmail(),
+                    inscription.getFirstName(),
+                    formationTitle
+            );
+
+            System.out.println("User " + inscription.getEmail() + " inscrit à la formation " + inscription.getFormationId());
+
+            return new ResponseEntity<>("Inscription réussie et email envoyé", HttpStatus.OK);
+        }
+
     }

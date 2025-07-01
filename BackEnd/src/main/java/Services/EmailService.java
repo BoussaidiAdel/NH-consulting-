@@ -104,4 +104,33 @@ public class EmailService {
             // Don't rethrow - this is a secondary email and shouldn't affect the main flow
         }
     }
+    @Async
+    public void sendFormationSubscriptionConfirmationEmail(String userEmail, String firstName, String formationTitle) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(userEmail);
+            helper.setSubject("Confirmation d'inscription à la formation");
+
+            Context context = new Context();
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("firstName", firstName);
+            variables.put("formationTitle", formationTitle);
+            context.setVariables(variables);
+
+            // Le template Thymeleaf doit être créé dans src/main/resources/templates/subscribe-confirmation.html
+            String emailContent = templateEngine.process("subscribe-confirmation.html", context);
+            helper.setText(emailContent, true);
+
+            mailSender.send(message);
+            logger.info("Confirmation email sent to: {}", userEmail);
+
+        } catch (MessagingException e) {
+            logger.error("Failed to send formation subscription confirmation email", e);
+            // Ne pas rethrow pour ne pas casser le flux principal
+        }
+    }
+
 }

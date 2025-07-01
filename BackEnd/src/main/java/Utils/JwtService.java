@@ -5,6 +5,7 @@ import Exceptions.JwtInvalidException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,10 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
-@Slf4j
 public class JwtService {
+
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(JwtService.class);
 
     @Value("${jwt.secret-key}")
     private String jwtSecret;

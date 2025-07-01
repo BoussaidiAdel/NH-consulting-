@@ -32,7 +32,7 @@ public class ContactController {
     public ResponseEntity<ContactResponse> sendContactEmail(@Valid @RequestBody ContactRequest request) {
         logger.info("Received contact form submission from: {}", request.getEmail());
 
-        try {
+ try {
             emailService.sendContactEmail(request);
 
             ContactResponse response = new ContactResponse(true, "Your message has been sent successfully!");
