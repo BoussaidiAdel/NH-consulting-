@@ -3,13 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, timeout, retry, finalize } from 'rxjs/operators';
 import { ContactFormData, ContactResponse } from '../Models/Contact';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = 'http://localhost:8080/api/public/contact'; 
+  private apiUrl = `${environment.apiUrl}/public/contact`; 
   
   constructor(private http: HttpClient) {}
   
@@ -17,6 +18,16 @@ export class ContactService {
     return this.http.post<ContactResponse>(`${this.apiUrl}/send`, data)
       .pipe(
         timeout(15000), 
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  subscribeToFormation(subscriptionData: any) {
+    // subscriptionData must include formationTitle
+    return this.http.post(`${this.apiUrl}/subscribe`, subscriptionData)
+      .pipe(
+        timeout(15000),
         retry(1),
         catchError(this.handleError)
       );

@@ -105,30 +105,46 @@ public class EmailService {
         }
     }
     @Async
-    public void sendFormationSubscriptionConfirmationEmail(String userEmail, String firstName, String formationTitle) {
+    public void sendFormationSubscriptionConfirmationEmail(String userEmail, String firstName, String formationTitle,
+                                                          String lastName, String phone, String address, String educationLevel,
+                                                          Integer age, String studentClass) {
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setFrom(fromEmail);
-            helper.setTo(userEmail);
-            helper.setSubject("Confirmation d'inscription à la formation");
+            // Confirmation email to the user
+            MimeMessage userMessage = mailSender.createMimeMessage();
+            MimeMessageHelper userHelper = new MimeMessageHelper(userMessage, true, "UTF-8");
+            userHelper.setFrom(fromEmail);
+            userHelper.setTo(userEmail);
+            userHelper.setSubject("Confirmation d'inscription à la formation");
 
             Context context = new Context();
             Map<String, Object> variables = new HashMap<>();
             variables.put("firstName", firstName);
+            variables.put("lastName", lastName);
+            variables.put("phone", phone);
+            variables.put("address", address);
+            variables.put("educationLevel", educationLevel);
+            variables.put("age", age);
+            variables.put("studentClass", studentClass);
             variables.put("formationTitle", formationTitle);
             context.setVariables(variables);
 
-            // Le template Thymeleaf doit être créé dans src/main/resources/templates/subscribe-confirmation.html
-            String emailContent = templateEngine.process("subscribe-confirmation.html", context);
-            helper.setText(emailContent, true);
-
-            mailSender.send(message);
+            String emailContent = templateEngine.process("formation-subscription-confirmation.html", context);
+            userHelper.setText(emailContent, true);
+            mailSender.send(userMessage);
             logger.info("Confirmation email sent to: {}", userEmail);
 
+            // Notification email to the admin/recipient
+            MimeMessage adminMessage = mailSender.createMimeMessage();
+            MimeMessageHelper adminHelper = new MimeMessageHelper(adminMessage, true, "UTF-8");
+            adminHelper.setFrom(fromEmail);
+            adminHelper.setTo(toEmail);
+            adminHelper.setSubject("Nouvelle inscription à une formation");
+            adminHelper.setText(emailContent, true); // reuse the same content
+            mailSender.send(adminMessage);
+            logger.info("Notification email sent to admin: {}", toEmail);
+
         } catch (MessagingException e) {
-            logger.error("Failed to send formation subscription confirmation email", e);
+            logger.error("Failed to send formation subscription confirmation or admin notification email", e);
             // Ne pas rethrow pour ne pas casser le flux principal
         }
     }

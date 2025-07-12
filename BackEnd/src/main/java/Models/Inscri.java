@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "Inscriptions")
 public class Inscri {
     public String getId() {
         return id;
@@ -95,6 +94,14 @@ public class Inscri {
         this.dateInscription = dateInscription;
     }
 
+    public String getFormationTitle() {
+        return formationTitle;
+    }
+
+    public void setFormationTitle(String formationTitle) {
+        this.formationTitle = formationTitle;
+    }
+
     @Id
     private String id;
 
@@ -108,4 +115,5 @@ public class Inscri {
     private Integer age;
     private String studentClass;
     private String dateInscription;
+    private String formationTitle;
 }

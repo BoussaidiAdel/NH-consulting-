@@ -12,6 +12,6 @@ export const routes: Routes = [
     { path:'contact' , component : ContactComponent},
     {path : 'formation' , component : FormationsComponent},
     {path:'user-manage/:id' , component:UserManagementComponent},
-    {path:'signin' , component:SignInComponent},
+    {path:'signin/:id' , component:SignInComponent},
     { path: '**', component: ErrorPageComponent }
 ];

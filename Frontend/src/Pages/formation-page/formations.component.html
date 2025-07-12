@@ -108,7 +108,7 @@
               <mat-icon>info</mat-icon>
               {{ 'FORMATIONS.CARD.DETAILS' | translate }}
             </button>
-            <button class="btn btn-secondary" [routerLink]="'/signin'">
+            <button class="btn btn-secondary" [routerLink]="['/signin', formation.id]">
               <mat-icon>how_to_reg</mat-icon>
               {{ 'FORMATIONS.CARD.REGISTER' | translate }}
             </button>
@@ -207,7 +207,7 @@
             </div>
             <span class="price-note">{{ 'FORMATIONS.DETAILS.PRICE_INCLUSIVE' | translate }}</span>
           </div>
-          <button class="btn btn-primary" [routerLink]="'signin'">
+          <button class="btn btn-primary" [routerLink]="['/signin', selectedFormation.id]">
             <mat-icon>how_to_reg</mat-icon>
             {{ 'FORMATIONS.DETAILS.REGISTER_NOW' | translate }}
           </button>
@@ -290,17 +290,17 @@
               <div class="form-group half">
                 <label for="niveauFr">{{ 'FORMATIONS.FORM.LEVEL_FR' | translate }}</label>
                 <mat-select id="niveauFr" formControlName="niveauFr" class="form-control">
-                  <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">Débutant</mat-option>
-                  <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">Intermédiaire</mat-option>
-                  <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">Avancé</mat-option>
+                  <mat-option value="BEGINNER">{{ 'FORMATIONS.LEVEL.BEGINNER' | translate }}</mat-option>
+                  <mat-option value="INTERMEDIATE">{{ 'FORMATIONS.LEVEL.INTERMEDIATE' | translate }}</mat-option>
+                  <mat-option value="ADVANCED">{{ 'FORMATIONS.LEVEL.ADVANCED' | translate }}</mat-option>
                 </mat-select>
               </div>
               <div class="form-group half">
                 <label for="niveauEn">{{ 'FORMATIONS.FORM.LEVEL_EN' | translate }}</label>
                 <mat-select id="niveauEn" formControlName="niveauEn" class="form-control">
-                  <mat-option [value]="{ fr: 'Débutant', en: 'Beginner' }">Beginner</mat-option>
-                  <mat-option [value]="{ fr: 'Intermédiaire', en: 'Intermediate' }">Intermediate</mat-option>
-                  <mat-option [value]="{ fr: 'Avancé', en: 'Advanced' }">Advanced</mat-option>
+                  <mat-option value="BEGINNER">{{ 'FORMATIONS.LEVEL.BEGINNER' | translate }}</mat-option>
+                  <mat-option value="INTERMEDIATE">{{ 'FORMATIONS.LEVEL.INTERMEDIATE' | translate }}</mat-option>
+                  <mat-option value="ADVANCED">{{ 'FORMATIONS.LEVEL.ADVANCED' | translate }}</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -313,15 +313,15 @@
               <div class="form-group half">
                 <label for="etatFr">{{ 'FORMATIONS.FORM.MODE_FR' | translate }}</label>
                 <mat-select id="etatFr" formControlName="etatFr" class="form-control">
-                  <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">En ligne</mat-option>
-                  <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">Présentiel</mat-option>
+                  <mat-option value="ONLINE">{{ 'FORMATIONS.MODE.ONLINE' | translate }}</mat-option>
+                  <mat-option value="IN_PERSON">{{ 'FORMATIONS.MODE.IN_PERSON' | translate }}</mat-option>
                 </mat-select>
               </div>
               <div class="form-group half">
                 <label for="etatEn">{{ 'FORMATIONS.FORM.MODE_EN' | translate }}</label>
                 <mat-select id="etatEn" formControlName="etatEn" class="form-control">
-                  <mat-option [value]="{ fr: 'En ligne', en: 'Online' }">Online</mat-option>
-                  <mat-option [value]="{ fr: 'Présentiel', en: 'In-person' }">In-person</mat-option>
+                  <mat-option value="ONLINE">{{ 'FORMATIONS.MODE.ONLINE' | translate }}</mat-option>
+                  <mat-option value="IN_PERSON">{{ 'FORMATIONS.MODE.IN_PERSON' | translate }}</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -408,3 +408,6 @@
       </div>
     </div>
   </div>
+
+
+  

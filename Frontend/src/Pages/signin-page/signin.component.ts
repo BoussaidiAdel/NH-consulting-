@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormationService } from '../../Services/formation.service';
+import { ContactService } from '../../Services/contact.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { FormationSubscriptionRequest } from '../../Models/Formation';
+import { Formation } from '../../Models/Formation';
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +20,7 @@ export class SignInComponent implements OnInit {
   formationTitle: string | null = null;
   formationPrice: number | null = null;
   isLoading: boolean = false;
+  formation: Formation | null = null;
 
   educationLevels = [
     { value: 'primary', key: 'SIGNIN.EDUCATION_LEVELS.PRIMARY' },
@@ -34,6 +37,7 @@ export class SignInComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formationService: FormationService,
+    private contactService: ContactService,
     private snackBar: MatSnackBar,
     private translate: TranslateService
   ) {
@@ -44,31 +48,44 @@ export class SignInComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{8,15}$')]],
       address: ['', [Validators.required]],
       educationLevel: ['', [Validators.required]],
-      age: ['', [Validators.required, Validators.min(16), Validators.max(100)]],
+      age: ['', [Validators.required, Validators.min(10), Validators.max(100)]],
       studentClass: ['', [Validators.required, Validators.minLength(1)]]
     });
   }
 
   ngOnInit() {
-    // Get formation data from query params
-    this.route.queryParams.subscribe(params => {
-      this.formationId = params['formationId'];
-      this.formationTitle = params['formationTitle'];
-      this.formationPrice = params['formationPrice'];
+    // Get formation id from route params
+    this.route.paramMap.subscribe(params => {
+      this.formationId = params.get('id');
+      if (this.formationId) {
+        this.formationService.getFormation(this.formationId).subscribe({
+          next: (formation) => {
+            this.formation = formation;
+            // Use the current language for the title if available
+            const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+            this.formationTitle = formation.title[lang] || formation.title.fr;
+            this.formationPrice = formation.prix;
+          },
+          error: () => {
+            this.formationTitle = null;
+            this.formationPrice = null;
+          }
+        });
+      }
     });
   }
 
   onSubmit() {
     if (this.signinForm.valid && this.formationId) {
       this.isLoading = true;
-      
+      const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
       const subscriptionData: FormationSubscriptionRequest = {
         ...this.signinForm.value,
         formationId: this.formationId,
+        formationTitle: this.formation ? this.formation.title[lang] || this.formation.title.fr : '',
         age: parseInt(this.signinForm.value.age, 10)
       };
-
-      this.formationService.subscribeToFormation(subscriptionData).subscribe({
+      this.contactService.subscribeToFormation(subscriptionData).subscribe({
         next: (response) => {
           this.translate.get('SIGNIN.MESSAGES.SUBSCRIPTION_SUCCESS').subscribe((message: string) => {
             this.snackBar.open(message, this.translate.instant('SIGNIN.COMMON.CLOSE'), {
@@ -77,7 +94,7 @@ export class SignInComponent implements OnInit {
               verticalPosition: 'bottom'
             });
           });
-          this.router.navigate(['/formations']);
+          this.router.navigate(['/formation']);
         },
         error: (error) => {
           this.translate.get('SIGNIN.MESSAGES.SUBSCRIPTION_ERROR').subscribe((message: string) => {
