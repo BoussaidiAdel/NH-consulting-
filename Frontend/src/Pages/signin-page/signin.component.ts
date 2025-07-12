@@ -78,12 +78,11 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     if (this.signinForm.valid && this.formationId) {
       this.isLoading = true;
-      const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
       const subscriptionData: FormationSubscriptionRequest = {
         ...this.signinForm.value,
         formationId: this.formationId,
-        formationTitle: this.formation ? this.formation.title[lang] || this.formation.title.fr : '',
-        age: parseInt(this.signinForm.value.age, 10)
+        age: parseInt(this.signinForm.value.age, 10),
+        formationTitle: this.formationTitle || ''
       };
       this.contactService.subscribeToFormation(subscriptionData).subscribe({
         next: (response) => {
@@ -94,7 +93,7 @@ export class SignInComponent implements OnInit {
               verticalPosition: 'bottom'
             });
           });
-          this.router.navigate(['/formation']);
+          this.router.navigate(['/formations']);
         },
         error: (error) => {
           this.translate.get('SIGNIN.MESSAGES.SUBSCRIPTION_ERROR').subscribe((message: string) => {

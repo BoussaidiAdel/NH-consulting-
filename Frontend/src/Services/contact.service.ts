@@ -24,7 +24,7 @@ export class ContactService {
   }
 
   subscribeToFormation(subscriptionData: any) {
-    // subscriptionData must include formationTitle
+    // Use the same base URL as sendEmail, but with /subscribe
     return this.http.post(`${this.apiUrl}/subscribe`, subscriptionData)
       .pipe(
         timeout(15000),
