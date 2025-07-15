@@ -106,7 +106,13 @@
             emailService.sendFormationSubscriptionConfirmationEmail(
                     inscription.getEmail(),
                     inscription.getFirstName(),
-                    formationTitle
+                    formationTitle,
+                    inscription.getLastName(),
+                    inscription.getPhone(),
+                    inscription.getAddress(),
+                    inscription.getEducationLevel(),
+                    inscription.getAge(),
+                    inscription.getStudentClass()
             );
 
             System.out.println("User " + inscription.getEmail() + " inscrit à la formation " + inscription.getFormationId());
