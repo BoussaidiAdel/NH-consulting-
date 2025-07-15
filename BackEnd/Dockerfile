@@ -11,6 +11,6 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 # Set production environment variables for CORS and reset link base
 ENV SPRING_PROFILES_ACTIVE=prod
-ENV app.cors.allowed-origin-prod=http://51.75.27.103:4200
-ENV app.reset-link-base-prod=http://51.75.27.103:4200
+ENV app.cors.allowed-origin-prod=http://51.75.27.103
+ENV app.reset-link-base-prod=http://51.75.27.103
 ENTRYPOINT ["java", "-jar", "app.jar"] 
