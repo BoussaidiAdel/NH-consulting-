@@ -4,12 +4,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Formation } from '../Models/Formation';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationService {
-  private apiUrl = 'http://localhost:8080/api/public/formations';
+  private apiUrl = `${environment.apiUrl}/public/formations`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,7 +29,7 @@ export class FormationService {
   }
 
   addFormation(formation: Formation): Observable<Formation> {
-    return this.http.post<Formation>(`${this.apiUrl}/formations`, formation);
+    return this.http.post<Formation>(`${this.apiUrl}/add`, formation);
   }
 
   updateFormation(formation: Formation): Observable<Formation> {

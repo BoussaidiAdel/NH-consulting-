@@ -10,6 +10,7 @@ import { Observable, combineLatest, Subscription } from 'rxjs';
 import { selectUserRole } from '../../Utils/Selectors/auth.selectors';
 import { selectSelectedLanguage } from '../../Utils/Selectors/language.selectors';
 import { Router } from '@angular/router';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-formations',
@@ -24,7 +25,6 @@ export class FormationsComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   isLoading: boolean = false;
   userRole$: Observable<string | null>;
-  selectedLanguage$: Observable<string>;
   currentLanguage: string = 'fr';
   private subscriptions: Subscription[] = [];
 
@@ -53,30 +53,24 @@ export class FormationsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.userRole$ = this.store.pipe(select(selectUserRole));
-    this.selectedLanguage$ = this.store.pipe(select(selectSelectedLanguage));
   }
 
-  ngOnInit(): void {
-    // Subscribe to language changes
-    this.subscriptions.push(
-      this.selectedLanguage$.subscribe(language => {
-        this.currentLanguage = language;
-        // Update selected formation if it exists
-        if (this.selectedFormation) {
-          this.selectedFormation = { ...this.selectedFormation };
-        }
-        this.applyFilters();
-      })
-    );
+  private langSub?: Subscription;
 
+  ngOnInit(): void {
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      this.applyFilters();
+    });
     this.loadFormations();
     this.initFormationForm();
   }
 
   ngOnDestroy(): void {
+    this.langSub?.unsubscribe();
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
@@ -86,29 +80,70 @@ export class FormationsComponent implements OnInit, OnDestroy {
 
   // Helper methods for getting localized values
   getTitleValue(title: { fr: string; en: string }): string {
-    return title[this.currentLanguage as keyof typeof title] || title.en;
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return title[lang] || title.fr;
   }
 
   getDescriptionValue(description: { fr: string; en: string }): string {
-    return description[this.currentLanguage as keyof typeof description] || description.fr;
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return description[lang] || description.fr;
   }
 
   getNiveauValue(niveau: { fr: string; en: string }): string {
-    return niveau[this.currentLanguage as keyof typeof niveau] || niveau.fr;
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return niveau[lang] || niveau.fr;
   }
 
   getEtatValue(etat: { fr: string; en: string }): string {
-    return etat[this.currentLanguage as keyof typeof etat] || etat.fr;
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return etat[lang] || etat.fr;
   }
 
   getPrerequisValue(prerequis: string | { fr: string; en: string }): string {
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
     if (typeof prerequis === 'string') return prerequis;
-    return prerequis[this.currentLanguage as keyof typeof prerequis] || prerequis.fr;
+    return prerequis[lang] || prerequis.fr;
   }
 
   getProgrammeValue(programme: string | { fr: string; en: string }): string {
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
     if (typeof programme === 'string') return programme;
-    return programme[this.currentLanguage as keyof typeof programme] || programme.fr;
+    return programme[lang] || programme.fr;
+  }
+
+  // Helper functions for mapping between keys and objects
+  getNiveauKey(niveau: { fr: string; en: string } | string): string {
+    if (!niveau) return '';
+    if (typeof niveau === 'string') return niveau;
+    if (niveau.fr === 'Débutant' || niveau.en === 'Beginner') return 'BEGINNER';
+    if (niveau.fr === 'Intermédiaire' || niveau.en === 'Intermediate') return 'INTERMEDIATE';
+    if (niveau.fr === 'Avancé' || niveau.en === 'Advanced') return 'ADVANCED';
+    return '';
+  }
+
+  getEtatKey(etat: { fr: string; en: string } | string): string {
+    if (!etat) return '';
+    if (typeof etat === 'string') return etat;
+    if (etat.fr === 'En ligne' || etat.en === 'Online') return 'ONLINE';
+    if (etat.fr === 'Présentiel' || etat.en === 'In-person') return 'IN_PERSON';
+    return '';
+  }
+
+  getNiveauObject(key: string): { fr: string; en: string } {
+    switch (key) {
+      case 'BEGINNER': return { fr: 'Débutant', en: 'Beginner' };
+      case 'INTERMEDIATE': return { fr: 'Intermédiaire', en: 'Intermediate' };
+      case 'ADVANCED': return { fr: 'Avancé', en: 'Advanced' };
+      default: return { fr: '', en: '' };
+    }
+  }
+
+  getEtatObject(key: string): { fr: string; en: string } {
+    switch (key) {
+      case 'ONLINE': return { fr: 'En ligne', en: 'Online' };
+      case 'IN_PERSON': return { fr: 'Présentiel', en: 'In-person' };
+      default: return { fr: '', en: '' };
+    }
   }
 
   initFormationForm(): void {
@@ -121,10 +156,10 @@ export class FormationsComponent implements OnInit, OnDestroy {
       image: ['', Validators.required],
       duree: ['', [Validators.required, Validators.min(1)]],
       nomFormateur: ['', Validators.required],
-      etatFr: [null, Validators.required],
-      etatEn: [null, Validators.required],
-      niveauFr: [null, Validators.required],
-      niveauEn: [null, Validators.required],
+      etatFr: ['', Validators.required],
+      etatEn: ['', Validators.required],
+      niveauFr: ['', Validators.required],
+      niveauEn: ['', Validators.required],
       prerequisFr: [''],
       prerequisEn: [''],
       programmeFr: [''],
@@ -237,8 +272,7 @@ export class FormationsComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.editMode = true;
     this.selectedFormation = formation;
-    
-    // Populate form with formation data
+    // Populate form with formation data using string keys for selects
     this.formationForm.patchValue({
       id: formation.id,
       titleFr: typeof formation.title === 'string' ? formation.title : formation.title.fr,
@@ -249,11 +283,11 @@ export class FormationsComponent implements OnInit, OnDestroy {
       image: formation.image,
       duree: formation.duree,
       nomFormateur: formation.nomFormateur,
-      etatFr: formation.etat,
-      etatEn: formation.etat,
-      niveauFr: formation.niveau,
-      niveauEn: formation.niveau,
-      active: formation.active,
+      etatFr: this.getEtatKey(formation.etat),
+      etatEn: this.getEtatKey(formation.etat),
+      niveauFr: this.getNiveauKey(formation.niveau),
+      niveauEn: this.getNiveauKey(formation.niveau),
+      active: (formation as any).active,
       dateDebut: formation.dateDebut,
       dateFin: formation.dateFin,
       placesDisponibles: formation.placesDisponibles,
@@ -262,7 +296,6 @@ export class FormationsComponent implements OnInit, OnDestroy {
       programmeFr: typeof formation.programme === 'string' ? formation.programme : formation.programme.fr,
       programmeEn: typeof formation.programme === 'string' ? formation.programme : formation.programme.en
     });
-    
     this.showFormationForm = true;
   }
 
@@ -290,8 +323,8 @@ export class FormationsComponent implements OnInit, OnDestroy {
         image: formValue.image,
         duree: formValue.duree,
         nomFormateur: formValue.nomFormateur,
-        etat: formValue.etatFr,
-        niveau: formValue.niveauFr,
+        etat: this.getEtatObject(formValue.etatFr), // map string key to object
+        niveau: this.getNiveauObject(formValue.niveauFr), // map string key to object
         prerequis: {
           fr: formValue.prerequisFr,
           en: formValue.prerequisEn

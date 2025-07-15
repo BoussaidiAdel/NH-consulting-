@@ -7,7 +7,9 @@ import Models.RegisterUser;
 import Models.User;
 import Services.AuthService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
-@Slf4j
+@CrossOrigin(origins = "${app.cors.allowed-origin-prod}", allowCredentials = "true") // Use -prod in production
 public class AuthController {
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(AuthController.class);
+
 
     @Autowired
     private AuthService authService;

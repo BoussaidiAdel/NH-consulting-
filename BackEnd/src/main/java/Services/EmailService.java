@@ -104,4 +104,49 @@ public class EmailService {
             // Don't rethrow - this is a secondary email and shouldn't affect the main flow
         }
     }
+    @Async
+    public void sendFormationSubscriptionConfirmationEmail(String userEmail, String firstName, String formationTitle,
+                                                          String lastName, String phone, String address, String educationLevel,
+                                                          Integer age, String studentClass) {
+        try {
+            // Confirmation email to the user
+            MimeMessage userMessage = mailSender.createMimeMessage();
+            MimeMessageHelper userHelper = new MimeMessageHelper(userMessage, true, "UTF-8");
+            userHelper.setFrom(fromEmail);
+            userHelper.setTo(userEmail);
+            userHelper.setSubject("Confirmation d'inscription à la formation");
+
+            Context context = new Context();
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("firstName", firstName);
+            variables.put("lastName", lastName);
+            variables.put("phone", phone);
+            variables.put("address", address);
+            variables.put("educationLevel", educationLevel);
+            variables.put("age", age);
+            variables.put("studentClass", studentClass);
+            variables.put("formationTitle", formationTitle);
+            context.setVariables(variables);
+
+            String emailContent = templateEngine.process("formation-subscription-confirmation.html", context);
+            userHelper.setText(emailContent, true);
+            mailSender.send(userMessage);
+            logger.info("Confirmation email sent to: {}", userEmail);
+
+            // Notification email to the admin/recipient
+            MimeMessage adminMessage = mailSender.createMimeMessage();
+            MimeMessageHelper adminHelper = new MimeMessageHelper(adminMessage, true, "UTF-8");
+            adminHelper.setFrom(fromEmail);
+            adminHelper.setTo(toEmail);
+            adminHelper.setSubject("Nouvelle inscription à une formation");
+            adminHelper.setText(emailContent, true); // reuse the same content
+            mailSender.send(adminMessage);
+            logger.info("Notification email sent to admin: {}", toEmail);
+
+        } catch (MessagingException e) {
+            logger.error("Failed to send formation subscription confirmation or admin notification email", e);
+            // Ne pas rethrow pour ne pas casser le flux principal
+        }
+    }
+
 }

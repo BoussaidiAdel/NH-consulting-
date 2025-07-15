@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation d'inscription à la formation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #e9e9e9;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+            color: #888;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .field-value {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Confirmation d'inscription à la formation</h2>
+    </div>
+    <div class="content">
+        <p>Bonjour <span th:text="${firstName}"></span> <span th:text="${lastName}"></span>,</p>
+        <p>Votre inscription à la formation <strong th:text="${formationTitle}"></strong> a été <strong>confirmée</strong>.</p>
+        <div class="field">
+            <div class="field-label">Téléphone :</div>
+            <div class="field-value" th:text="${phone}"></div>
+        </div>
+        <div class="field">
+            <div class="field-label">Adresse :</div>
+            <div class="field-value" th:text="${address}"></div>
+        </div>
+        <div class="field">
+            <div class="field-label">Niveau d'éducation :</div>
+            <div class="field-value" th:text="${educationLevel}"></div>
+        </div>
+        <div class="field">
+            <div class="field-label">Âge :</div>
+            <div class="field-value" th:text="${age}"></div>
+        </div>
+        <div class="field">
+            <div class="field-label">Classe :</div>
+            <div class="field-value" th:text="${studentClass}"></div>
+        </div>
+        <p>Merci et à bientôt !</p>
+    </div>
+    <div class="footer">
+        <p>Ce courriel a été envoyé automatiquement. Merci de ne pas y répondre.</p>
+        <p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> NH Consulting. Tous droits réservés.</p>
+    </div>
+</div>
+</body>
+</html> 

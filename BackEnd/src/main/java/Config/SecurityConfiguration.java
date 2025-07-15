@@ -3,6 +3,7 @@ package Config;
 import Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,6 +29,9 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
 
+    @Value("${app.cors.allowed-origin-prod}") // Use -prod in production
+    private String allowedOrigin;
+
     @Qualifier("userService")
     @Autowired
     private UserService userDetailService;
@@ -38,7 +42,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                                                    AuthenticationProvider authenticationProvider) throws Exception {
 
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:4200")); // Your frontend origin
+        corsConfig.setAllowedOrigins(List.of(allowedOrigin)); // Use env variable
         corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(List.of("*"));
         corsConfig.setAllowCredentials(true);

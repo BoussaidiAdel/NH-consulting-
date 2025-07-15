@@ -309,10 +309,16 @@
   width: 90%;
   max-width: 800px;
   max-height: 90vh;
-  overflow-y: auto;
   position: relative;
   z-index: 10000;
   transform: translateZ(0);
+}
+
+/* Add this to ensure Angular Material overlays appear above the modal */
+::ng-deep .cdk-overlay-container, 
+::ng-deep .cdk-overlay-backdrop, 
+::ng-deep .cdk-overlay-pane {
+  z-index: 11000 !important;
 }
 
 .close-btn {
@@ -368,6 +374,8 @@
 
 .modal-body {
   padding: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .modal-body h2 {

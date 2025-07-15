@@ -1,6 +1,6 @@
 <section class="game-section">
   <div class="section-header">
-    <h2 class="line-title">NOS FORMATIONS EN TENDANCE</h2>
+    <h2 class="line-title">{{ 'SLIDE_CONTAINER.TRENDING_TITLE' | translate }}</h2>
     <div class="section-controls">
       <button
         class="control-btn prev-btn"
@@ -58,16 +58,16 @@
           <div class="item-overlay"></div>
         </div>
         <div class="item-desc">
-          <h4>{{ formation.title }}</h4>
-          <p>{{ formation.description }}</p>
+          <h4>{{ getTitleValue(formation.title) }}</h4>
+          <p>{{ getDescriptionValue(formation.description) }}</p>
           <div class="item-meta">
             <div class="meta-item">
               <i class="fas fa-clock"></i>
-              <span>{{ formation.duree }} semaines</span>
+              <span>{{ formation.duree }} {{ 'SLIDE_CONTAINER.WEEKS' | translate }}</span>
             </div>
             <div class="meta-item">
               <i class="fas fa-graduation-cap"></i>
-              <span>{{ formation.niveau }}</span>
+              <span>{{ getNiveauValue(formation.niveau) }}</span>
             </div>
           </div>
           <div class="formation-price">
@@ -80,7 +80,7 @@
           </div>
           <button class="enroll-btn" (click)="register(formation)">
             <i class="fas fa-user-plus"></i>
-            S'inscrire
+            {{ 'SLIDE_CONTAINER.ENROLL' | translate }}
           </button>
         </div>
       </div>
@@ -90,7 +90,7 @@
 
   <div class="loading-container" *ngIf="loading">
     <div class="spinner"></div>
-    <p>Chargement des formations...</p>
+    <p>{{ 'SLIDE_CONTAINER.LOADING' | translate }}</p>
   </div>
 
   <div class="error-message" *ngIf="errorMessage">
@@ -117,10 +117,10 @@
         stroke-linejoin="round"
       />
     </svg>
-    <h3>Aucune formation disponible</h3>
+    <h3>{{ 'SLIDE_CONTAINER.EMPTY_TITLE' | translate }}</h3>
     <p>
-      Il n'y a actuellement aucune formation disponible dans notre catalogue.
+      {{ 'SLIDE_CONTAINER.EMPTY_MESSAGE' | translate }}
     </p>
-    <button class="refresh-btn" (click)="loadFormations()">Rafraîchir</button>
+    <button class="refresh-btn" (click)="loadFormations()">{{ 'SLIDE_CONTAINER.REFRESH' | translate }}</button>
   </div>
 </section>

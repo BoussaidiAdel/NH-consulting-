@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-slide-container',
@@ -24,7 +25,8 @@ export class SlideContainerComponent implements AfterViewInit {
   constructor(
     private formationService: FormationService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngAfterViewInit(): void {
@@ -179,15 +181,25 @@ export class SlideContainerComponent implements AfterViewInit {
     this.toggleActive(this.formations[prevIndex]);
   }
 
+  // Helper methods for getting localized values
+  getTitleValue(title: { fr: string; en: string }): string {
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return title[lang] || title.fr;
+  }
+
+  getDescriptionValue(description: { fr: string; en: string }): string {
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return description[lang] || description.fr;
+  }
+
+  getNiveauValue(niveau: { fr: string; en: string }): string {
+    const lang = this.translate.currentLang === 'en' ? 'en' : 'fr';
+    return niveau[lang] || niveau.fr;
+  }
+
   register(formation: Formation): void {
-    // Navigate to signin page with formation data
-    this.router.navigate(['/signin'], {
-      queryParams: {
-        formationId: formation.id,
-        formationTitle: formation.title,
-        formationPrice: formation.prix
-      }
-    });
+    // Navigate to signin page with formation id
+    this.router.navigate(['/signin', formation.id]);
   }
 
   @HostListener('window:keydown', ['$event'])

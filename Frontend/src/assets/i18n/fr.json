@@ -59,8 +59,17 @@
     "DESCRIPTION": "Nous sommes disponibles pendant les heures de bureau",
     "MON_FRI": "Lundi - Vendredi",
     "TIME": "9h00 - 17h00"
+  }},
+  "SLIDE_CONTAINER": {
+    "TRENDING_TITLE": "NOS FORMATIONS EN TENDANCE",
+    "WEEKS": "semaines",
+    "ENROLL": "S'inscrire",
+    "LOADING": "Chargement des formations...",
+    "EMPTY_TITLE": "Aucune formation disponible",
+    "EMPTY_MESSAGE": "Il n'y a actuellement aucune formation disponible dans notre catalogue.",
+    "REFRESH": "Rafraîchir"
   }
-},
+,
  "footer": {
     "company_description": "Nous accompagnons votre développement professionnel avec des formations de qualité, animées par des experts passionnés et expérimentés.",
     "quick_links": "Liens Rapides",
@@ -74,7 +83,7 @@
     "contact": "Contact",
     "address": "43 rue de l'orge 91000 evry, France",
     "phone": "+33 753 4863 83",
-    "email": "contact@nhconsulting.fr",
+    "email": "contact@nh-consultingbusiness.com",
     "hours": "Lun - Ven: 9h00 - 18h00",
     "newsletter_title": "Newsletter",
     "newsletter_description": "Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres spéciales.",
@@ -152,58 +161,58 @@
   },
   "SIGNIN": {
     "SIGNIN": {
-      "TITLE": "Formation Registration",
-      "PRICE_LABEL": "Price",
-      "SUBMIT_BUTTON": "Register"
+      "TITLE": "Inscription à la formation",
+      "PRICE_LABEL": "Prix",
+      "SUBMIT_BUTTON": "S'inscrire"
     },
     "FORM": {
-      "FIRST_NAME": "First Name",
-      "FIRST_NAME_PLACEHOLDER": "Your first name",
-      "LAST_NAME": "Last Name",
-      "LAST_NAME_PLACEHOLDER": "Your last name",
+      "FIRST_NAME": "Prénom",
+      "FIRST_NAME_PLACEHOLDER": "Votre prénom",
+      "LAST_NAME": "Nom",
+      "LAST_NAME_PLACEHOLDER": "Votre nom",
       "EMAIL": "Email",
-      "EMAIL_PLACEHOLDER": "Your email",
-      "PHONE": "Phone",
-      "PHONE_PLACEHOLDER": "Your phone number",
-      "ADDRESS": "Address",
-      "ADDRESS_PLACEHOLDER": "Your address",
-      "EDUCATION_LEVEL": "Education Level",
-      "AGE": "Age",
-      "AGE_PLACEHOLDER": "Your age",
-      "STUDENT_CLASS": "Class",
-      "STUDENT_CLASS_PLACEHOLDER": "Your current class"
+      "EMAIL_PLACEHOLDER": "Votre adresse email",
+      "PHONE": "Téléphone",
+      "PHONE_PLACEHOLDER": "Votre numéro de téléphone",
+      "ADDRESS": "Adresse",
+      "ADDRESS_PLACEHOLDER": "Votre adresse",
+      "EDUCATION_LEVEL": "Niveau d'études",
+      "AGE": "Âge",
+      "AGE_PLACEHOLDER": "Votre âge",
+      "STUDENT_CLASS": "Classe",
+      "STUDENT_CLASS_PLACEHOLDER": "Votre classe actuelle"
     },
     "EDUCATION_LEVELS": {
-      "PRIMARY": "Primary",
-      "SECONDARY": "Secondary",
-      "HIGH_SCHOOL": "High School",
-      "BACHELOR": "Bachelor's Degree",
-      "MASTER": "Master's Degree",
-      "DOCTORATE": "Doctorate",
-      "OTHER": "Other"
+      "PRIMARY": "Primaire",
+      "SECONDARY": "Collège",
+      "HIGH_SCHOOL": "Lycée",
+      "BACHELOR": "Licence",
+      "MASTER": "Master",
+      "DOCTORATE": "Doctorat",
+      "OTHER": "Autre"
     },
     "VALIDATION": {
-      "FIRST_NAME_REQUIRED": "First name is required",
-      "FIRST_NAME_MIN_LENGTH": "First name must contain at least 2 characters",
-      "LAST_NAME_REQUIRED": "Last name is required",
-      "LAST_NAME_MIN_LENGTH": "Last name must contain at least 2 characters",
-      "EMAIL_REQUIRED": "Email is required",
-      "EMAIL_INVALID": "Invalid email format",
-      "PHONE_REQUIRED": "Phone number is required",
-      "PHONE_INVALID": "Invalid phone format",
-      "ADDRESS_REQUIRED": "Address is required",
-      "EDUCATION_LEVEL_REQUIRED": "Education level is required",
-      "AGE_REQUIRED": "Age is required",
-      "AGE_MIN": "Minimum age is 16 years",
-      "AGE_MAX": "Maximum age is 100 years",
-      "STUDENT_CLASS_REQUIRED": "Class is required"
+      "FIRST_NAME_REQUIRED": "Le prénom est requis",
+      "FIRST_NAME_MIN_LENGTH": "Le prénom doit contenir au moins 2 caractères",
+      "LAST_NAME_REQUIRED": "Le nom est requis",
+      "LAST_NAME_MIN_LENGTH": "Le nom doit contenir au moins 2 caractères",
+      "EMAIL_REQUIRED": "L'email est requis",
+      "EMAIL_INVALID": "Format d'email invalide",
+      "PHONE_REQUIRED": "Le numéro de téléphone est requis",
+      "PHONE_INVALID": "Format de téléphone invalide",
+      "ADDRESS_REQUIRED": "L'adresse est requise",
+      "EDUCATION_LEVEL_REQUIRED": "Le niveau d'études est requis",
+      "AGE_REQUIRED": "L'âge est requis",
+      "AGE_MIN": "L'âge minimum est de 10 ans",
+      "AGE_MAX": "L'âge maximum est de 100 ans",
+      "STUDENT_CLASS_REQUIRED": "La classe est requise"
     },
     "MESSAGES": {
-      "SUBSCRIPTION_SUCCESS": "Registration successful! You will receive a confirmation email.",
-      "SUBSCRIPTION_ERROR": "Registration error. Please try again."
+      "SUBSCRIPTION_SUCCESS": "Inscription réussie ! Vous recevrez un email de confirmation.",
+      "SUBSCRIPTION_ERROR": "Erreur d'inscription. Veuillez réessayer."
     },
     "COMMON": {
-      "CLOSE": "Close"
+      "CLOSE": "Fermer"
     }
   },
   "FORMATIONS": {

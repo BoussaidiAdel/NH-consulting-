@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: NHconsulting
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./BackEnd
+    container_name: backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/NHconsulting
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
+      CONTACT_EMAIL_RECIPIENT: contact@nhconsulting.fr
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./Frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data: 

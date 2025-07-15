@@ -59,4 +59,5 @@ export interface FormationSubscriptionRequest {
     age: number;
     studentClass: string;
     formationId: string;
-  }
+    formationTitle: string;
+}
