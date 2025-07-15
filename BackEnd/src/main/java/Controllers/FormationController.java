@@ -6,6 +6,7 @@
     import Services.FormationService;
     import Services.InscriptionService;
     import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.beans.factory.annotation.Value;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,8 @@
     import java.util.Optional;
 
     @RestController
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping("/api/public/formations")
+    @RequestMapping("/api/public/formation")
+    @CrossOrigin(origins = "${app.cors.allowed-origin-prod}") // Use -prod in production
     public class FormationController {
 
         @Autowired

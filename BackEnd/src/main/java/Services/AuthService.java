@@ -69,6 +69,9 @@ public class AuthService {
     @Value("${jwt.refresh-token-expiration}")
     private int refreshTokenExpiration;
 
+    @Value("${app.reset-link-base-prod}") // Use -prod in production
+    private String resetLinkBase;
+
     @Transactional
     public User register(RegisterUser registerUser) {
         if (registerUser.getEmail() == null || registerUser.getPassword() == null) {
@@ -274,7 +277,7 @@ public class AuthService {
 
         // Generate reset token
         String resetToken = jwtService.generateToken(email, false);
-        String resetLink = "http://localhost:4200" + "/reset-password?token=" + resetToken;
+        String resetLink = resetLinkBase + "/reset-password?token=" + resetToken;
 
         try {
             // Prepare Thymeleaf context

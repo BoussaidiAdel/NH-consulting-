@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +18,6 @@ import Services.FormationService;
 import Models.Formation;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/public/contact")
 @Validated  
@@ -25,6 +25,9 @@ import java.util.Optional;
 public class ContactController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
+
+    @Value("${app.cors.allowed-origin-prod}") // Use -prod in production
+    private String allowedOrigin;
 
     private final EmailService emailService;
 
